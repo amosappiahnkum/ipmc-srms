@@ -1,0 +1,9 @@
+[
+  {
+    "group": "Leave Request",
+    "permissions": [
+      "approve-leave-request",
+      "decline-leave-request"
+    ]
+  }
+]

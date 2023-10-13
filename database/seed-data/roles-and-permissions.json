@@ -1,0 +1,86 @@
+[
+    {
+        "roles": [
+            "hr"
+        ],
+        "group": "Employee",
+        "permissions": [
+            "add-employee",
+            "edit-employee",
+            "delete-employee",
+            "view-employee"
+        ]
+    },
+    {
+        "roles": [
+            "hr"
+        ],
+        "group": "Department",
+        "permissions": [
+            "add-department",
+            "edit-department",
+            "delete-department",
+            "view-department"
+        ]
+    },
+    {
+        "roles": [
+            "hr"
+        ],
+        "group": "Leave Types",
+        "permissions": [
+            "add-leave-types",
+            "edit-leave-types",
+            "delete-leave-types",
+            "view-leave-types"
+        ]
+    },
+    {
+        "roles": [
+            "hr"
+        ],
+        "group": "Leave Management",
+        "permissions": [
+            "move-leave",
+            "approve-leave",
+            "disapprove-leave",
+            "view-approved-leave",
+            "view-pending-leave"
+        ]
+    },
+    {
+        "roles": [
+            "hr"
+        ],
+        "group": "Previous Positions",
+        "permissions": [
+            "add-previous-position",
+            "edit-previous-position",
+            "delete-previous-position",
+            "view-previous-position"
+        ]
+    },
+    {
+        "roles": [
+            "hr"
+        ],
+        "group": "Previous Ranks",
+        "permissions": [
+            "add-previous-rank",
+            "edit-previous-rank",
+            "delete-previous-rank",
+            "view-previous-rank"
+        ]
+    },
+    {
+        "roles": [
+            "staff"
+        ],
+        "group": "Leave Request",
+        "permissions": [
+            "request-leave",
+            "view-pending-request",
+            "view-approved-request"
+        ]
+    }
+]
