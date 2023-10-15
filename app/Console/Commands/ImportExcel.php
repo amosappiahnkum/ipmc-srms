@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Imports\EmployeeImport;
+use App\Imports\AllProgramsImport;
 use Illuminate\Console\Command;
 
 class ImportExcel extends Command
@@ -12,7 +12,7 @@ class ImportExcel extends Command
      *
      * @var string
      */
-    protected $signature = 'import:excel';
+    protected $signature = 'import:programs';
 
     /**
      * The console command description.
@@ -27,22 +27,13 @@ class ImportExcel extends Command
     public function handle(): void
     {
         $items = [
-            'applied_arts',
-            'applied_sciences',
-            'built',
-            'business',
-            'centre_for_languages',
-            'engineering',
-            'non_teaching_junior_staff',
-            'non_teaching_senior_members',
-            'non_teaching_senior_staff',
-            'secondment_staff',
+            'programs',
         ];
 
         $this->output->title('Starting import');
 
         foreach ($items as $item) {
-            (new EmployeeImport)->withOutput($this->output)->import(public_path('data/' . $item . '.xlsx'));
+            (new AllProgramsImport)->withOutput($this->output)->import(public_path('data/' . $item . '.xlsx'));
         }
 
         $this->output->success('Import successful');

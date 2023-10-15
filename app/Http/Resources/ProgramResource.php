@@ -17,10 +17,10 @@ class ProgramResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'duration' => $this->duration,
-            'program_type' => $this->program_type,
+            'duration' => 1,
+            'type' => $this->type,
             'fee' => $this->fee,
-            'students' => $this->students->count(),
+            'students' => 0,
         ];
     }
 }

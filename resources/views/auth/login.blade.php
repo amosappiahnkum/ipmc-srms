@@ -6,13 +6,13 @@
             <div class="col-md-12 mb-2">
                 <div class="input-group">
                     <label for="username" class="sr-only">Email</label>
-                    <div class="input-group-prepend border border-dark">
+                    <div class="input-group-prepend border border-danger">
                         <span class="input-group-text bg-transparent border-0" id="basic-addon1">
                             <i class="fa fa-envelope"></i>
                         </span>
                     </div>
                     <input id="username" placeholder="Enter your email" type="text"
-                           class="form-control form-control-lg border border-dark bg-transparent"
+                           class="form-control form-control-lg border border-danger bg-transparent"
                            name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
                     <div class="invalid-feedback text-right mb-0">
                         Required
@@ -23,14 +23,14 @@
             <div class="col-md-12">
                 <div class="input-group mb-2">
                     <label for="password" class="sr-only">password</label>
-                    <div class="input-group-prepend border border-dark">
+                    <div class="input-group-prepend border border-danger">
                         <span class="input-group-text addon border-transparent bg-transparent" id="basic-addon1">
                             <i class="fa fa-lock" style="font-size: 22px"></i>
                         </span>
                     </div>
                     <input style="background: transparent !important;"
                            id="password" placeholder="Enter your password" type="password"
-                           class="form-control form-control-lg border border-dark bg-transparent"
+                           class="form-control form-control-lg border border-danger bg-transparent"
                            name="password" required autocomplete="current-password">
                     <div class="invalid-feedback text-right mb-0">
                         Required

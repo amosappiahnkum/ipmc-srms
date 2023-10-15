@@ -52,6 +52,7 @@ function AllEnquires(props) {
                             <TlaAddNew data={record} link={`${record.student.name}/details`}>
                                 <Button>Detail</Button>
                             </TlaAddNew>
+                            <p>{record.student.status}</p>
                         </Space>
                     </Space>
                 )}/>
@@ -66,12 +67,14 @@ function AllEnquires(props) {
                         </a>
                     </Space>
                 )}/>
-                <Column title="D.o.B" dataIndex={['student','dob']}/>
+                <Column title="D.o.B" dataIndex={['student', 'dob']}/>
                 <Column title="Contact" render={(_, {student}) => (
                     <Space direction={'vertical'} size={1}>
                         <a className={'link-icon'} href={`mailto:${student.email}`}><FiMail/>{student.email}</a>
-                        <a className={'link-icon'} href={`tel:${student.phone_number}`}><FiPhone/>{student.phone_number}</a>
-                        <a className={'link-icon'} href={`tel:${student.alt_phone_number}`}><FiPhone/>{student.alt_phone_number}</a>
+                        <a className={'link-icon'} href={`tel:${student.phone_number}`}><FiPhone/>{student.phone_number}
+                        </a>
+                        <a className={'link-icon'}
+                           href={`tel:${student.alt_phone_number}`}><FiPhone/>{student.alt_phone_number}</a>
                     </Space>
                 )}/>
                 <Table.Column title={'Actions'} render={(_, record) => (
@@ -82,9 +85,12 @@ function AllEnquires(props) {
                                 <div style={contentStyle}>
                                     {React.cloneElement(menu, {style: {boxShadow: 'none', width: '100%'},})}
                                     <div className={'px-1 pb-2 flex flex-col gap-2'}>
-                                        <TlaAddNew data={{studentId: record?.student_id}} link={'/students/enroll'}>
-                                            <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm'}>Enroll</p>
-                                        </TlaAddNew>
+                                        {
+                                            record.student.status !== 'in-school' &&
+                                            <TlaAddNew data={{studentId: record?.student_id}} link={'/students/enroll'}>
+                                                <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm'}>Enroll</p>
+                                            </TlaAddNew>
+                                        }
                                         <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm cursor-pointer'}
                                            onClick={() => {
                                                setPrinting(true)

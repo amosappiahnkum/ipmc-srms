@@ -1,6 +1,8 @@
 <?php
 
 use App\Enums\ProgramType;
+use App\Models\AllPrograms;
+use App\Models\Duration;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,10 +16,9 @@ return new class extends Migration
     {
         Schema::create('programs', static function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('duration')->default(6)->comment('in-months');
-            $table->decimal('fee');
-            $table->string('program_type');
+            $table->foreignIdFor(AllPrograms::class);
+            $table->foreignIdFor(Duration::class);
+            $table->string('year')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\EnquiryResource;
 use App\Http\Resources\ProgramResource;
 use App\Jobs\SendNewEnquiryJob;
+use App\Models\AllPrograms;
 use App\Models\Enquiry;
 use App\Models\Program;
 use App\Models\Sponsor;
@@ -33,7 +34,7 @@ class PublicPageController extends Controller
 
     public function getPrograms(): Collection
     {
-        return ProgramResource::collection(Program::all())->collection->groupBy('program_type');
+        return ProgramResource::collection(AllPrograms::all())->collection->groupBy('type');
     }
 
     public function newEnquiry(Request $request): JsonResponse|EnquiryResource
@@ -98,6 +99,9 @@ class PublicPageController extends Controller
 
     public function debug()
     {
-        return view('mail.new-enquiry');
+        $date = Carbon::now()->addMonths(6);
+
+        return $date;
+//        return view('mail.new-enquiry');
     }
 }

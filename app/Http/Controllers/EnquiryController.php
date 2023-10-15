@@ -50,10 +50,6 @@ class EnquiryController extends Controller
                 'landscape');
         }
 
-        $studentsQuery->whereRelation('student', function ($q) {
-            return $q->where('status', '!=', StudentStatus::IN_SCHOOL);
-        });
-
         return EnquiryResource::collection($studentsQuery->paginate(10));
     }
 

@@ -163,12 +163,12 @@ class ProgramSeeder extends Seeder
         foreach ($programs as $program) {
             Program::updateOrCreate([
                 'name' => $program['name'],
-                'program_type' => $program['type'],
+                'type' => $program['type'],
             ], [
                 'name' => $program['name'],
                 'duration' => $program['duration'],
                 'fee' => $program['fee'],
-                'program_type' => $program['type'],
+                'type' => $program['type'],
             ]);
         }
     }

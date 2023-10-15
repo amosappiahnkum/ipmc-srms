@@ -1,4 +1,4 @@
-import {Checkbox, Col, Form, Input, Row} from 'antd'
+import {Checkbox, Form, Input} from 'antd'
 import React, {useEffect, useState} from 'react'
 import {connect, useSelector} from "react-redux";
 import {handleGetEnquiryPrograms} from "../actions/enquiry/EnquiryAction";
@@ -23,8 +23,8 @@ function Programs({getEnquiryPrograms}) {
                         message: 'Choose at least one program'
                     }
                 ]} name="programs" label="">
-                    <Checkbox.Group>
-                        <div className={'grid grid-cols-1 md:grid-cols-3 gap-2'}>
+                    <div className={'grid grid-cols-1 md:grid-cols-2 gap-2'}>
+                        <Checkbox.Group>
                             {
                                 programTypes.map((type, index) => (
                                     <div key={type} className={`p-2 rounded-lg bg-gray-${index + 1}00`}>
@@ -44,8 +44,8 @@ function Programs({getEnquiryPrograms}) {
                                     </div>
                                 ))
                             }
-                        </div>
-                    </Checkbox.Group>
+                        </Checkbox.Group>
+                    </div>
                 </Form.Item>
             </div>
             <div>
