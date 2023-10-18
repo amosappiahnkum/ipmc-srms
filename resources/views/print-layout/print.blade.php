@@ -6,6 +6,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'IPMC - SRMS') }}</title>
+    <style>
+        body, html, table, th, td, p {
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
 @yield('print-content')

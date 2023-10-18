@@ -16,6 +16,7 @@ import {handleSubmitEnquiry} from "../actions/enquiry/EnquiryAction";
 const steps = [
     {
         title: 'Personal Information',
+        // content: <Programs/>,
         content: <PersonalInfo/>,
     },
     {
@@ -99,7 +100,7 @@ function Enquiry({submitEnquiry}) {
             <Spin spinning={submitting}>
                 <div className={'flex flex-col md:flex-row items-center justify-center'}>
                     <div
-                        className={'w-full md:w-2/5 bg-gray-200 chat-list h-fit md:h-screen flex flex-col items-between justify-center pt-5 enquiry-side'}>
+                        className={'w-full md:w-2/6 bg-gray-200 chat-list h-fit md:h-screen flex flex-col items-between justify-center pt-5 enquiry-side'}>
                         <div className={'flex justify-center flex-col items-center'}>
                             <img height={'auto'} width={100} src={Logo} alt="IPMC Takoradi"/>
                             <h3 className={'uppercase mt-3 text-xl'}>Takoradi</h3>
@@ -114,8 +115,8 @@ function Enquiry({submitEnquiry}) {
                             </div>
                         </div>
                     </div>
-                    <div className={'w-full md:w-3/5 chat-content shadow-lg h-[calc(100vh-230px)] md:h-screen'}>
-                        <div className={'flex items-center h-fit overflow-y-auto md:h-screen'}>
+                    <div className={'w-full md:w-4/6 chat-content h-[calc(100vh-230px)] md:h-[calc(100vh-10px)]'}>
+                        <div className={'flex items-center h-fit overflow-hidden md:h-screen'}>
                             <Form onFinish={submit} form={form} layout={'vertical'} initialValues={initialValues}>
                                 <React.Fragment>
                                     <h3 className={'text-lg md:text-3xl font-bold mb-3 text-red-600'}>{steps[current].title}</h3>
@@ -131,7 +132,9 @@ function Enquiry({submitEnquiry}) {
                                         </Button>
                                     )}
                                     {current > 0 && (
-                                        <Button size={'large'} style={{margin: '0 8px'}} onClick={() => prev()}>
+                                        <Button
+                                            size={'large'} style={{margin: '0 8px'}}
+                                            onClick={() => prev()}>
                                             Previous
                                         </Button>
                                     )}

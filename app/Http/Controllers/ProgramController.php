@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\ProgramExport;
 use App\Http\Resources\ProgramResource;
+use App\Models\AllPrograms;
 use App\Models\Program;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -60,12 +61,12 @@ class ProgramController extends Controller
         DB::beginTransaction();
         try {
             $request['user_id'] = Auth::id();
-            $program = Program::create($request->all());
+            $program = AllPrograms::create($request->all());
             DB::commit();
             return new ProgramResource($program);
         } catch (Exception $exception) {
             DB::rollBack();
-            Log::error('Add Program Error', [$exception]);
+            Log::error('Add AllPrograms Error', [$exception]);
 
             return response()->json([
                 'message' => 'Something went wrong'
@@ -75,10 +76,10 @@ class ProgramController extends Controller
 
     /**
      * @param Request $request
-     * @param Program $program
+     * @param AllPrograms $program
      * @return ProgramResource|JsonResponse
      */
-    public function update(Request $request, Program $program): ProgramResource|JsonResponse
+    public function update(Request $request, AllPrograms $program): ProgramResource|JsonResponse
     {
         DB::beginTransaction();
         try {
@@ -88,7 +89,7 @@ class ProgramController extends Controller
             return new ProgramResource($program);
         } catch (Exception $exception) {
             DB::rollBack();
-            Log::error('Add Program Error', [$exception]);
+            Log::error('Add AllPrograms Error', [$exception]);
 
             return response()->json([
                 'message' => 'Something went wrong'

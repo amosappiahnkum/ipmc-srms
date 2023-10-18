@@ -10,14 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-
-    private $url;
-    public function __construct($app)
-    {
-        $this->url = env('FRONTEND_URL');
-        parent::__construct($app);
-    }
-
     /**
      * The path to the "home" route for your application.
      *
@@ -25,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = "{config('FRONTEND_URL')}";
+    public const HOME = 'http://localhost:3000';
 
     /**
      * The controller namespace for the application.
@@ -35,6 +27,11 @@ class RouteServiceProvider extends ServiceProvider
      * @var string|null
      */
     // protected $namespace = 'App\\Http\\Controllers';
+
+    public static function getHome()
+    {
+        return env('FRONTEND_URL');
+    }
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -67,10 +64,5 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
-    }
-
-    function getHomeUrl()
-    {
-        return "/{config('random_prefix')}/dashboard";
     }
 }

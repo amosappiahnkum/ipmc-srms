@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use function Symfony\Component\Translation\t;
 
 class ProgramResource extends JsonResource
 {
@@ -16,11 +17,14 @@ class ProgramResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'duration' => 1,
-            'type' => $this->type,
-            'fee' => $this->fee,
+            'name' => $this->allPrograms->name,
+            'duration' => $this->allPrograms->duration,
+            'type' => $this->allPrograms->type,
+            'fee' => $this->allPrograms->fee,
             'students' => 0,
+            'registration_fee' => $this->allPrograms->registration_fee,
+            'total_fee' => $this->allPrograms->total_fee,
+            'number_of_installment' => $this->allPrograms->number_of_installment,
         ];
     }
 }

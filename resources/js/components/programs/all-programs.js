@@ -32,14 +32,16 @@ function AllPrograms(props) {
                 callbackFunction={ getPrograms }
                 data={ data } meta={ meta }>
                 <Column title="Name" dataIndex={'name'}/>
-                <Column title="Duration (In-Weeks)" dataIndex={ 'duration' }/>
+                <Column title="Duration" render={(text, record) => (
+                    <>{record.duration +' ' + record.duration_type}</>
+                )}/>
                 <Column title="Fee" dataIndex={ 'fee' }/>
                 <Column title="Total Students" dataIndex={ 'students' }/>
-                <Table.Column title={'Actions'} render={(text, record) => (
+                {/*<Table.Column title={'Actions'} render={(text, record) => (
                     <TlaAddNew data={record} link={'form'}>
                         <Button>Edit</Button>
                     </TlaAddNew>
-                )}/>
+                )}/>*/}
             </TlaTableWrapper>
         </div>
     )

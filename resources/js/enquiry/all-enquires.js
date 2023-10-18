@@ -8,6 +8,7 @@ import TlaTableWrapper from "../commons/table/tla-table-wrapper";
 import TlaImage from "../commons/tla-image";
 import TlaAddNew from "../commons/tla-add-new";
 import {handleGetAllEnquiries, handlePrintEnquiry} from "../actions/enquiry/EnquiryAction";
+import FilterEnquiries from "./filter-enquiries";
 
 const {Column} = Table
 const {useToken} = theme;
@@ -21,7 +22,6 @@ function AllEnquires(props) {
     const {setPageInfo} = useOutletContext();
     useEffect(() => {
         setPageInfo({title: 'Students', addLink: '/students/form', buttonText: 'Student'})
-
         getEnquiries(new URLSearchParams(filter)).then(() => {
             setLoading(false)
         })
@@ -38,7 +38,7 @@ function AllEnquires(props) {
     };
     return (
         <div className={'pb-10'}>
-            {/*<FilterStudents/>*/}
+            <FilterEnquiries/>
             <TlaTableWrapper
                 formLoading={loading}
                 filterObj={filter}
@@ -52,7 +52,6 @@ function AllEnquires(props) {
                             <TlaAddNew data={record} link={`${record.student.name}/details`}>
                                 <Button>Detail</Button>
                             </TlaAddNew>
-                            <p>{record.student.status}</p>
                         </Space>
                     </Space>
                 )}/>

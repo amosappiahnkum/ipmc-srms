@@ -6,6 +6,7 @@
             flex-wrap: wrap;
             gap: 20px !important;
             margin: 0;
+            font-family: Arial, sans-serif;
         }
 
         .title {
@@ -81,7 +82,7 @@
                     <p class="title">Interested Programs</p>
                    <ul>
                        @foreach($data->enquiryPrograms() as $program)
-                           <li>{{$program->name}}</li>
+                           <li>{{$program->allPrograms->name}}</li>
                        @endforeach
                    </ul>
                 </div>

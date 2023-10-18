@@ -55,21 +55,8 @@ export const SidebarMenus = [
     },
     {
         title: 'Programs',
-        link: '#',
-        children: [
-            {
-                permission: '',
-                modal: true,
-                title: 'Add Program',
-                link: '/programs/form',
-            },
-            {
-                permission: '',
-                modal: false,
-                title: 'All Programs',
-                link: '/programs',
-            }
-        ],
+        link: '/programs',
+        children: [],
         permissions: [],
         icon: 'program'
     },

@@ -3,10 +3,6 @@ import React from 'react'
 import {connect} from "react-redux";
 import {Outlet, useLocation} from 'react-router'
 import {Route, Routes} from 'react-router-dom'
-import Configs from "../../components/admin/config";
-import Departments from "../../components/admin/config/departments";
-import TerminationReasons from "../../components/admin/config/termination-reasons";
-import Users from "../../components/admin/config/users";
 import PageWrapper from "../../components/admin/page-wrapper";
 import AllStudents from "../../components/students/all-students";
 import {ModalRoutes} from "./ModalRoutes";
@@ -33,13 +29,6 @@ const ProtectedRoutes = () => {
                     <Route path='programs' element={<AllPrograms/>}/>
                     <Route path='instructors' element={<AllInstructors/>}/>
                     <Route path='batches' element={<AllBatches/>}/>
-                </Route>
-                <Route path='app/configs' element={<Configs/>}>
-                    <Route element={<PageWrapper/>}>
-                        <Route path='departments' element={<Departments/>}/>
-                        <Route path='users' element={<Users/>}/>
-                        <Route path='termination-reasons' element={<TerminationReasons/>}/>
-                    </Route>
                 </Route>
                 <Route exact>
                     <>not found</>

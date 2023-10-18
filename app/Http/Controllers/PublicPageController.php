@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AllProgramsResource;
 use App\Http\Resources\EnquiryResource;
 use App\Http\Resources\ProgramResource;
 use App\Jobs\SendNewEnquiryJob;
@@ -34,7 +35,7 @@ class PublicPageController extends Controller
 
     public function getPrograms(): Collection
     {
-        return ProgramResource::collection(AllPrograms::all())->collection->groupBy('type');
+        return AllProgramsResource::collection(AllPrograms::all())->collection->groupBy('type');
     }
 
     public function newEnquiry(Request $request): JsonResponse|EnquiryResource

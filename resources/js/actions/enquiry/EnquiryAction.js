@@ -1,6 +1,5 @@
 import api from '../../utils/api'
-import {getEnquires, getEnquiryPrograms, submitEnquiry} from './ActionCreators'
-import {addFilter} from "../students/ActionCreators";
+import {getEnquires, getEnquiryPrograms, submitEnquiry, addFilter} from './ActionCreators'
 import {completeExport} from "../../utils";
 
 
@@ -48,6 +47,19 @@ export const handlePrintEnquiry = (enquiryId) => async () => {
         api().get(`/report/enquiry/print/${enquiryId}`, { responseType: 'blob' })
             .then((res) => {
                 completeExport(res.data, 'enquiry')
+                resolve()
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+
+export const handleExportEnquiries = (params) => async () => {
+    return new Promise((resolve, reject) => {
+        api().get(`/enquiries?${params}`, { responseType: 'blob' })
+            .then((res) => {
+                completeExport(res.data, 'ipmc-enquiries' + Date.now())
                 resolve()
             }).catch((err) => {
             reject(err)

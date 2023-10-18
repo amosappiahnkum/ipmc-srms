@@ -14,6 +14,10 @@ class Enquiry extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $casts = [
+      'programs' => 'array'
+    ];
+
     protected $fillable = [
         'student_id',
         'programs',

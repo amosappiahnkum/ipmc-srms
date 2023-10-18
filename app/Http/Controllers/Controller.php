@@ -2,18 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CelebrationResource;
-use App\Models\Department;
-use App\Models\EducationLevel;
-use App\Models\Employee;
+use App\Models\AllPrograms;
 use App\Models\Instructor;
-use App\Models\JobCategory;
 use App\Models\OngoingProgram;
-use App\Models\Position;
-use App\Models\Program;
-use App\Models\Rank;
 use App\Models\Student;
-use App\Models\SubUnit;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -35,7 +27,7 @@ class Controller extends BaseController
             ], 422);
         }
 
-        $programs = Program::count();
+        $programs = AllPrograms::count();
         $instructors = Instructor::count();
         $batches = OngoingProgram::count();
         $students = Student::all();

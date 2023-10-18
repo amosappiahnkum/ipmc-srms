@@ -1,12 +1,12 @@
-import {Checkbox, Form, Input} from 'antd'
+import {Checkbox, Form, Input, Spin} from 'antd'
 import React, {useEffect, useState} from 'react'
 import {connect, useSelector} from "react-redux";
 import {handleGetEnquiryPrograms} from "../actions/enquiry/EnquiryAction";
 import PropTypes from "prop-types";
 
 function Programs({getEnquiryPrograms}) {
-
     const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         getEnquiryPrograms().then(() => setLoading(false))
     }, [])
@@ -15,23 +15,24 @@ function Programs({getEnquiryPrograms}) {
 
     const programTypes = Object.keys(programs)
     return (
-        <React.Fragment>
-            <div>
-                <Form.Item rules={[
-                    {
-                        required: true,
-                        message: 'Choose at least one program'
-                    }
-                ]} name="programs" label="">
-                    <div className={'grid grid-cols-1 md:grid-cols-2 gap-2'}>
-                        <Checkbox.Group>
+        <Spin spinning={loading}>
+            {
+                !loading &&
+                <>
+                    <div>
+                        <Form.Item rules={[
                             {
-                                programTypes.map((type, index) => (
-                                    <div key={type} className={`p-2 rounded-lg bg-gray-${index + 1}00`}>
-                                        <p className={'text-lg'}>{type}</p>
-                                        <div className={'flex flex-col'}>
+                                required: true,
+                                message: 'Choose at least one program'
+                            }
+                        ]} name="programs" label="">
+                            <Checkbox.Group>
+                                <div className={'grid grid-cols-1 md:grid-cols-2 gap-2'}>
+                                    <div className={`p-2 rounded-lg bg-gray-100`}>
+                                        <p className={'text-lg'}>{programTypes[0]}</p>
+                                        <div>
                                             {
-                                                programs[type].map((program) => (
+                                                programs[programTypes[0]].map((program) => (
                                                     <Checkbox
                                                         key={program.id}
                                                         value={program.id}
@@ -42,18 +43,51 @@ function Programs({getEnquiryPrograms}) {
                                             }
                                         </div>
                                     </div>
-                                ))
-                            }
-                        </Checkbox.Group>
+                                    <div>
+                                        <div className={'p-2 rounded-lg bg-gray-200 mb-2'}>
+                                            <p className={'text-lg'}>{programTypes[1]}</p>
+                                            <div>
+                                                {
+                                                    programs[programTypes[1]].map((program) => (
+                                                        <Checkbox
+                                                            key={program.id}
+                                                            value={program.id}
+                                                            style={{lineHeight: '32px'}}>
+                                                            {program.name}
+                                                        </Checkbox>
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
+                                        <div className={'p-2 rounded-lg bg-gray-200'}>
+                                            <p className={'text-lg'}>{programTypes[2]}</p>
+                                            <div>
+                                                {
+                                                    programs[programTypes[2]].map((program) => (
+                                                        <Checkbox
+                                                            key={program.id}
+                                                            value={program.id}
+                                                            style={{lineHeight: '32px'}}>
+                                                            {program.name}
+                                                        </Checkbox>
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Checkbox.Group>
+                        </Form.Item>
                     </div>
-                </Form.Item>
-            </div>
-            <div>
-                <Form.Item name="other_program" label="Any Other Program (Specify)">
-                    <Input size={'large'}/>
-                </Form.Item>
-            </div>
-        </React.Fragment>
+                    <div>
+                        <Form.Item name="other_program" label="Any Other Program (Specify)">
+                            <Input size={'large'}/>
+                        </Form.Item>
+                    </div>
+                </>
+            }
+
+        </Spin>
     )
 }
 

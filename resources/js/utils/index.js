@@ -61,6 +61,10 @@ export const formatDate = (date) => {
     return dayjs(date).format('MMM Do YY')
 }
 
+export const dateRange = (date) => {
+    return [dayjs(date[0]), dayjs(date[1])]
+}
+
 export const statuses = [
     'Pending', 'Approved', 'Rejected', 'Canceled'
 ]
