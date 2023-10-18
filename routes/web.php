@@ -18,7 +18,7 @@ Route::get('/debug/{path?}', [PublicPageController::class, 'debug'])
     ->where('path','.*');
 
 Route::get('/enquiry/{path?}', [PublicPageController::class, 'index'])
-    ->where('path','.*');
+    ->where('path','.*')->name('make-enquiry');
 
 Route::middleware(['auth'])->get('/{path?}', function () {
     return view('home');
