@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\AllProgramsResource;
 use App\Http\Resources\EnquiryResource;
+use App\Http\Resources\OngoingProgramResource;
 use App\Http\Resources\ProgramResource;
-use App\Jobs\SendNewEnquiryJob;
+use App\Http\Resources\SubjectResource;
 use App\Models\AllPrograms;
-use App\Models\Enquiry;
+use App\Models\Holiday;
+use App\Models\OngoingProgram;
 use App\Models\Program;
 use App\Models\Sponsor;
 use App\Models\Student;
+use App\Models\Subjects;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -100,9 +103,21 @@ class PublicPageController extends Controller
 
     public function debug()
     {
-        $date = Carbon::now()->addMonths(6);
+        $ongoingProgram = OngoingProgram::query()->find(1);
 
-        return $date;
-//        return view('mail.new-enquiry');
+        $modules = $ongoingProgram->program->modules->where('semester', 1);
+
+        $data = [
+            'batch' => $ongoingProgram,
+            'modules' => $modules,
+            'totalDuration' => $modules->sum('duration.duration')
+        ];
+
+        return \view('print.ongoing-programs.batch-plan', compact('data'));
+    }
+
+    public function getHolidays(): Collection
+    {
+        return Holiday::all()->pluck('start_date');
     }
 }

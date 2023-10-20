@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\AllPrograms;
+use App\Models\Duration;
 use App\Models\Program;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -17,10 +19,11 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Program::class);
             $table->string('name');
-            $table->integer('duration')->default(2)->comment('in-weeks');
+            $table->foreignIdFor(Duration::class);
             $table->integer('contact_hours')->default(2)->nullable();
-            $table->integer('year');
-            $table->integer('semester');
+            $table->string('year')->nullable();
+            $table->integer('semester')->nullable();
+            $table->string('code', 20);
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });

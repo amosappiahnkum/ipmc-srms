@@ -13,6 +13,9 @@ function InstructorForm(props) {
 
     const formValues = {
         id: 0,
+        other_name: '',
+        email: '',
+        specialization: '',
         ...state.data
     }
 

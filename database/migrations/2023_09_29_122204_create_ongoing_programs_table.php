@@ -21,6 +21,7 @@ return new class extends Migration
             $table->time('batch_time');
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('room')->nullable();
             $table->foreignIdFor(User::class);
             $table->timestamps();
             $table->softDeletes();

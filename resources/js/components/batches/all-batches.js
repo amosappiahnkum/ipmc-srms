@@ -1,12 +1,11 @@
-import {Button, Table} from 'antd'
+import {Table} from 'antd'
 import PropTypes from 'prop-types'
 import React, {useEffect, useState} from 'react'
 import {connect} from "react-redux";
 import {useOutletContext} from 'react-router'
-import {Link} from "react-router-dom";
 import {handleGetAllBatches} from "../../actions/batches/BatchAction";
 import TlaTableWrapper from "../../commons/table/tla-table-wrapper";
-import TlaAddNew from "../../commons/tla-add-new";
+import BatchActions from "./batch-actions";
 
 const {Column} = Table
 
@@ -24,23 +23,21 @@ function AllBatches(props) {
     }, [])
 
     return (
-        <div className={ 'pb-10' }>
+        <div className={'pb-10'}>
             {/*<FilterGetBatches/>*/}
             <TlaTableWrapper
-                formLoading={ loading }
-                filterObj={ filter }
-                callbackFunction={ getBatches }
-                data={ data } meta={ meta }>
+                formLoading={loading}
+                filterObj={filter}
+                callbackFunction={getBatches}
+                data={data} meta={meta}>
                 <Column title="Program" dataIndex={'program'}/>
-                <Column title="instructor" dataIndex={ 'instructor' }/>
-                <Column title="start time" dataIndex={ 'batch_time' }/>
-                <Column title="start date" dataIndex={ 'start_date' }/>
-                <Column title="end date" dataIndex={ 'end_date' }/>
-                <Column title="Students" dataIndex={ 'students' }/>
+                <Column title="instructor" dataIndex={'instructor'}/>
+                <Column title="start time" dataIndex={'batch_time'}/>
+                <Column title="start date" dataIndex={'start_date'}/>
+                <Column title="end date" dataIndex={'end_date'}/>
+                <Column title="Students" dataIndex={'students'}/>
                 <Table.Column title={'Actions'} render={(text, record) => (
-                    <TlaAddNew data={record} link={'form'}>
-                        <Button>Edit</Button>
-                    </TlaAddNew>
+                    <BatchActions record={record}/>
                 )}/>
             </TlaTableWrapper>
         </div>

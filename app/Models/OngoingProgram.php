@@ -18,6 +18,7 @@ class OngoingProgram extends Model
         'batch_time',
         'start_date',
         'end_date',
+        'room',
         'user_id'
     ];
 
@@ -26,7 +27,7 @@ class OngoingProgram extends Model
      */
     public function program(): BelongsTo
     {
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(Program::class, 'program_id');
     }
 
     /**

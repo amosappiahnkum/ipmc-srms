@@ -75,6 +75,12 @@ export const SidebarMenus = [
                 modal: false,
                 title: 'All Batches',
                 link: '/batches',
+            },
+            {
+                permission: '',
+                modal: true,
+                title: 'Generate Attendance',
+                link: '/batches/generate-attendance',
             }
         ],
         permissions: [],

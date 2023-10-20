@@ -42,10 +42,14 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::apiResource('enquiries', EnquiryController::class);
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/programs', ProgramController::class);
+    Route::get('/all-programs', [ProgramController::class, 'allPrograms']);
     Route::post('/students/{student}/enroll', [StudentController::class, 'enrollStudent']);
     Route::apiResource('/students', StudentController::class);
     Route::apiResource('/instructors', InstructorController::class);
+    Route::post('/ongoing-programs/attendance', [OngoingProgramController::class, 'printAttendance']);
+    Route::post('/ongoing-programs/batch-plan', [OngoingProgramController::class, 'printBatchPlan']);
     Route::apiResource('/ongoing-programs', OngoingProgramController::class);
+    Route::get('/all-batches', [OngoingProgramController::class, 'getAllBatches']);
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

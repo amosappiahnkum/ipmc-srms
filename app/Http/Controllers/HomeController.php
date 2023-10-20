@@ -2,12 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LeaveRequestResource;
-use App\Http\Resources\MyTeamResource;
-use App\Models\Employee;
-use App\Models\EmployeeSupervisor;
 use App\Models\Enrollment;
-use App\Models\LeaveRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -33,7 +28,7 @@ class HomeController extends Controller
 
     public function getEnrollmentChart(): JsonResponse
     {
-        $enrollment = Enrollment::query()->get()->groupBy('ongoingProgram.program.name')->map->count();
+        $enrollment = Enrollment::query()->get()->groupBy('ongoingProgram.program.allPrograms.name')->map->count();
 
         $enrollmentByMonth = Enrollment::query()
             ->whereYear('created_at','2023')

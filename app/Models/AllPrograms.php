@@ -6,6 +6,7 @@ use App\Enums\ProgramType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class AllPrograms extends Model
 {
@@ -17,12 +18,7 @@ class AllPrograms extends Model
 
     protected $fillable = [
         'name',
-        'duration_id',
-        'fee',
-        'registration_fee',
-        'total_fee',
-        'type',
-        'number_of_installment',
+        'type'
     ];
 
     public function duration(): BelongsTo

@@ -19,6 +19,10 @@ function DateFilter() {
             value: [dayjs().add(-1, 'd'), dayjs().add(-1, 'd')],
         },
         {
+            label: 'Today',
+            value: [dayjs().add(0, 'd'), dayjs().add(0, 'd')],
+        },
+        {
             label: 'Last 7 Days',
             value: [dayjs().add(-7, 'd'), dayjs()],
         },

@@ -1,9 +1,15 @@
 import { Types } from './Types'
 
-
 export const getPrograms = (payload) => {
     return {
         type: Types.GET_PROGRAMS,
+        payload: payload
+    }
+}
+
+export const getAllPrograms = (payload) => {
+    return {
+        type: Types.GET_ALL_PROGRAMS,
         payload: payload
     }
 }

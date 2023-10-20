@@ -6,9 +6,11 @@ use App\Exports\ProgramExport;
 use App\Http\Resources\ProgramResource;
 use App\Models\AllPrograms;
 use App\Models\Program;
+use App\Traits\UsePrint;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +18,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ProgramController extends Controller
 {
+    use UsePrint;
     /**
      * Display a listing of the resource.
      */
@@ -27,22 +30,9 @@ class ProgramController extends Controller
             return $q->where('department_id', $request->department_id);
         });
 
-        $programsQuery->when($request->has('rank_id') &&
-            $request->rank_id !== 'all', function ($q) use ($request) {
-            return $q->where('rank_id', $request->rank_id);
-        });
-
-        $programsQuery->when($request->has('job_category_id') &&
-            $request->job_category_id !== 'all', function ($q) use ($request) {
-            return $q->whereRelation('jobDetail', static function ($jQuery) use ($request) {
-                return $jQuery->where('job_category_id', $request->job_category_id);
-            });
-        });
-
-
         if ($request->has('export') && $request->export === 'true') {
             return Excel::download(new ProgramExport(ProgramResource::collection($programsQuery->get())),
-                'Expenses.xlsx');
+                'Programs.xlsx');
         }
 
         if ($request->has('print') && $request->print === 'true') {
@@ -103,5 +93,13 @@ class ProgramController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * @return AnonymousResourceCollection
+     */
+    public function allPrograms(): AnonymousResourceCollection
+    {
+        return ProgramResource::collection(Program::all());
     }
 }

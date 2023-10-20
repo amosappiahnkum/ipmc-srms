@@ -7,7 +7,7 @@ import {
     getProgram,
     getPrograms,
     removeProgram,
-    updateProgram,
+    updateProgram, getAllPrograms,
 } from './ActionCreators'
 
 /**
@@ -36,6 +36,20 @@ export const handleGetAllPrograms = (params) => (dispatch) => {
             dispatch(getPrograms(res.data))
             params?.delete('page')
             params && dispatch(addFilter(Object.fromEntries(params)))
+            resolve(res)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+/**
+ * @returns {function(*): Promise<unknown>}
+ */
+export const handleGetProgramsForSearch = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        api().get('all-programs').then((res) => {
+            dispatch(getAllPrograms(res.data))
             resolve(res)
         }).catch((err) => {
             reject(err)

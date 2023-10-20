@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
@@ -50,4 +49,15 @@ class Helper
         return $request->all();
     }
 
+    public static function getDate($date, $weeks, $start)
+    {
+        $endDate = Carbon::parse($date)->addWeekday()->addRealWeeks($weeks)->format('d-m-Y');
+        $examDate = Carbon::parse($endDate)->addWeekday()->format('d-m-Y');
+
+        return [
+            'end' => $endDate . ' - ' . Carbon::parse($date)->diffInWeeks(Carbon::parse($endDate)),
+            'exam' => $examDate,
+            'week' => $weeks
+        ];
+    }
 }

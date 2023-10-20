@@ -8,6 +8,8 @@ import BatchForm from "../../components/batches/batch-form";
 import EnrollmentForm from "../../components/students/enrollment-form";
 import StudentDetail from "../../components/students/student-details";
 import EnquiryDetail from "../../enquiry/enquiry-details";
+import GenerateAttendanceForm from "../../components/batches/generate-attendance-form";
+import GenerateBatchPlan from "../../components/batches/generate-batch-plan";
 
 export const ModalRoutes = () => {
     return (
@@ -17,6 +19,8 @@ export const ModalRoutes = () => {
             <Route exact path="students/:name/details" element={<StudentDetail/>}/>
             <Route exact path="enquires/:name/details" element={<EnquiryDetail/>}/>
             <Route exact path="batches/form" element={<BatchForm/>}/>
+            <Route exact path="batches/generate-attendance" element={<GenerateAttendanceForm/>}/>
+            <Route exact path="batches/print-batch-plan" element={<GenerateBatchPlan/>}/>
             <Route exact path="programs/form" element={<ProgramForm/>}/>
             <Route exact path="instructors/form" element={<InstructorForm/>}/>
             <Route exact path="preview/:fileName" element={<PreviewFile/>}/>

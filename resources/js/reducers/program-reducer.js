@@ -4,12 +4,10 @@ const initialState = {
         data: [],
         meta: {}
     },
+    allPrograms: [],
     program: {},
     filter: {
-        department_id: 'all',
-        rank_id: 'all',
-        educational_level_id: 'all',
-        job_category_id: 'all'
+        program_id: 'all'
     }
 }
 
@@ -17,6 +15,9 @@ export default function programReducer (state = initialState, action) {
     switch (action.type) {
         case Types.GET_PROGRAMS:
             return { ...state, programs: action.payload }
+
+        case Types.GET_ALL_PROGRAMS:
+            return { ...state, allPrograms: action.payload }
 
         case Types.ADD_PROGRAM_FILTER:
             return { ...state, filter: action.payload}

@@ -7,16 +7,16 @@ import {handleGetAllBatches} from "../../actions/batches/BatchAction";
 import TlaFormWrapper from "../../commons/tla-form-wrapper";
 import {handleGetAllPrograms} from "../../actions/programs/ProgramAction";
 import {handleEnrollStudent} from "../../actions/students/StudentAction";
+import AllProgramsFilter from "../../commons/filter/all-programs-filter";
 
 function EnrollmentForm(props) {
     const [hasProgram, setHasProgram] = useState(false)
     const [selectedBatch, setSelectedBatch] = useState(null)
     const [loading, setLoading] = useState(false)
-    const {enrollStudent, getPrograms, getBatches} = props
+    const {enrollStudent, getBatches} = props
 
     const [form] = Form.useForm();
 
-    const programs = useSelector((state) => state.programReducer.programs.data)
     const batches = useSelector((state) => state.batchReducer.batches.data)
     const {state} = useLocation()
 
@@ -37,35 +37,17 @@ function EnrollmentForm(props) {
             formTitle={`${(formValues.id === 0 ? "New" : "Edit")} Enrollment`}>
             <Row gutter={10}>
                 <Col span={24} xs={24} md={12}>
-                    <Form.Item name="program_id" label="Program"
-                               rules={[
-                                   {
-                                       required: true,
-                                       message: 'Program is Required'
-                                   }
-                               ]}>
-                        <Select showSearch size={'large'} loading={loading}
-                                onFocus={() => {
-                                    if (programs.length === 0) {
-                                        setLoading(true)
-                                        getPrograms().then(() => setLoading(false))
-                                    }
-                                }}
-                                onChange={(value) => {
-                                    setSelectedBatch(null)
-                                    form.setFieldValue('ongoing_program_id', null)
-                                    getBatches(new URLSearchParams(`program_id=${value}`)).then(() => {
-                                        setHasProgram(true)
-                                        setLoading(false)
-                                    })
-                                }}>
-                            {
-                                programs.map(({id, name}) => (
-                                    <Select.Option value={id} key={id}>{name}</Select.Option>
-                                ))
-                            }
-                        </Select>
-                    </Form.Item>
+                    <AllProgramsFilter
+                        required
+                        hasAll={false}
+                        callBack={(value) => {
+                            setSelectedBatch(null)
+                            form.setFieldValue('ongoing_program_id', null)
+                            getBatches(new URLSearchParams(`program_id=${value}`)).then(() => {
+                                setHasProgram(true)
+                                setLoading(false)
+                            })
+                        }}/>
                 </Col>
                 {
                     hasProgram &&

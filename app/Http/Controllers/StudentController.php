@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\EnquiryResource;
 use App\Http\Resources\EnrollmentResource;
 use App\Http\Resources\StudentResource;
+use App\Models\AllPrograms;
 use App\Models\Enquiry;
 use App\Models\Enrollment;
 use App\Models\Program;
@@ -183,10 +184,10 @@ class StudentController extends Controller
 
             $enrollment = $student->enrollments()->create([
                 'ongoing_program_id' => $request->ongoing_program_id,
-                'total_course_fee' => $program->fee,
-                'registration_fee' => 0,
+                'total_course_fee' => $program->total_fee,
+                'registration_fee' => $program->registration_fee,
                 'discounted_fee' => $discount,
-                'net_payable_fee' => $program->fee - $discount,
+                'net_payable_fee' => $program->total_fee - $discount,
             ]);
 
             if ($student->status != StudentStatus::IN_SCHOOL){

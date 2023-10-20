@@ -1,45 +1,24 @@
-import React, {useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import {connect, useSelector} from "react-redux";
+import {connect} from "react-redux";
 import {Col, Row} from "antd";
 import FilterWrapper from "../../commons/filter/filter-wrapper";
 import {handleExportStudents, handleGetAllStudents} from "../../actions/students/StudentAction";
-import TlaSelect from "../../commons/tla/TlaSelect";
-import {handleGetAllPrograms} from "../../actions/programs/ProgramAction";
+import AllProgramsFilter from "../../commons/filter/all-programs-filter";
 
 function FilterStudents(props) {
-    const [loading, setLoading] = useState(false)
-    const {submitFilter, filter, exportFilter, getPrograms} = props
-    const programs = useSelector(state => state.programReducer.programs.data)
+    const {submitFilter, filter, exportFilter} = props
+
     const initials = {
         ...filter,
         export: false
     }
 
     return (
-        <FilterWrapper print excel initialValue={initials} submitFilter={submitFilter} exportFilter={exportFilter}>
-            {/*<div>
-               <Form.Item name="date" label="Date">
-                   <DatePicker.RangePicker />
-               </Form.Item>
-           </div>*/}
+        <FilterWrapper excel initialValue={initials} submitFilter={submitFilter} exportFilter={exportFilter}>
             <Row gutter={10}>
                 <Col span={6} xs={24} sm={24} md={6} lg={6} xl={6}>
-                    <TlaSelect
-                        loading={loading}
-                        hasAll
-                        name={'program_id'}
-                        optionKey={'name'}
-                        options={programs}
-                        label={'program'}
-                        onFocus={() => {
-                            if (programs.length === 0) {
-                                setLoading(true)
-                                getPrograms().then(() => setLoading(false))
-                            }
-
-                        }}
-                    />
+                    <AllProgramsFilter/>
                 </Col>
             </Row>
         </FilterWrapper>
@@ -49,7 +28,6 @@ function FilterStudents(props) {
 FilterStudents.propTypes = {
     submitFilter: PropTypes.func,
     exportFilter: PropTypes.func,
-    getPrograms: PropTypes.func,
     filter: PropTypes.object
 }
 
@@ -59,8 +37,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     submitFilter: (params) => dispatch(handleGetAllStudents(params)),
-    exportFilter: (params) => dispatch(handleExportStudents(params)),
-    getPrograms: (params) => dispatch(handleGetAllPrograms(params)),
+    exportFilter: (params) => dispatch(handleExportStudents(params))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterStudents)

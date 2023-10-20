@@ -3,7 +3,7 @@ import api from '../../utils/api'
 import {
     addBatch,
     addFilter,
-    applySearch,
+    applySearch, getAllBatches,
     getBatch,
     getBatches,
     removeBatch,
@@ -80,6 +80,16 @@ export const handleGetSingleBatch = (id) => (dispatch) => {
         })
     })
 }
+export const handleGetAllBatch = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        api().get('/all-batches').then((res) => {
+            dispatch(getAllBatches(res.data))
+            resolve(res)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
 /**
  * Update the specified resource in storage.
  * @param data
@@ -109,6 +119,30 @@ export const handleDeleteBatch = (id) => (dispatch) => {
             dispatch(removeBatch(id))
             resolve(res)
         }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+
+export const handlePrintAttendance = (data) => async () => {
+    return new Promise((resolve, reject) => {
+        api().post(`/ongoing-programs/attendance`, data,{ responseType: 'blob' })
+            .then((res) => {
+                completeExport(res.data, 'batch')
+                resolve()
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+export const handlePrintBatchPlan = (data) => async () => {
+    return new Promise((resolve, reject) => {
+        api().post(`/ongoing-programs/batch-plan`, data,{ responseType: 'blob' })
+            .then((res) => {
+                completeExport(res.data, 'batch-plan')
+                resolve()
+            }).catch((err) => {
             reject(err)
         })
     })

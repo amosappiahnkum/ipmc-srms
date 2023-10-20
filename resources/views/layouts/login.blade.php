@@ -66,10 +66,10 @@
 <body style="background: #ffffff">
 <div
     style="background-image: url({{asset('/images/login.jpg')}}); background-size: cover; background-position: center center">
-    <main class="">
+    <main>
         <div class="container-fluid">
-            <div class="flex justify-content-end pt-5 pr-5">
-                <a class="btn btn-outline-dark" href="{{ route('make-enquiry') }}" target="_blank">Make Enquiry</a>
+            <div class="relative">
+                <a class="btn btn-outline-dark absolute" style="top: 20px; right: 30px" href="{{ route('make-enquiry') }}" target="_blank">Make Enquiry</a>
             </div>
             <div class="row justify-content-center align-items-center " style="height: 100vh">
                 <div class="text-center position-absolute" style="top: 20px;">

@@ -1,10 +1,12 @@
-import { Types } from '../actions/batches/Types'
+import {Types} from '../actions/batches/Types'
+
 const initialState = {
     batches: {
         data: [],
         meta: {}
     },
     batch: {},
+    allBatches: [],
     filter: {
         program_id: 'all',
         instructor_id: 'all',
@@ -13,21 +15,24 @@ const initialState = {
     }
 }
 
-export default function batchReducer (state = initialState, action) {
+export default function batchReducer(state = initialState, action) {
     switch (action.type) {
         case Types.GET_BATCHES:
-            return { ...state, batches: action.payload }
+            return {...state, batches: action.payload}
+
+        case Types.GET_ALL_BATCHES:
+            return {...state, allBatches: action.payload}
 
         case Types.ADD_BATCH_FILTER:
-            return { ...state, filter: action.payload}
+            return {...state, filter: action.payload}
 
         case Types.GET_BATCH:
-            return { ...state, batch: action.payload }
+            return {...state, batch: action.payload}
 
         case Types.ADD_BATCH:
             return {
                 ...state,
-                batches: { ...state.batches, data: state.batches.data.concat(action.payload) }
+                batches: {...state.batches, data: state.batches.data.concat(action.payload)}
             }
 
         case Types.UPDATE_BATCH:
@@ -45,7 +50,7 @@ export default function batchReducer (state = initialState, action) {
         case Types.REMOVE_BATCH:
             return {
                 ...state,
-                batches: { ...state.batches, data: state.batches.data.filter((batch) => batch.id !== action.id) }
+                batches: {...state.batches, data: state.batches.data.filter((batch) => batch.id !== action.id)}
             }
 
         default:

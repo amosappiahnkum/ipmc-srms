@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Statuses;
+use App\Enums\StudentStatus;
 use App\Models\AllPrograms;
 use App\Models\Instructor;
 use App\Models\OngoingProgram;
@@ -27,10 +29,10 @@ class Controller extends BaseController
             ], 422);
         }
 
-        $programs = AllPrograms::count();
-        $instructors = Instructor::count();
-        $batches = OngoingProgram::count();
-        $students = Student::all();
+        $programs = AllPrograms::query()->count();
+        $instructors = Instructor::query()->count();
+        $batches = OngoingProgram::query()->count();
+        $students = Student::query()->where('status', StudentStatus::IN_SCHOOL)->get();
         return response([
             'programs' => $programs,
             'instructors' => $instructors,

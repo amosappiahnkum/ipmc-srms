@@ -8,6 +8,14 @@ export const getBatches = (payload) => {
     }
 }
 
+
+export const getAllBatches = (payload) => {
+    return {
+        type: Types.GET_ALL_BATCHES,
+        payload: payload
+    }
+}
+
 export const applySearch = (payload) => {
     return {
         type: Types.APPLY_SEARCH_RESULTS,
@@ -46,6 +54,13 @@ export const updateBatch = (payload) => {
 export const addFilter = (payload) => {
     return {
         type: Types.ADD_BATCH_FILTER,
+        payload: payload
+    }
+}
+
+export const printAttendance = (payload) => {
+    return {
+        type: Types.PRINT_ATTENDANCE,
         payload: payload
     }
 }
