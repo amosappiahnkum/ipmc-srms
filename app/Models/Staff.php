@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\StaffType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Instructor extends Model
+class Staff extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -15,12 +17,20 @@ class Instructor extends Model
         'last_name',
         'other_name',
         'phone_number',
-        'email',
-        'specialization',
+        'type',
+    ];
+
+    protected $casts = [
+        'type' => StaffType::class
     ];
 
     public function getNameAttribute(): string
     {
         return $this->first_name . " " . $this->other_name . " " . $this->last_name;
+    }
+
+    public function user(): MorphOne
+    {
+        return $this->morphOne(User::class,'userable');
     }
 }

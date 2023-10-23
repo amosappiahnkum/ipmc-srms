@@ -1,14 +1,14 @@
-import { Button, Col, Row, Space } from 'antd'
+import {Button, Col, Row, Space} from 'antd'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
-import { FiPlus } from 'react-icons/fi'
-import { connect } from 'react-redux'
-import { Outlet } from 'react-router'
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react'
+import {FiPlus} from 'react-icons/fi'
+import {connect} from 'react-redux'
+import {Outlet} from 'react-router'
+import {Link} from 'react-router-dom'
 import TlaAddNew from '../../commons/tla-add-new'
 import PageCrumbs from "./page-crumbs";
 
-function PageWrapper () {
+function PageWrapper() {
     const [pageInfo, setPageInfo] = useState({});
     const [extra, setExtra] = useState(<></>);
 
@@ -17,7 +17,7 @@ function PageWrapper () {
             <Col span={12}>
                 <Space>
                     {/*<Button icon={<FiArrowLeft/>}>Go Back</Button>*/}
-                    <h3 className="text-title" style={{ fontSize: 18, paddingTop: 5 }}>{pageInfo.title}</h3>
+                    <h3 className="text-title" style={{fontSize: 18, paddingTop: 5}}>{pageInfo.title}</h3>
                 </Space>
             </Col>
             <Col span={12} className={'flex justify-end'}>
@@ -27,10 +27,12 @@ function PageWrapper () {
                         {
                             !pageInfo.modalLink ?
                                 <TlaAddNew link={pageInfo.addLink} data={pageInfo?.extraInfo}>
-                                    <Button size={'large'} className={'btn tla-btn-primary'} icon={<FiPlus/>}>&nbsp;Add {pageInfo.buttonText ?? pageInfo.title}</Button>
+                                    <Button size={'large'} className={'btn tla-btn-primary'}
+                                            icon={<FiPlus/>}>&nbsp;Add {pageInfo.buttonText ?? pageInfo.title}</Button>
                                 </TlaAddNew> :
                                 <Link to={pageInfo.addLink}>
-                                    <Button size={'large'} className={'btn tla-btn-primary'} icon={<FiPlus/>}>&nbsp;Add {pageInfo.buttonText ?? pageInfo.title}</Button>
+                                    <Button size={'large'} className={'btn tla-btn-primary'}
+                                            icon={<FiPlus/>}>&nbsp;Add {pageInfo.buttonText ?? pageInfo.title}</Button>
                                 </Link>
                         }
 
@@ -40,21 +42,19 @@ function PageWrapper () {
         </Row>
     )
     return (
-        <div>
-            <div>
-                <PageCrumbs/>
-                <div className={'m-2'}>
-                    {/*{PageTitle}*/}
-                    <div align={'middle'} className={'flex justify-between'}>
-                        <div>
-                            {extra}
-                        </div>
-                        <div>
-                            {/*<TlaSearch/>*/}
-                        </div>
+        <div className={'bg-white rounded-lg'}>
+            <PageCrumbs/>
+            <div className={'m-2'}>
+                {/*{PageTitle}*/}
+                <div align={'middle'} className={'flex justify-between'}>
+                    <div>
+                        {extra}
                     </div>
-                    <Outlet context={{setPageInfo, setExtra }}/>
+                    <div>
+                        {/*<TlaSearch/>*/}
+                    </div>
                 </div>
+                <Outlet context={{setPageInfo, setExtra}}/>
             </div>
         </div>
     )

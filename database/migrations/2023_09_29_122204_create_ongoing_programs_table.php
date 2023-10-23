@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Instructor;
+use App\Models\Staff;
 use App\Models\Program;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('ongoing_programs', static function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Program::class);
-            $table->foreignIdFor(Instructor::class)->nullable();
+            $table->foreignIdFor(Staff::class)->nullable();
             $table->time('batch_time');
             $table->date('start_date');
             $table->date('end_date');

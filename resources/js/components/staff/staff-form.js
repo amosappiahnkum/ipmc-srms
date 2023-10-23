@@ -1,13 +1,13 @@
-import {Col, Form, Input, Row} from 'antd'
+import {Col, Form, Input, Row, Select} from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
 import {connect} from 'react-redux'
 import {useLocation} from "react-router-dom";
-import {handleAddInstructor, handleUpdateInstructor} from "../../actions/instructors/InstructorAction";
+import {handleAddStaff, handleUpdateStaff} from "../../actions/staff/StaffAction";
 import TlaFormWrapper from "../../commons/tla-form-wrapper";
 
-function InstructorForm(props) {
-    const {addInstructor, updateInstructor} = props
+function StaffForm(props) {
+    const {addStaff, updateStaff} = props
 
     const {state} = useLocation()
 
@@ -15,19 +15,19 @@ function InstructorForm(props) {
         id: 0,
         other_name: '',
         email: '',
-        specialization: '',
+        type: 'instructor',
         ...state.data
     }
 
     return (
         <TlaFormWrapper
-            submitText={'Save Instructor'}
+            submitText={'Save Staff'}
             file={null} width={600}
             initialValues={formValues}
-            onSubmit={formValues.id === 0 ? addInstructor : updateInstructor}
-            formTitle={`${(formValues.id === 0 ? "New" : "Edit")} Instructor`}>
+            onSubmit={formValues.id === 0 ? addStaff : updateStaff}
+            formTitle={`${(formValues.id === 0 ? "New" : "Edit")} Staff`}>
             <Row gutter={10}>
-                <Col span={24} xs={24} md={8}>
+                <Col span={24} xs={24} md={12}>
                     <Form.Item name="first_name" label="First Name"
                                rules={[
                                    {
@@ -38,7 +38,7 @@ function InstructorForm(props) {
                         <Input size={'large'}/>
                     </Form.Item>
                 </Col>
-                <Col span={24} xs={24} md={8}>
+                <Col span={24} xs={24} md={12}>
                     <Form.Item name="last_name" label="Last Name"
                                rules={[
                                    {
@@ -49,7 +49,7 @@ function InstructorForm(props) {
                         <Input size={'large'}/>
                     </Form.Item>
                 </Col>
-                <Col span={24} xs={24} md={8}>
+                <Col span={24} xs={24} md={12}>
                     <Form.Item name="other_name" label="Other Name">
                         <Input size={'large'}/>
                     </Form.Item>
@@ -76,9 +76,20 @@ function InstructorForm(props) {
                         <Input size={'large'}/>
                     </Form.Item>
                 </Col>
-                <Col span={24} xs={24} md={24}>
-                    <Form.Item name="specialization" label="specialization">
-                        <Input.TextArea rows={2} size={'large'}/>
+                <Col span={24} xs={24} md={12}>
+                    <Form.Item rules={[
+                        {
+                            required: true,
+                            message: 'Required'
+                        }
+                    ]} name="type" label="Staff Role">
+                        <Select size={'large'} showSearch>
+                            <Select.Option value={'instructor'}>Instructor</Select.Option>
+                            <Select.Option value={'administrator'}>Administrator</Select.Option>
+                            {/*<Select.Option value={'assistant-administrator'}>Assistant Administrator</Select.Option>*/}
+                            <Select.Option value={'counselor'}>Counselor</Select.Option>
+                            <Select.Option value={'cashier'}>Cashier</Select.Option>
+                        </Select>
                     </Form.Item>
                 </Col>
                 <Form.Item
@@ -96,14 +107,14 @@ function InstructorForm(props) {
     )
 }
 
-InstructorForm.propTypes = {
-    addInstructor: PropTypes.func.isRequired,
-    updateInstructor: PropTypes.func.isRequired
+StaffForm.propTypes = {
+    addStaff: PropTypes.func.isRequired,
+    updateStaff: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addInstructor: (payload) => dispatch(handleAddInstructor(payload)),
-    updateInstructor: (payload) => dispatch(handleUpdateInstructor(payload)),
+    addStaff: (payload) => dispatch(handleAddStaff(payload)),
+    updateStaff: (payload) => dispatch(handleUpdateStaff(payload)),
 })
 
-export default connect(null, mapDispatchToProps)(InstructorForm)
+export default connect(null, mapDispatchToProps)(StaffForm)

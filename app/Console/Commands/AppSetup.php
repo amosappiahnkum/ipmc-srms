@@ -35,7 +35,8 @@ class AppSetup extends Command
 
             Artisan::call('migrate:fresh');
             Artisan::call('db:seed');
-            Artisan::call('import:excel');
+            Artisan::call('import:programs');
+            Artisan::call('import:modules');
             Artisan::call('update:holidays');
 
             $this->output->success('Setup Complete');

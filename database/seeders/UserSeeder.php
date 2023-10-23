@@ -15,33 +15,20 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::updateOrcreate(
-            ['username' => 'israelnkum'],
+        User::updateOrcreate(['username' => 'israelnkum'],
             [
-                'first_name' => 'Israel',
-                'last_name' => 'Nkum',
                 'username' => 'israelnkum',
                 'email' => 'israelnkum@gmail.com',
-                'password' => Hash::make(1),
-                'phone_number' => '0249051415'
+                'password' => Hash::make(1)
             ]
         );
 
-        User::updateOrcreate(
-            ['username' => 'takoradi'],
+        User::updateOrcreate(['username' => 'takoradi.admin'],
             [
-                'first_name' => 'Takoradi',
-                'last_name' => 'Admin',
                 'username' => 'takoradi.admin',
                 'email' => 'takoradi@ipmcghana.com',
-                'password' => Hash::make(11111111),
-                'phone_number' => '00000000'
+                'password' => Hash::make(11111111)
             ]
         );
-
-//
-//        $role = Role::firstOrCreate(['name' => 'Admin'])->first();
-//
-//        $user->roles()->attach($role->id);
     }
 }

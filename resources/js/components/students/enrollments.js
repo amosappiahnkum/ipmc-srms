@@ -10,7 +10,7 @@ function Enrollments() {
             <Table.Column title="Program Detail" render={(_, { ongoing_program }) => (
                 <Space direction={'vertical'} size={1}>
                     <p><b>Name:</b> {ongoing_program.program}</p>
-                    <p><b>Instructor:</b>{ongoing_program.instructor}</p>
+                    <p><b>Instructor:</b>{ongoing_program.staff}</p>
                     <p><b>Batch Time:</b> {ongoing_program.batch_time}</p>
                     <p><b>Start Date:</b>{ongoing_program.start_date}</p>
                     <p><b>End Date:</b> {ongoing_program.end_date}</p>

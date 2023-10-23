@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 use JsonException;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -30,7 +31,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
                 foreach ($permission->permissions as $item) {
                     $rolePermission = Permission::firstOrCreate([
-//                        'name' => $item . '-' . strtolower(str_replace(' ', '-', $permission->group)),
                         'name' => $item,
                         'group' => $permission->group
                     ]);
@@ -46,15 +46,15 @@ class RolesAndPermissionsSeeder extends Seeder
         $user = User::query()->where('username', 'israelnkum')->first();
         $user?->assignRole($superAdminRole);
 
-        $perms = json_decode(file_get_contents(database_path('seed-data/permissions.json')),
-            false, 512, JSON_THROW_ON_ERROR);
-        foreach ($perms as $permission) {
-            foreach ($permission->permissions as $item) {
-                Permission::firstOrCreate([
-                    'name' => $item,
-                    'group' => $permission->group
-                ]);
-            }
-        }
+//        $perms = json_decode(file_get_contents(database_path('seed-data/permissions.json')),
+//            false, 512, JSON_THROW_ON_ERROR);
+//        foreach ($perms as $permission) {
+//            foreach ($permission->permissions as $item) {
+//                Permission::firstOrCreate([
+//                    'name' => $item,
+//                    'group' => $permission->group
+//                ]);
+//            }
+//        }
     }
 }

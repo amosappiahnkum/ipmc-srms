@@ -6,7 +6,7 @@ import Chart from 'react-apexcharts'
 import {Card, Col, Row} from "antd";
 import EnrollmentByMonth from "./enrollment-by-month";
 
-function EnrollmentChart({getEnrollmentChart}) {
+function EnrollmentChart({getEnrollmentChart, roles}) {
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         getEnrollmentChart().then(() => {
@@ -54,20 +54,30 @@ function EnrollmentChart({getEnrollmentChart}) {
     return (
         loading === false &&
         <Row gutter={[10, 10]}>
-            <Col span={12} xs={24} md={12}>
-                <Card title={'Enrollment by Program'} loading={loading}>
-                    <Chart options={data?.options} series={data?.series} type="bar" height={350}/>
-                </Card>
-            </Col>
-            <Col span={12} xs={24} md={12}>
-                <EnrollmentByMonth/>
-            </Col>
+            {
+                (
+                    roles.includes('administrator') ||
+                    roles.includes('super-admin') ||
+                    roles.includes('counselor')
+                ) &&
+                <>
+                    <Col span={12} xs={24} md={12}>
+                        <Card title={'Enrollment by Program'} loading={loading}>
+                            <Chart options={data?.options} series={data?.series} type="bar" height={350}/>
+                        </Card>
+                    </Col>
+                    <Col span={12} xs={24} md={12}>
+                        <EnrollmentByMonth/>
+                    </Col>
+                </>
+            }
         </Row>
     )
 }
 
 EnrollmentChart.propTypes = {
     getEnrollmentChart: PropTypes.func,
+    roles: PropTypes.array,
 }
 
 const mapDispatchToProps = (dispatch) => ({

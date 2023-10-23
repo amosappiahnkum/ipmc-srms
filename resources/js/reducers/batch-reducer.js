@@ -9,7 +9,7 @@ const initialState = {
     allBatches: [],
     filter: {
         program_id: 'all',
-        instructor_id: 'all',
+        staff_id: 'all',
         start_date: null,
         end_date: null
     }

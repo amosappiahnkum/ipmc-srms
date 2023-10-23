@@ -34,9 +34,9 @@ class OngoingProgramController extends Controller
                 return $q->where('program_id', $request->program_id);
             });
 
-        $ongoingProgramsQuery->when($request->has('instructor_id') &&
-            $request->instructor_id !== 'all', function ($q) use ($request) {
-            return $q->where('instructor_id', $request->instructor_id);
+        $ongoingProgramsQuery->when($request->has('staff_id') &&
+            $request->staff_id !== 'all', function ($q) use ($request) {
+            return $q->where('staff_id', $request->staff_id);
         });
 
         $ongoingProgramsQuery->when($request->has('start_date') &&
@@ -72,16 +72,16 @@ class OngoingProgramController extends Controller
         $time = Carbon::parse($request->batch_time)->format('H:i');
         $endDate = Carbon::parse($request->end_date)->format('Y-m-d');
 //        $check = OngoingProgram::query()
-//            ->where('instructor_id', $request->instructor_id)
+//            ->where('staff_id', $request->staff_id)
 //            ->whereDate('end_date', '>', $endDate)
 //            ->where('batch_time', $time)->count();
 
-        Log::info('instructor_id', [$request->instructor_id]);
+        Log::info('staff_id', [$request->staff_id]);
         DB::beginTransaction();
         try {
             $request['user_id'] = Auth::id();
             $request['batch_time'] = $time;
-            $request['instructor_id'] = $request->instructor_id == "null" ? null : $request->instructor_id;
+            $request['staff_id'] = $request->staff_id == "null" ? null : $request->staff_id;
             $request['start_date'] = Carbon::parse($request->start_date)->format('Y-m-d');
             $request['end_date'] = $endDate;
 
@@ -136,6 +136,12 @@ class OngoingProgramController extends Controller
     public function printAttendance(Request $request)
     {
         $ongoingProgram = OngoingProgram::find($request->batch_id);
+
+        if ($ongoingProgram->enrollments->count() == 0) {
+            return response()->json([
+                'message' => 'There is no student in this batch'
+            ], 400);
+        }
         $addWeekends = $request->type == 'both';
         $weekendOnly = $request->type == 'weekends';
         $weekdaysOnly = $request->type == 'weekdays';
@@ -205,8 +211,13 @@ class OngoingProgramController extends Controller
     /**
      * @return JsonResponse
      */
-    public function getAllBatches(): JsonResponse
+    public function getAllBatches(Request $request): JsonResponse
     {
-        return response()->json(OngoingProgramResource::collection(OngoingProgram::all()));
+        $ongoingProgramsQuery = OngoingProgram::query();
+        $ongoingProgramsQuery->when($request->has('staff_id')
+            && $request->staff_id !== '', function ($q) use ($request) {
+                return $q->where('staff_id', $request->staff_id);
+            });
+        return response()->json(OngoingProgramResource::collection($ongoingProgramsQuery->get()));
     }
 }

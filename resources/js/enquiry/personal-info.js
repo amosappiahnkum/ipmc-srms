@@ -104,7 +104,7 @@ function PersonalInfo() {
                 </Form.Item>
             </Col>
             <Col span={16} xs={24} md={16}>
-                <Form.Item name="education_qualifications" label="Educational Qualifications">
+                <Form.Item name="education_qualifications" label="Educational Qualifications (You can select multiple)">
                     <Select maxTagCount={'responsive'} mode={'multiple'} size={'large'} showSearch>
                         {
                             educationalQualifications.map((type) => (

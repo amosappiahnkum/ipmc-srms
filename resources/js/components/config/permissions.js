@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { Button, Checkbox, Col, Drawer, message, Row, Spin, Tag, Typography } from 'antd'
-import { connect } from 'react-redux'
+import React, {useState} from 'react'
+import {Button, Checkbox, Col, Drawer, message, Spin, Tag, Typography} from 'antd'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import { handleAssignPermissions, handleGetAllPermissions } from "../../actions/commons/CommonAction";
+import {handleAssignPermissions, handleGetAllPermissions} from "../../actions/commons/CommonAction";
 
-const Permissions = ({staffPermissions, getAllPermissions, assignPermission, permissions, employeeId}) => {
+const Permissions = ({staffPermissions, getAllPermissions, assignPermission, permissions, staffId}) => {
     const [loading, setLoading] = useState(false)
     const [visible, setVisible] = useState(false)
 
@@ -28,7 +28,7 @@ const Permissions = ({staffPermissions, getAllPermissions, assignPermission, per
     const showDrawer = () => {
         setLoading(true)
         setVisible(true)
-        getAllPermissions(employeeId).then(() => {
+        getAllPermissions(staffId).then(() => {
             setLoading(false)
         })
     }
@@ -40,7 +40,7 @@ const Permissions = ({staffPermissions, getAllPermissions, assignPermission, per
         setLoading(true)
         const data = {
             permissions: checkedList,
-            employeeId: employeeId
+            staffId: staffId
         }
         assignPermission(data).then(() => {
             setLoading(false)
@@ -61,14 +61,15 @@ const Permissions = ({staffPermissions, getAllPermissions, assignPermission, per
                 onClose={ onClose }
                 open={ visible }
                 extra={ [
-                    <Checkbox key={ 'check-all' } indeterminate={ indeterminate } onChange={ onCheckAllChange }
-                              checked={ checkAll }>
-                        Check all
-                    </Checkbox>,
-                    <Button key={ 'save' } disabled={ checkedList.length === 0 && staffPermissions.length === 0 }
-                            type={ 'primary' } onClick={ savePermissions }>Save</Button>
-                ] }
-            >
+                   <div key={'action'} className={'flex items-center gap-2'}>
+                       <Checkbox key={ 'check-all' } indeterminate={ indeterminate } onChange={ onCheckAllChange }
+                                 checked={ checkAll }>
+                           Check all
+                       </Checkbox>
+                       <Button key={ 'save' } disabled={ checkedList.length === 0 && staffPermissions.length === 0 }
+                               type={ 'primary' } onClick={ savePermissions }>Save</Button>
+                   </div>
+                ] }>
 
                 <Checkbox.Group value={ checkedList } onChange={ onChange }>
                     <div className={'flex flex-wrap flex-col md:flex-row gap-2'}>
@@ -79,7 +80,7 @@ const Permissions = ({staffPermissions, getAllPermissions, assignPermission, per
                                     {
                                         permissions[option].map((opt) => {
                                             return <Col key={ opt.id } span={ 24 }>
-                                                <Checkbox value={ opt.id }>{ opt.name.replaceAll('-', ' ') }</Checkbox>
+                                                <Checkbox value={ opt.id } className={'capitalize'}>{ opt.name.replaceAll('-', ' ') }</Checkbox>
                                             </Col>
                                         })
                                     }
@@ -94,7 +95,7 @@ const Permissions = ({staffPermissions, getAllPermissions, assignPermission, per
 }
 
 Permissions.propTypes = {
-    employeeId: PropTypes.number.isRequired,
+    staffId: PropTypes.number.isRequired,
     staffPermissions: PropTypes.array.isRequired,
     permissions: PropTypes.object.isRequired,
     assignPermission: PropTypes.func.isRequired,
@@ -109,7 +110,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getAllPermissions: (employeeId) => dispatch(handleGetAllPermissions(employeeId)),
+        getAllPermissions: (staffId) => dispatch(handleGetAllPermissions(staffId)),
         assignPermission: (data) => dispatch(handleAssignPermissions(data))
     }
 }

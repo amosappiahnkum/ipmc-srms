@@ -4,7 +4,7 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class InstructorExport implements FromCollection
+class StaffExport implements FromCollection
 {
     /**
     * @return \Illuminate\Support\Collection

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Instructor;
+use App\Models\Staff;
 use Illuminate\Database\Seeder;
 
 class InstructorSeeder extends Seeder
@@ -12,6 +12,6 @@ class InstructorSeeder extends Seeder
      */
     public function run(): void
     {
-        Instructor::factory()->count(20)->create();
+        Staff::factory()->count(20)->create();
     }
 }

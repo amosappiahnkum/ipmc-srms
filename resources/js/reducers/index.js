@@ -5,7 +5,7 @@ import programReducer from './program-reducer'
 import userReducer from './UserReducer'
 import commonReducer from "./common-reducer";
 import studentReducer from "./student-reducer";
-import instructorReducer from "./instructor-reducer";
+import staffReducer from "./staff-reducer";
 import batchReducer from "./batch-reducer";
 import enquiryReducer from "./enquiry-reducer";
 
@@ -17,7 +17,7 @@ const persistConfig = {
         'userReducer',
         'commonReducer',
         'studentReducer',
-        'instructorReducer',
+        'staffReducer',
         'batchReducer',
         'enquiryReducer'
     ]
@@ -28,7 +28,7 @@ const rootReducer = combineReducers({
     userReducer,
     commonReducer,
     studentReducer,
-    instructorReducer,
+    staffReducer,
     batchReducer,
     enquiryReducer
 })

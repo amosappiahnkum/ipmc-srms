@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Instructor;
+use App\Models\Staff;
 use App\Models\Program;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +20,7 @@ class OngoingProgramFactory extends Factory
     {
         return [
             'program_id' => Program::query()->inRandomOrder()->first()->id,
-            'instructor_id' => Instructor::query()->inRandomOrder()->first()->id,
+            'staff_id' => Staff::query()->inRandomOrder()->first()->id,
             'batch_time' => $this->faker->time(),
             'start_date' => $this->faker->date,
             'end_date' => $this->faker->date,

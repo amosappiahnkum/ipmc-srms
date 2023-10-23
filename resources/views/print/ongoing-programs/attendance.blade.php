@@ -46,7 +46,7 @@
     <div style="text-align: center; margin-bottom: 5px;">
         <b>Start Date:</b> {{ $data['batch']->start_date }} |
         <b>Batch Time:</b> {{ \Carbon\Carbon::parse($data['batch']->batch_time)->format('h:i a') }} |
-        <b>Lecturer:</b> {{ $data['batch']->instructor?->name }}
+        <b>Lecturer:</b> {{ $data['batch']->staff?->name }}
     </div>
     <div style="text-align: center; text-transform: uppercase">
         <p>{{$data['batch']->program->allPrograms->name}} | {{$data['month']->format('F, Y')}}</p>

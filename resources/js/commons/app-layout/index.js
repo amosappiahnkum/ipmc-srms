@@ -59,7 +59,7 @@ AppLayout.propTypes = {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    getRoles: () => dispatch(getActiveRoles('21993de6-123a-54c68c0b')),
+    getRoles: () => dispatch(getActiveRoles('21993de6')),
     getCommonData: () => dispatch(handleGetCommonData()),
 })
 

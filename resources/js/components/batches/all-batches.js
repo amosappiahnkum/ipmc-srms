@@ -1,22 +1,29 @@
 import {Table} from 'antd'
 import PropTypes from 'prop-types'
 import React, {useEffect, useState} from 'react'
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {useOutletContext} from 'react-router'
 import {handleGetAllBatches} from "../../actions/batches/BatchAction";
 import TlaTableWrapper from "../../commons/table/tla-table-wrapper";
 import BatchActions from "./batch-actions";
+import {useLocation} from "react-router-dom";
 
 const {Column} = Table
 
 function AllBatches(props) {
     const {getBatches, batches, filter} = props
+    const { pathname } = useLocation()
+    const loggedInUser = useSelector(state => state.userReducer.loggedInUser)
     const {data, meta} = batches
     const [loading, setLoading] = useState(true)
     const {setPageInfo} = useOutletContext();
     useEffect(() => {
-        setPageInfo({title: 'Get Batches', addLink: '/batches/form', buttonText: 'Batches'})
+        setPageInfo({title: 'Batches', addLink: '/batches/form', buttonText: 'Batches'})
 
+        if (pathname === '/my-batches') {
+            filter.staff_id = loggedInUser.staff_id
+        }
+        filter.program_id  = 'all'
         getBatches(new URLSearchParams(filter)).then(() => {
             setLoading(false)
         })
@@ -31,7 +38,7 @@ function AllBatches(props) {
                 callbackFunction={getBatches}
                 data={data} meta={meta}>
                 <Column title="Program" dataIndex={'program'}/>
-                <Column title="instructor" dataIndex={'instructor'}/>
+                <Column title="instructor" dataIndex={'staff'}/>
                 <Column title="start time" dataIndex={'batch_time'}/>
                 <Column title="start date" dataIndex={'start_date'}/>
                 <Column title="end date" dataIndex={'end_date'}/>

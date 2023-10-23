@@ -1,9 +1,9 @@
 import { Types } from './Types'
 
 
-export const getInstructors = (payload) => {
+export const getStaffs = (payload) => {
     return {
-        type: Types.GET_INSTRUCTORS,
+        type: Types.GET_STAFFS,
         payload: payload
     }
 }
@@ -15,37 +15,37 @@ export const applySearch = (payload) => {
     }
 }
 
-export const getInstructor = (payload) => {
+export const getStaff = (payload) => {
     return {
-        type: Types.GET_INSTRUCTOR,
+        type: Types.GET_STAFF,
         payload: payload
     }
 }
 
-export const addInstructor = (payload) => {
+export const addStaff = (payload) => {
     return {
-        type: Types.ADD_INSTRUCTOR,
+        type: Types.ADD_STAFF,
         payload: payload
     }
 }
 
-export const removeInstructor = (id) => {
+export const removeStaff = (id) => {
     return {
-        type: Types.REMOVE_INSTRUCTOR,
+        type: Types.REMOVE_STAFF,
         id: id
     }
 }
 
-export const updateInstructor = (payload) => {
+export const updateStaff = (payload) => {
     return {
-        type: Types.UPDATE_INSTRUCTOR,
+        type: Types.UPDATE_STAFF,
         payload: payload
     }
 }
 
 export const addFilter = (payload) => {
     return {
-        type: Types.ADD_INSTRUCTOR_FILTER,
+        type: Types.ADD_STAFF_FILTER,
         payload: payload
     }
 }

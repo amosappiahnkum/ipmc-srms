@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\InstructorExport;
-use App\Http\Resources\InstructorResource;
-use App\Models\Instructor;
+use App\Exports\StaffExport;
+use App\Helpers\Helper;
+use App\Http\Resources\StaffResource;
+use App\Models\Staff;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Permission\Models\Role;
 
-class InstructorController extends Controller
+class StaffController extends Controller
 {
 
     /**
@@ -21,18 +24,18 @@ class InstructorController extends Controller
      */
     public function index(Request $request)
     {
-        $instructorsQuery = Instructor::query();
-        $instructorsQuery->when($request->has('department_id') &&
+        $staffQuery = Staff::query();
+        $staffQuery->when($request->has('department_id') &&
             $request->department_id !== 'all', function ($q) use ($request) {
             return $q->where('department_id', $request->department_id);
         });
 
-        $instructorsQuery->when($request->has('rank_id') &&
+        $staffQuery->when($request->has('rank_id') &&
             $request->rank_id !== 'all', function ($q) use ($request) {
             return $q->where('rank_id', $request->rank_id);
         });
 
-        $instructorsQuery->when($request->has('job_category_id') &&
+        $staffQuery->when($request->has('job_category_id') &&
             $request->job_category_id !== 'all', function ($q) use ($request) {
             return $q->whereRelation('jobDetail', static function ($jQuery) use ($request) {
                 return $jQuery->where('job_category_id', $request->job_category_id);
@@ -41,32 +44,42 @@ class InstructorController extends Controller
 
 
         if ($request->has('export') && $request->export === 'true') {
-            return Excel::download(new InstructorExport(InstructorResource::collection($instructorsQuery->get())),
+            return Excel::download(new StaffExport(StaffResource::collection($staffQuery->get())),
                 'Expenses.xlsx');
         }
 
         if ($request->has('print') && $request->print === 'true') {
-            return $this->pdf('print.instructors.all', InstructorResource::collection($instructorsQuery->get()), 'Expenses',
+            return $this->pdf('print.staff.all', StaffResource::collection($staffQuery->get()), 'Expenses',
                 'landscape');
         }
 
-        return InstructorResource::collection($instructorsQuery->paginate(10));
+        return StaffResource::collection($staffQuery->paginate(10));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse|InstructorResource
+    public function store(Request $request): JsonResponse|StaffResource
     {
         DB::beginTransaction();
         try {
-            $request['user_id'] = Auth::id();
-            $instructor = Instructor::create($request->all());
+            $staff = Staff::create($request->all());
+
+            $userName = Helper::createUserName($request->first_name, $request->last_name);
+            $user = $staff->user()->create([
+                'username' => $userName,
+                'email' => $request->email,
+                'password' => Hash::make($userName),
+            ]);
+
+            $role = Role::query()->where('name', $request->type)->first();
+            $user->roles()->syncWithoutDetaching($role?->id);
+
             DB::commit();
-            return new InstructorResource($instructor);
+            return new StaffResource($staff);
         } catch (Exception $exception) {
             DB::rollBack();
-            Log::error('Add Instructor Error', [$exception]);
+            Log::error('Add Staff Error', [$exception]);
 
             return response()->json([
                 'message' => 'Something went wrong'
@@ -76,20 +89,21 @@ class InstructorController extends Controller
 
     /**
      * @param Request $request
-     * @param Instructor $instructor
-     * @return InstructorResource|JsonResponse
+     * @param Staff $staff
+     * @return StaffResource|JsonResponse
      */
-    public function update(Request $request, Instructor $instructor): InstructorResource|JsonResponse
+    public function update(Request $request, Staff $staff): StaffResource|JsonResponse
     {
         DB::beginTransaction();
         try {
-            $request['user_id'] = Auth::id();
-            $instructor->update($request->all());
+            $staff->update($request->all());
+
+           $staff->user()->update(['email' => $request->email]);
             DB::commit();
-            return new InstructorResource($instructor);
+            return new StaffResource($staff);
         } catch (Exception $exception) {
             DB::rollBack();
-            Log::error('Add Instructor Error', [$exception]);
+            Log::error('Add Staff Error', [$exception]);
 
             return response()->json([
                 'message' => 'Something went wrong'
@@ -100,7 +114,7 @@ class InstructorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Instructor $instructor)
+    public function destroy(Staff $staff)
     {
         //
     }

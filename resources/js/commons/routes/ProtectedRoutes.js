@@ -7,7 +7,7 @@ import PageWrapper from "../../components/admin/page-wrapper";
 import AllStudents from "../../components/students/all-students";
 import {ModalRoutes} from "./ModalRoutes";
 import AllPrograms from "../../components/programs/all-programs";
-import AllInstructors from "../../components/instructors/all-instructors";
+import AllStaff from "../../components/staff/all-staff";
 import AllBatches from "../../components/batches/all-batches";
 import Dashboard from "../../components/dashboard";
 import AllEnquires from "../../enquiry/all-enquires";
@@ -27,8 +27,9 @@ const ProtectedRoutes = () => {
                     <Route path='enquires' element={<AllEnquires/>}/>
                     <Route path='students' element={<AllStudents/>}/>
                     <Route path='programs' element={<AllPrograms/>}/>
-                    <Route path='instructors' element={<AllInstructors/>}/>
+                    <Route path='staff' element={<AllStaff/>}/>
                     <Route path='batches' element={<AllBatches/>}/>
+                    <Route path='my-batches' element={<AllBatches/>}/>
                 </Route>
                 <Route exact>
                     <>not found</>

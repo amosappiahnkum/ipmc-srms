@@ -10,7 +10,9 @@ export const SidebarMenus = [
         title: 'Enquiries',
         link: '/enquires',
         children: [],
-        permissions: [],
+        permissions: [
+            'view-enquiry'
+        ],
         icon: 'enquiries'
     },
     {
@@ -18,72 +20,79 @@ export const SidebarMenus = [
         link: '#',
         children: [
             {
-                permission: '',
+                permission: 'add-student',
                 modal: true,
                 title: 'Add Student',
                 link: '/students/form',
             },
             {
-                permission: '',
+                permission: 'view-student',
                 modal: false,
                 title: 'All Students',
                 link: '/students',
             }
         ],
-        permissions: [],
+        permissions: ['add-student', 'view-student'],
         icon: 'students'
     },
     {
-        title: 'Instructors',
+        title: 'Staff',
         link: '#',
         children: [
             {
-                permission: '',
+                permission: 'add-staff',
                 modal: true,
-                title: 'Add Instructor',
-                link: '/instructors/form',
+                title: 'Add Staff',
+                link: '/staff/form',
             },
             {
-                permission: '',
+                permission: 'view-staff',
                 modal: false,
-                title: 'All Instructors',
-                link: '/instructors',
+                title: 'All Staff',
+                link: '/staff',
             }
         ],
-        permissions: [],
+        permissions: ['add-staff', 'view-staff'],
         icon: 'teachers'
     },
     {
         title: 'Programs',
         link: '/programs',
         children: [],
-        permissions: [],
+        permissions: ['view-program'],
         icon: 'program'
+    },
+    {
+        title: 'My Batches',
+        link: '/my-batches',
+        children: [],
+        permissions: ['view-my-batches'],
+        icon: 'batch'
     },
     {
         title: 'Batches',
         link: '#',
         children: [
             {
-                permission: '',
+                permission: 'add-batch',
                 modal: true,
                 title: 'Add Batch',
                 link: '/batches/form',
             },
             {
-                permission: '',
+                permission: 'view-batch',
                 modal: false,
                 title: 'All Batches',
                 link: '/batches',
             },
             {
-                permission: '',
+                permission: 'generate-attendance',
                 modal: true,
                 title: 'Generate Attendance',
                 link: '/batches/generate-attendance',
             }
         ],
-        permissions: [],
+        permissions: ['add-batch', 'view-batch', 'generate-attendance'],
         icon: 'batch'
     },
     // {

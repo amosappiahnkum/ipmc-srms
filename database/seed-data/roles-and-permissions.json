@@ -1,86 +1,82 @@
 [
     {
         "roles": [
-            "hr"
+            "administrator"
         ],
-        "group": "Employee",
+        "group": "Staff",
         "permissions": [
-            "add-employee",
-            "edit-employee",
-            "delete-employee",
-            "view-employee"
+            "add-staff",
+            "edit-staff",
+            "delete-staff",
+            "view-staff"
         ]
     },
     {
         "roles": [
-            "hr"
+            "administrator",
+            "counselor"
         ],
-        "group": "Department",
+        "group": "Student",
         "permissions": [
-            "add-department",
-            "edit-department",
-            "delete-department",
-            "view-department"
+            "add-student",
+            "edit-student",
+            "delete-student",
+            "view-student",
+            "print-student",
+            "export-students",
+            "enroll-student"
         ]
     },
     {
         "roles": [
-            "hr"
+            "administrator",
+            "counselor"
         ],
-        "group": "Leave Types",
+        "group": "Enquiries",
         "permissions": [
-            "add-leave-types",
-            "edit-leave-types",
-            "delete-leave-types",
-            "view-leave-types"
+            "edit-enquiry",
+            "delete-enquiry",
+            "view-enquiry",
+            "export-enquiries"
         ]
     },
     {
         "roles": [
-            "hr"
+            "administrator"
         ],
-        "group": "Leave Management",
+        "group": "Program",
         "permissions": [
-            "move-leave",
-            "approve-leave",
-            "disapprove-leave",
-            "view-approved-leave",
-            "view-pending-leave"
+            "add-program",
+            "edit-program",
+            "delete-program",
+            "view-program"
         ]
     },
     {
         "roles": [
-            "hr"
+            "administrator",
+            "counselor"
         ],
-        "group": "Previous Positions",
+        "group": "Batch",
         "permissions": [
-            "add-previous-position",
-            "edit-previous-position",
-            "delete-previous-position",
-            "view-previous-position"
+            "add-batch",
+            "edit-batch",
+            "delete-batch",
+            "view-batch",
+            "generate-attendance"
         ]
     },
     {
         "roles": [
-            "hr"
+            "instructor",
+            "administrator",
+            "counselor"
         ],
-        "group": "Previous Ranks",
+        "group": "Batch",
         "permissions": [
-            "add-previous-rank",
-            "edit-previous-rank",
-            "delete-previous-rank",
-            "view-previous-rank"
-        ]
-    },
-    {
-        "roles": [
-            "staff"
-        ],
-        "group": "Leave Request",
-        "permissions": [
-            "request-leave",
-            "view-pending-request",
-            "view-approved-request"
+            "view-my-batches",
+            "view-batch-plan",
+            "view-batch-students"
         ]
     }
 ]

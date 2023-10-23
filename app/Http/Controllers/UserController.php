@@ -36,7 +36,7 @@ class UserController extends Controller
         })->get());
     }
 
-    public function getActiveRoles()
+    public function getActiveRoles(): JsonResponse|array
     {
         $loggedInUser = Auth::user();
 
@@ -47,11 +47,10 @@ class UserController extends Controller
         }
 
         return [
-            'user' => $loggedInUser->only(['id', 'name', 'username']),
+            'user' => new UserResource($loggedInUser),
             'roles' => $loggedInUser->getRoleNames(),
-            'permissions' => $loggedInUser->getPermissionsViaRoles()->pluck('name')->merge
-            ($loggedInUser->getDirectPermissions()->pluck('name')),
-            'employee_id' =>  null
+            'permissions' => $loggedInUser->getPermissionsViaRoles()->pluck('name')->merge($loggedInUser->getDirectPermissions()->pluck('name')),
+            'staff_id' =>  $loggedInUser->userable_id
         ];
     }
 

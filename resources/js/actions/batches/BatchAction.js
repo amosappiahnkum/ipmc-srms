@@ -1,9 +1,10 @@
-import { completeExport } from "../../utils";
+import {completeExport} from "../../utils";
 import api from '../../utils/api'
 import {
     addBatch,
     addFilter,
-    applySearch, getAllBatches,
+    applySearch,
+    getAllBatches,
     getBatch,
     getBatches,
     removeBatch,
@@ -60,7 +61,7 @@ export const handleSearchBatches = (query) => (dispatch) => {
 
 export const handleExportBatches = (params) => async () => {
     return new Promise((resolve, reject) => {
-        api().get(`/ongoing-programs?${params}`, { responseType: 'blob' })
+        api().get(`/ongoing-programs?${params}`, {responseType: 'blob'})
             .then((res) => {
                 completeExport(res.data, 'srms-ongoing-programs')
                 resolve()
@@ -80,9 +81,9 @@ export const handleGetSingleBatch = (id) => (dispatch) => {
         })
     })
 }
-export const handleGetAllBatch = () => (dispatch) => {
+export const handleGetAllBatch = (params) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        api().get('/all-batches').then((res) => {
+        api().get(`/all-batches?${params}`).then((res) => {
             dispatch(getAllBatches(res.data))
             resolve(res)
         }).catch((err) => {
@@ -127,18 +128,19 @@ export const handleDeleteBatch = (id) => (dispatch) => {
 
 export const handlePrintAttendance = (data) => async () => {
     return new Promise((resolve, reject) => {
-        api().post(`/ongoing-programs/attendance`, data,{ responseType: 'blob' })
+        api().post(`/ongoing-programs/attendance`, data, {responseType: 'blob'})
             .then((res) => {
                 completeExport(res.data, 'batch')
                 resolve()
-            }).catch((err) => {
+            }).catch(async (err) => {
+            err.response.data['message'] = JSON.parse(await err.response.data.text())?.message
             reject(err)
         })
     })
 }
 export const handlePrintBatchPlan = (data) => async () => {
     return new Promise((resolve, reject) => {
-        api().post(`/ongoing-programs/batch-plan`, data,{ responseType: 'blob' })
+        api().post(`/ongoing-programs/batch-plan`, data, {responseType: 'blob'})
             .then((res) => {
                 completeExport(res.data, 'batch-plan')
                 resolve()

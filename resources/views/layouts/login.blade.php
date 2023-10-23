@@ -55,21 +55,17 @@
         ::placeholder {
             font-family: Montserrat, sans-serif !important;
         }
-
-        .login-body {
-            border-radius: 10px;
-        }
     </style>
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
-
 </head>
-<body style="background: #ffffff">
-<div
-    style="background-image: url({{asset('/images/login.jpg')}}); background-size: cover; background-position: center center">
+<body>
+<div style="background-image: url({{asset('/images/login.jpg')}});
+    background-size: cover; background-position: center center">
     <main>
         <div class="container-fluid">
             <div class="relative">
-                <a class="btn btn-outline-dark absolute" style="top: 20px; right: 30px" href="{{ route('make-enquiry') }}" target="_blank">Make Enquiry</a>
+                <a class="btn btn-outline-dark absolute" style="top: 20px; right: 30px"
+                   href="{{ route('make-enquiry') }}" target="_blank">Make Enquiry</a>
             </div>
             <div class="row justify-content-center align-items-center " style="height: 100vh">
                 <div class="text-center position-absolute" style="top: 20px;">
@@ -90,7 +86,7 @@
                         </div>
                     @endif
                 </div>
-                <div class="col-md-4 text-center">
+                <div class="col-md-4 text-center" style="max-width: 400px">
                     <div class="login-body shadow-md p-4 bg-white">
                         <img height="auto" class="mx-auto" width="100" alt="logo" src="{{asset('images/logo.png')}}"/>
                         <div>

@@ -5,7 +5,7 @@ import {connect, useSelector} from 'react-redux'
 import {useLocation} from "react-router-dom";
 import {handleAddBatch, handleUpdateBatch} from "../../actions/batches/BatchAction";
 import TlaFormWrapper from "../../commons/tla-form-wrapper";
-import {handleGetAllInstructors} from "../../actions/instructors/InstructorAction";
+import {handleGetAllStaff} from "../../actions/staff/StaffAction";
 import dayjs from "dayjs";
 import AllProgramsFilter from "../../commons/filter/all-programs-filter";
 
@@ -15,17 +15,17 @@ function BatchForm(props) {
 
     const [endDate, setEndDate] = useState(state?.data?.end_date ? dayjs(state?.data.start_date) : null)
     const [selectedProgram, setSelectedProgram] = useState(null)
-    const {addBatch, updateBatch, getInstructors} = props
+    const {addBatch, updateBatch, getStaffs} = props
     const durationsTypes = {
         'Months': 'month',
         'Weeks': 'week'
     }
-    const instructors = useSelector((state) => state.instructorReducer.instructors.data)
+    const staffs = useSelector((state) => state.staffReducer.staffs.data)
     const [form] = Form.useForm();
 
     const formValues = {
         id: 0,
-        instructor_id: null,
+        staff_id: null,
         ...state.data,
         start_date: state?.data?.start_date ? dayjs(state?.data.start_date) : null,
         end_date: endDate,
@@ -73,16 +73,16 @@ function BatchForm(props) {
                     </Form.Item>
                 </Col>
                 <Col span={12} xs={12} md={12}>
-                    <Form.Item name="instructor_id" label="instructor">
+                    <Form.Item name="staff_id" label="Instructor">
                         <Select loading={loading} showSearch size={'large'}
                                 onFocus={() => {
-                                    if (instructors.length === 0) {
+                                    if (staffs.length === 0) {
                                         setLoading(true)
-                                        getInstructors().then(() => setLoading(false))
+                                        getStaffs().then(() => setLoading(false))
                                     }
                                 }}>
                             {
-                                instructors.map(({id, name}) => (
+                                staffs.map(({id, name}) => (
                                     <Select.Option value={id} key={id}>{name}</Select.Option>
                                 ))
                             }
@@ -138,13 +138,13 @@ function BatchForm(props) {
 BatchForm.propTypes = {
     addBatch: PropTypes.func.isRequired,
     updateBatch: PropTypes.func.isRequired,
-    getInstructors: PropTypes.func.isRequired
+    getStaffs: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = (dispatch) => ({
     addBatch: (payload) => dispatch(handleAddBatch(payload)),
     updateBatch: (payload) => dispatch(handleUpdateBatch(payload)),
-    getInstructors: (payload) => dispatch(handleGetAllInstructors(payload))
+    getStaffs: (payload) => dispatch(handleGetAllStaff(payload))
 })
 
 export default connect(null, mapDispatchToProps)(BatchForm)

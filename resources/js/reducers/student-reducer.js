@@ -11,7 +11,8 @@ const initialState = {
     student: {},
     filter: {
         program_id: 'all',
-        status: 'in-school'
+        status: 'in-school',
+        search: ''
     }
 }
 

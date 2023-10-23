@@ -37,21 +37,22 @@ function AppHeader({user, collapseButton, mobileMenu}) {
     return (
         <Affix offsetTop={1}>
             <div className={'bg-white h-[60px] px-2 md:px-5 flex items-center justify-between border-bottom'}>
-                <img className={'block md:hidden'} width={ 50 } src={ NoTextLogo } alt="IPMC"/>
+                <img className={'block md:hidden'} width={50} src={NoTextLogo} alt="IPMC"/>
                 <div className={'hidden md:block'}>
                     {collapseButton}
                 </div>
                 <div className={'block md:hidden'}>
                     {mobileMenu}
                 </div>
-                <Space size={'large'}>
+                <Space size={'large'} direction={'horizontal'}>
+                    <a className="btn btn-outline-dark btn-sm" href="/enquiry" target="_blank">Make Enquiry</a>
                     <Spin spinning={loading}>
                         <Dropdown
                             menu={{items}}>
                             <a onClick={(e) => e.preventDefault()}>
                                 <Space>
-                                    Hi {user?.name?.split(' ')[0]}
-                                    <TlaImage name={user.name} size={40} src={''}/>
+                                    Hi {user?.name?.split(' ')[0] ?? user.username}
+                                    <TlaImage name={user.name ?? user.username} size={40} src={''}/>
                                     <FiChevronDown/>
                                 </Space>
                             </a>

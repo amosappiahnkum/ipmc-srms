@@ -1,24 +1,24 @@
 import { completeExport } from "../../utils";
 import api from '../../utils/api'
 import {
-    addInstructor,
+    addStaff,
     addFilter,
     applySearch,
-    getInstructor,
-    getInstructors,
-    removeInstructor,
-    updateInstructor,
+    getStaff,
+    getStaffs,
+    removeStaff,
+    updateStaff,
 } from './ActionCreators'
 
 /**
  * Store a newly created resource in storage.
- * @param instructor
+ * @param staff
  * @returns {function(*): Promise<unknown>}
  */
-export const handleAddInstructor = (instructor) => (dispatch) => {
+export const handleAddStaff = (staff) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        api().post('/instructors', instructor).then((res) => {
-            dispatch(addInstructor(res.data))
+        api().post('/staff', staff).then((res) => {
+            dispatch(addStaff(res.data))
             resolve(res)
         }).catch((err) => {
             reject(err)
@@ -30,10 +30,10 @@ export const handleAddInstructor = (instructor) => (dispatch) => {
  * Display a listing of the resource.
  * @returns {function(*): Promise<unknown>}
  */
-export const handleGetAllInstructors = (params) => (dispatch) => {
+export const handleGetAllStaff = (params) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        api().get(`/instructors?${params}`).then((res) => {
-            dispatch(getInstructors(res.data))
+        api().get(`/staff?${params}`).then((res) => {
+            dispatch(getStaffs(res.data))
             params?.delete('page')
             params && dispatch(addFilter(Object.fromEntries(params)))
             resolve(res)
@@ -47,9 +47,9 @@ export const handleGetAllInstructors = (params) => (dispatch) => {
  * Display a listing of the resource.
  * @returns {function(*): Promise<unknown>}
  */
-export const handleSearchInstructors = (query) => (dispatch) => {
+export const handleSearchStaff = (query) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        api().get(`/instructors/search/${query}`).then((res) => {
+        api().get(`/staff/search/${query}`).then((res) => {
             dispatch(applySearch(res.data))
             resolve(res)
         }).catch((err) => {
@@ -58,11 +58,11 @@ export const handleSearchInstructors = (query) => (dispatch) => {
     })
 }
 
-export const handleExportInstructors = (params) => async () => {
+export const handleExportStaffs = (params) => async () => {
     return new Promise((resolve, reject) => {
-        api().get(`/instructors?${params}`, { responseType: 'blob' })
+        api().get(`/staff?${params}`, { responseType: 'blob' })
             .then((res) => {
-                completeExport(res.data, 'srms-instructors')
+                completeExport(res.data, 'srms-staff')
                 resolve()
             }).catch((err) => {
             reject(err)
@@ -70,10 +70,10 @@ export const handleExportInstructors = (params) => async () => {
     })
 }
 
-export const handleGetSingleInstructor = (id) => (dispatch) => {
+export const handleGetSingleStaff = (id) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        api().get(`/instructors/${id}`).then((res) => {
-            dispatch(getInstructor(res.data))
+        api().get(`/staff/${id}`).then((res) => {
+            dispatch(getStaff(res.data))
             resolve(res)
         }).catch((err) => {
             reject(err)
@@ -85,12 +85,12 @@ export const handleGetSingleInstructor = (id) => (dispatch) => {
  * @param data
  * @returns {function(*): Promise<unknown>}
  */
-export const handleUpdateInstructor = (data) => (dispatch) => {
+export const handleUpdateStaff = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        api().post(`/instructors/${data.get('id')}`, data, {
-            // headers: { 'Content-type': 'multipart/instructors-dashboard-data' }
+        api().post(`/staff/${data.get('id')}`, data, {
+            // headers: { 'Content-type': 'multipart/staff-dashboard-data' }
         }).then((res) => {
-            dispatch(updateInstructor(res.data))
+            dispatch(updateStaff(res.data))
             resolve(res)
         }).catch((err) => {
             reject(err)
@@ -103,10 +103,10 @@ export const handleUpdateInstructor = (data) => (dispatch) => {
  * @param id
  * @returns {function(*): Promise<unknown>}
  */
-export const handleDeleteInstructor = (id) => (dispatch) => {
+export const handleDeleteStaff = (id) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        api().delete(`/instructors/${id}`).then((res) => {
-            dispatch(removeInstructor(id))
+        api().delete(`/staff/${id}`).then((res) => {
+            dispatch(removeStaff(id))
             resolve(res)
         }).catch((err) => {
             reject(err)

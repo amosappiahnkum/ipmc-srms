@@ -1,11 +1,11 @@
 import React from "react";
-import { Breadcrumb, Card } from 'antd'
-import { FiHome } from 'react-icons/fi'
-import { IoIosArrowForward } from 'react-icons/io'
-import { useLocation } from 'react-router'
-import { Link } from 'react-router-dom'
-import { capitalize } from "../../utils";
-import { createGlobalStyle } from "styled-components";
+import {Breadcrumb} from 'antd'
+import {FiHome} from 'react-icons/fi'
+import {IoIosArrowForward} from 'react-icons/io'
+import {useLocation} from 'react-router'
+import {Link} from 'react-router-dom'
+import {capitalize} from "../../utils";
+import {createGlobalStyle} from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
   .ant-breadcrumb ol li {
@@ -39,10 +39,10 @@ const PageCrumbs = () => {
         })
     })
     return (
-        <Card className={'m-2'} size={'small'}>
+        <div className={'p-3'}>
             <GlobalStyles/>
             <Breadcrumb items={ items } className={ 'flex' } separator={ <IoIosArrowForward/> }/>
-        </Card>
+        </div>
     )
 };
 

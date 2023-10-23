@@ -14,7 +14,7 @@ class OngoingProgram extends Model
 
     protected $fillable = [
         'program_id',
-        'instructor_id',
+        'staff_id',
         'batch_time',
         'start_date',
         'end_date',
@@ -33,9 +33,9 @@ class OngoingProgram extends Model
     /**
      * @return BelongsTo
      */
-    public function instructor(): BelongsTo
+    public function staff(): BelongsTo
     {
-        return $this->belongsTo(Instructor::class);
+        return $this->belongsTo(Staff::class);
     }
 
     /**

@@ -2,7 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
@@ -59,5 +61,24 @@ class Helper
             'exam' => $examDate,
             'week' => $weeks
         ];
+    }
+
+    /**
+     * @param $firstName
+     * @param $lastName
+     * @return string
+     * @throws Exception
+     */
+    public static function createUserName($firstName, $lastName): string
+    {
+        $username = strtolower($firstName) . '.' . strtolower(str_replace(' ', '_', $lastName));
+
+        $checkUsername = User::query()->where('username', $username)->count();
+
+        if ($checkUsername >= 1) {
+            $username .= '_' . random_int(10, 150);
+        }
+
+        return $username;
     }
 }

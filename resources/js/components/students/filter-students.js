@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from "react-redux";
-import {Col, Row} from "antd";
+import {Button, Col, Row} from "antd";
 import FilterWrapper from "../../commons/filter/filter-wrapper";
 import {handleExportStudents, handleGetAllStudents} from "../../actions/students/StudentAction";
 import AllProgramsFilter from "../../commons/filter/all-programs-filter";
+import {FiFilter} from "react-icons/fi";
+import TlaSearch from "../../commons/search/tla-search";
 
 function FilterStudents(props) {
+    const [open, setOpen] = useState(false);
     const {submitFilter, filter, exportFilter} = props
 
     const initials = {
@@ -15,13 +18,18 @@ function FilterStudents(props) {
     }
 
     return (
-        <FilterWrapper excel initialValue={initials} submitFilter={submitFilter} exportFilter={exportFilter}>
-            <Row gutter={10}>
-                <Col span={6} xs={24} sm={24} md={6} lg={6} xl={6}>
-                    <AllProgramsFilter/>
-                </Col>
-            </Row>
-        </FilterWrapper>
+        <>
+            <FilterWrapper
+                open={open}
+                onClose={() => setOpen(false)}
+                excel initialValue={initials} submitFilter={submitFilter} exportFilter={exportFilter}>
+                <Row gutter={10}>
+                    <Col span={6}>
+                        <AllProgramsFilter/>
+                    </Col>
+                </Row>
+            </FilterWrapper>
+        </>
     )
 }
 

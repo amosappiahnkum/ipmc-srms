@@ -2,14 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\ContactDetail;
-use App\Models\Dependant;
-use App\Models\Education;
-use App\Models\EmergencyContact;
-use App\Models\Employee;
-use App\Models\JobDetail;
-use App\Models\NextOfKin;
-use App\Models\Photo;
+use App\Models\Staff;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -41,14 +34,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Relation::morphMap([
-            'Employee' => Employee::class,
-            'ContactDetail' => ContactDetail::class,
-            'NextOfKin' => NextOfKin::class,
-            'EmergencyContact' => EmergencyContact::class,
-            'Dependant' => Dependant::class,
-            'Education' => Education::class,
-            'Photo' => Photo::class,
-            'JobDetail' => JobDetail::class,
+            'Staff' => Staff::class
         ]);
     }
 }

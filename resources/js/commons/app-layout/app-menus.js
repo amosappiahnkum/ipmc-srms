@@ -7,6 +7,7 @@ import MenuHelper from "../menu-helper";
 import SideProfile from "./side-profile";
 import PropTypes from "prop-types";
 import {Certificate, Student, UsersFour}  from "@phosphor-icons/react";
+import {Divider} from "antd";
 
 function AppMenus(props) {
     const {name, collapsed, showProfile} = props
@@ -21,7 +22,7 @@ function AppMenus(props) {
                     <SideProfile collapsed={collapsed} size={collapsed ? 30 : 50} name={name}/>
                 </div>
             }
-
+            <Divider/>
             <MenuHelper icons={{
                 home: <FiHome/>,
                 pim: <FiUser/>,

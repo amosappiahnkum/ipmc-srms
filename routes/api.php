@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\OngoingProgramController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PublicPageController;
@@ -45,11 +45,16 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::get('/all-programs', [ProgramController::class, 'allPrograms']);
     Route::post('/students/{student}/enroll', [StudentController::class, 'enrollStudent']);
     Route::apiResource('/students', StudentController::class);
-    Route::apiResource('/instructors', InstructorController::class);
+    Route::apiResource('/staff', StaffController::class);
     Route::post('/ongoing-programs/attendance', [OngoingProgramController::class, 'printAttendance']);
     Route::post('/ongoing-programs/batch-plan', [OngoingProgramController::class, 'printBatchPlan']);
     Route::apiResource('/ongoing-programs', OngoingProgramController::class);
     Route::get('/all-batches', [OngoingProgramController::class, 'getAllBatches']);
+
+    Route::prefix('common')->group(function () {
+        Route::get('permissions/{id}', [HomeController::class, 'getAllPermissions']);
+        Route::post('permissions/assign', [HomeController::class, 'assignPermissions']);
+    });
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

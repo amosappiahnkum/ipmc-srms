@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasActivityLogs;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,24 +15,17 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes, HasRoles, HasActivityLogs;
 
-    protected $appends = [
-        'name'
-    ];
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
         'username',
         'email',
+        'userable',
         'password',
-        'phone_number',
-        'provider',
-        'provider_id',
-        'employee_id'
+        'is_active'
     ];
 
     /**
@@ -54,10 +48,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return BelongsTo
+     * @return MorphTo
      */
-    public function employee(): BelongsTo
+    public function userable(): MorphTo
     {
-        return $this->belongsTo(Employee::class)->withDefault(null);
+        return $this->morphTo()->withDefault([
+            'email' => $this->email,
+            'username' => $this->username
+        ]);
     }
 }

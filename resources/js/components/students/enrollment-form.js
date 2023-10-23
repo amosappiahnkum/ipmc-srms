@@ -99,7 +99,7 @@ function EnrollmentForm(props) {
                             {/*<Descriptions.Item label="Program">{selectedBatch?.program_name ?? '-'}</Descriptions.Item>*/}
                             <Descriptions.Item label="Time">{selectedBatch?.batch_time ?? '-'}</Descriptions.Item>
                             <Descriptions.Item
-                                label="Instructor">{selectedBatch?.instructor ?? '-'}</Descriptions.Item>
+                                label="Instructor">{selectedBatch?.staff ?? '-'}</Descriptions.Item>
                             <Descriptions.Item label="Start Date">{selectedBatch?.start_date ?? '-'}</Descriptions.Item>
                             <Descriptions.Item label="End Date">{selectedBatch?.end_date ?? '-'}</Descriptions.Item>
                         </Descriptions>

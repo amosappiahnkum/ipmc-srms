@@ -3,7 +3,7 @@ import {Route, Routes} from 'react-router-dom'
 import StudentForm from "../../components/students/student-form";
 import PreviewFile from "../preview-file";
 import ProgramForm from "../../components/programs/program-form";
-import InstructorForm from "../../components/instructors/instructor-form";
+import StaffForm from "../../components/staff/staff-form";
 import BatchForm from "../../components/batches/batch-form";
 import EnrollmentForm from "../../components/students/enrollment-form";
 import StudentDetail from "../../components/students/student-details";
@@ -22,7 +22,7 @@ export const ModalRoutes = () => {
             <Route exact path="batches/generate-attendance" element={<GenerateAttendanceForm/>}/>
             <Route exact path="batches/print-batch-plan" element={<GenerateBatchPlan/>}/>
             <Route exact path="programs/form" element={<ProgramForm/>}/>
-            <Route exact path="instructors/form" element={<InstructorForm/>}/>
+            <Route exact path="staff/form" element={<StaffForm/>}/>
             <Route exact path="preview/:fileName" element={<PreviewFile/>}/>
         </Routes>
     )

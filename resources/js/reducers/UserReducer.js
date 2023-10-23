@@ -71,7 +71,7 @@ export default function userReducer(state = initialState, action) {
         case Types.GET_ACTIVE_USER_ROLES:
             return {
                 ...state,
-                loggedInUser: {...action.payload.user, employee_id: action.payload.employee_id},
+                loggedInUser: action.payload.user,
                 activeRoles: action.payload.roles,
                 permissions: action.payload.permissions
             }
