@@ -22,13 +22,5 @@ class UserSeeder extends Seeder
                 'password' => Hash::make(1)
             ]
         );
-
-        User::updateOrcreate(['username' => 'takoradi.admin'],
-            [
-                'username' => 'takoradi.admin',
-                'email' => 'takoradi@ipmcghana.com',
-                'password' => Hash::make(11111111)
-            ]
-        );
     }
 }
