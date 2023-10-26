@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Branch;
 use App\Models\Sponsor;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -36,6 +37,7 @@ return new class extends Migration
             $table->string('status')->default('enquiry');
             $table->foreignIdFor(Sponsor::class);
             $table->foreignIdFor(User::class)->comment('added by')->nullable();
+            $table->foreignIdFor(Branch::class);
             $table->timestamps();
             $table->softDeletes();
         });

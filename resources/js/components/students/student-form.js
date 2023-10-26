@@ -19,6 +19,9 @@ function StudentForm(props) {
         dob: state?.data?.info_update?.new_info ? (state?.data?.info_update?.new_info.dob ? dayjs(state?.data?.info_update?.new_info.dob) : null) : (state?.data ? (state?.data.dob ? dayjs(state?.data.dob) : null) : null),
     }
 
+    const disabledDate = (current) => {
+        return current && current > dayjs().endOf('day');
+    };
     return (
         <TlaFormWrapper
             width={1000}
@@ -90,7 +93,7 @@ function StudentForm(props) {
                                         message: 'Required'
                                     }
                                 ]} name="dob" label="date of birth">
-                                    <DatePicker style={{width: '100%'}} size={'large'}/>
+                                    <DatePicker disabledDate={disabledDate} style={{width: '100%'}} size={'large'}/>
                                 </Form.Item>
                             </Col>
                             <Col span={24} xs={12} md={8}>

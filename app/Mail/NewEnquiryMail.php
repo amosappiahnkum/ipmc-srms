@@ -29,7 +29,7 @@ class NewEnquiryMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('srms@ipmcghana.com', 'IPMC Takoradi'),
+            from: new Address('srms@ipmcghana.com', 'IPMC'),
             cc: 'takoradi@ipmcghana.com',
             subject: 'New Enquiry'
         );

@@ -7,9 +7,31 @@ export const SidebarMenus = [
         icon: 'home'
     },
     {
-        title: 'Enquiries',
-        link: '/enquires',
-        children: [],
+        title: 'File',
+        link: '#',
+        children: [
+            {
+
+                permission: 'view-enquiry',
+                modal: false,
+                title: 'Enquiries',
+                link: '/enquires'
+            },
+            {
+
+                permission: 'view-registrations',
+                modal: false,
+                title: 'Registrations',
+                link: '/registrations'
+            },
+            {
+
+                permission: '',
+                modal: false,
+                title: 'Follow Ups',
+                link: '/follow-ups'
+            },
+        ],
         permissions: [
             'view-enquiry'
         ],
@@ -88,7 +110,7 @@ export const SidebarMenus = [
             {
                 permission: 'generate-attendance',
                 modal: true,
-                title: 'Generate Attendance',
+                title: 'Attendance',
                 link: '/batches/generate-attendance',
             }
         ],

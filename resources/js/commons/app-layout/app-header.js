@@ -51,7 +51,7 @@ function AppHeader({user, collapseButton, mobileMenu}) {
                             menu={{items}}>
                             <a onClick={(e) => e.preventDefault()}>
                                 <Space>
-                                    Hi {user?.name?.split(' ')[0] ?? user.username}
+                                    <span className={'hidden md:block'}>Hi {user?.name?.split(' ')[0] ?? user.username}</span>
                                     <TlaImage name={user.name ?? user.username} size={40} src={''}/>
                                     <FiChevronDown/>
                                 </Space>

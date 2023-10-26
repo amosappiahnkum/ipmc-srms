@@ -23,8 +23,7 @@
             "delete-student",
             "view-student",
             "print-student",
-            "export-students",
-            "enroll-student"
+            "export-students"
         ]
     },
     {
@@ -38,6 +37,19 @@
             "delete-enquiry",
             "view-enquiry",
             "export-enquiries"
+        ]
+    },
+    {
+        "roles": [
+            "administrator",
+            "counselor"
+        ],
+        "group": "Follow-Ups",
+        "permissions": [
+            "edit-follow-up",
+            "delete-follow-up",
+            "view-follow-up",
+            "export-follow-up"
         ]
     },
     {
@@ -68,15 +80,37 @@
     },
     {
         "roles": [
+            "instructor"
+        ],
+        "group": "Batch",
+        "permissions": [
+            "view-my-batches"
+        ]
+    },
+    {
+        "roles": [
             "instructor",
             "administrator",
             "counselor"
         ],
         "group": "Batch",
         "permissions": [
-            "view-my-batches",
             "view-batch-plan",
             "view-batch-students"
+        ]
+    },
+    {
+        "roles": [
+            "instructor",
+            "administrator",
+            "counselor"
+        ],
+        "group": "Enrollments",
+        "permissions": [
+            "view-registrations",
+            "make-registrations",
+            "edit-registrations",
+            "change-registrations-status"
         ]
     }
 ]

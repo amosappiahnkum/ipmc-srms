@@ -10,7 +10,19 @@ function TlaFormWrapper(props) {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false)
-    const {onSubmit, initialValues, formTitle, children, file, width, customForm, submitText, resourceId, raw} = props;
+    const {
+        onSubmit,
+        initialValues,
+        formTitle,
+        children,
+        file,
+        width,
+        customForm,
+        submitText,
+        resourceId,
+        raw,
+        afterSubmit
+    } = props;
 
     const submit = (values) => {
         setLoading(true)
@@ -24,12 +36,13 @@ function TlaFormWrapper(props) {
             }
         }
 
-        (resourceId ? onSubmit(raw ? values : formData, resourceId) : onSubmit(raw ? values : formData)).then(() => {
-            setLoading(false)
-            TlaSuccess();
-            customForm ? customForm.resetFields() : form.resetFields();
-            navigate(-1);
-        }).catch((error) => {
+        (resourceId ? onSubmit(raw ? values : formData, resourceId) : onSubmit(raw ? values : formData))
+            .then((res) => {
+                setLoading(false)
+                TlaSuccess();
+                customForm ? customForm.resetFields() : form.resetFields();
+                afterSubmit ? afterSubmit(res.data) : navigate(-1);
+            }).catch((error) => {
             setLoading(false)
             TlaError(error.response.data.message)
         });
@@ -70,7 +83,8 @@ TlaFormWrapper.defaultProps = {
     customForm: null,
     raw: false,
     width: 520,
-    submitText: 'Submit'
+    submitText: 'Submit',
+    afterSubmit: null
 }
 
 TlaFormWrapper.propTypes = {
@@ -84,7 +98,8 @@ TlaFormWrapper.propTypes = {
     customForm: PropTypes.any,
     submitText: PropTypes.string,
     resourceId: PropTypes.any,
-    raw: PropTypes.bool
+    raw: PropTypes.bool,
+    afterSubmit: PropTypes.func
 };
 
 export default TlaFormWrapper

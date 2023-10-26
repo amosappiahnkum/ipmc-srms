@@ -15,7 +15,7 @@ class OngoingProgramResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $time = Carbon::parse($this->batch_time)->format('h:i A');
+        $time = $this->batch_time;
         return [
             'id' => $this->id,
             'program_id' => $this->program_id,
@@ -26,9 +26,10 @@ class OngoingProgramResource extends JsonResource
             'sems' => array_filter(array_unique($this->program->modules->pluck('semester')->toArray())),
             'batch_time' => $time,
             'room' => $this->room,
+            'status' => $this->status,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'students' => $this->enrollments->count(),
+            'students' => $this->registrations->count(),
         ];
     }
 }

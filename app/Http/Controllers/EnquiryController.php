@@ -11,6 +11,7 @@ use App\Traits\UseDateRage;
 use App\Traits\UsePrint;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -33,6 +34,10 @@ class EnquiryController extends Controller
             $request->date !== 'null', function ($q) use ($request) {
             return $q->whereBetween('created_at', $this->dateRange($request->date));
         });
+
+        if(!Auth::user()->hasRole('super-admin')) {
+            $enquiryQuery->where('branch_id', Auth::user()->userable->branch_id);
+        }
 
         if ($request->has('export') && $request->export === 'true') {
             return Excel::download(new EnquiryExport($enquiryQuery->get()),

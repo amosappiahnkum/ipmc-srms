@@ -9,13 +9,22 @@ function ContactInfo() {
                     {
                         required: true,
                         message: 'Required'
+                    },
+                    {
+                        min: 10,
+                        message: 'Must be at least 10 digit'
                     }
                 ]} name="phone_number" label="Mobile No.1">
                     <Input size={'large'}/>
                 </Form.Item>
             </Col>
             <Col span={24} xs={12} md={8}>
-                <Form.Item name="alt_phone_number" label="Mobile No.2">
+                <Form.Item rules={[
+                    {
+                        min: 10,
+                        message: 'Must be at least 10 digit'
+                    }
+                ]}  name="alt_phone_number" label="Mobile No.2">
                     <Input size={'large'}/>
                 </Form.Item>
             </Col>
@@ -24,10 +33,6 @@ function ContactInfo() {
                     {
                         type: 'email',
                         message: 'Type a valid email'
-                    },
-                    {
-                        required: true,
-                        message: 'Email is required'
                     }
                 ]} name="email" label="Email">
                     <Input size={'large'}/>

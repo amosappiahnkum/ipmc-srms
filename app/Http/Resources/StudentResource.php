@@ -22,7 +22,7 @@ class StudentResource extends JsonResource
             'other_name' => $this->other_name,
             'phone_number' => $this->phone_number,
             'dob' => $this->dob,
-            'enrollments' => EnrollmentResource::collection($this->enrollments),
+            'registrations' => RegistrationResource::collection($this->registrations),
             'nationality' => $this->nationality,
             'gender' => $this->gender,
             'alt_phone_number' => $this->alt_phone_number,

@@ -7,6 +7,28 @@ export const getEnquiryPrograms = (payload) => {
         payload: payload
     }
 }
+
+export const addFeedback = (payload) => {
+    return {
+        type: Types.ADD_FEEDBACK,
+        payload: payload
+    }
+}
+
+export const updateFeedback = (payload) => {
+    return {
+        type: Types.ENQUIRY_DETAIL,
+        payload: payload
+    }
+}
+
+export const getBatches = (payload) => {
+    return {
+        type: Types.GET_BRANCHES,
+        payload: payload
+    }
+}
+
 export const submitEnquiry = (payload) => {
     return {
         type: Types.SUBMIT_ENQUIRY,

@@ -25,6 +25,8 @@ class EnquiryResource extends JsonResource
             'other_preferred_timing' => $this->other_preferred_timing,
             'heard' => $this->heard,
             'other_heard' => $this->other_heard,
+            'follow_ups' => FollowUpResource::collection($this->followUps),
+            'follow_ups_count' => $this->followUps->count(),
             'school_name' => $this->school_name,
             'evaluated_by' => $this->evaluated_by,
             'evaluation_date' => $this->evaluation_date

@@ -1,8 +1,11 @@
 import {Checkbox, Col, Form, Input, Row, Select} from 'antd'
 import React from 'react'
 import {heardAboutUs, preferredTimings} from "../utils/nationalities";
+import {useSelector} from "react-redux";
 
 function Sponsor() {
+
+    const branches = useSelector(state => state.enquiryReducer.branches)
     return (
         <div>
             <div>
@@ -19,17 +22,21 @@ function Sponsor() {
                         </Form.Item>
                     </Col>
                     <Col span={12} xs={24} md={6}>
-                        <Form.Item rules={[
-                            {
-                                required: true,
-                                message: 'Required'
-                            }
-                        ]} name="sponsor_number" label="Sponsor's Number">
+                        <Form.Item rules={[{
+                            required: true, message: 'Required'
+                        }, {
+                            min: 10, message: 'Must be at least 10 digit'
+                        }]} name="sponsor_number" label="Sponsor's Number">
                             <Input size={'large'}/>
                         </Form.Item>
                     </Col>
                     <Col span={12} xs={24} md={6}>
-                        <Form.Item name="sponsor_email" label="Sponsor's Email">
+                        <Form.Item rules={[
+                            {
+                                type: 'email',
+                                message: 'Type a valid email'
+                            }
+                        ]} name="sponsor_email" label="Sponsor's Email">
                             <Input size={'large'}/>
                         </Form.Item>
                     </Col>
@@ -49,7 +56,10 @@ function Sponsor() {
             <div className={'grid grid-cols-1 md:grid-cols-2 gap-4 mb-3'}>
                 <div className={'border rounded-lg p-3'}>
                     <h3 className={'font-bold  text-lg mb-2'}>Preferred Course Timings</h3>
-                    <Form.Item name="preferred_timings" label="">
+                    <Form.Item name="preferred_timings" rules={[{
+                        required: true,
+                        message: 'Select at least one'
+                    }]}>
                         <Checkbox.Group>
                             <div className={'grid grid-cols-3 gap-2'}>
                                 {
@@ -58,7 +68,7 @@ function Sponsor() {
                                             <div key={time} className={`p-2 rounded-lg bg-gray-${index + 1}00`}>
                                                 <div className={'flex flex-col'}>
                                                     <Checkbox
-                                                        style={{ fontSize: 12, color : (index + 1) > 4 ? '#fff': '#000'}}
+                                                        style={{fontSize: 12, color: (index + 1) > 4 ? '#fff' : '#000'}}
                                                         value={time}>
                                                         {time}
                                                     </Checkbox>
@@ -79,7 +89,12 @@ function Sponsor() {
                 </div>
                 <div className={'border rounded-lg p-3'}>
                     <h3 className={'font-bold text-lg mb-2'}>How did you hear about us</h3>
-                    <Form.Item name="heard" label="">
+                    <Form.Item
+                        name="heard" label=""
+                        rules={[{
+                            required: true,
+                            message: 'Select at least one'
+                        }]}>
                         <Checkbox.Group>
                             <div className={'grid grid-cols-3 gap-2'}>
                                 {
@@ -87,7 +102,7 @@ function Sponsor() {
                                         <div key={time} className={`p-2 rounded-lg bg-gray-${index + 1}00`}>
                                             <div className={'flex flex-col'}>
                                                 <Checkbox
-                                                    style={{ fontSize: 12, color : (index + 1) > 4 ? '#fff': '#000'}}
+                                                    style={{fontSize: 12, color: (index + 1) > 4 ? '#fff' : '#000'}}
                                                     value={time}>
                                                     {time}
                                                 </Checkbox>
@@ -99,12 +114,25 @@ function Sponsor() {
                         </Checkbox.Group>
                     </Form.Item>
 
+                    <Form.Item name="other_heard" label="Any Other (Specify)">
+                        <Input size={'large'}/>
+                    </Form.Item>
                     <div>
-                        <div>
-                            <Form.Item name="other_heard" label="Any Other (Specify)">
-                                <Input size={'large'}/>
-                            </Form.Item>
-                        </div>
+                        <h3 className={'font-bold text-lg mb-2'}>Preferred Branch</h3>
+                        <Form.Item
+                            name="branch_id"
+                            rules={[{
+                                required: true,
+                                message: 'Select a branch'
+                            }]}>
+                            <Select size={'large'} showSearch>
+                                {
+                                    branches.map(({id, name}) => (
+                                        <Select.Option key={id} value={id}>{name}</Select.Option>
+                                    ))
+                                }
+                            </Select>
+                        </Form.Item>
                     </div>
                 </div>
             </div>

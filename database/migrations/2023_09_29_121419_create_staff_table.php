@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Branch;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->string('other_name')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('type');
+            $table->foreignIdFor(Branch::class);
             $table->timestamps();
             $table->softDeletes();
         });

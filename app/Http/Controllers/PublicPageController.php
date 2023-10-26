@@ -8,6 +8,7 @@ use App\Http\Resources\OngoingProgramResource;
 use App\Http\Resources\ProgramResource;
 use App\Http\Resources\SubjectResource;
 use App\Models\AllPrograms;
+use App\Models\Branch;
 use App\Models\Holiday;
 use App\Models\OngoingProgram;
 use App\Models\Program;
@@ -41,6 +42,11 @@ class PublicPageController extends Controller
         return AllProgramsResource::collection(AllPrograms::all())->collection->groupBy('type');
     }
 
+    public function getBranches(): Collection
+    {
+        return Branch::all();
+    }
+
     public function newEnquiry(Request $request): JsonResponse|EnquiryResource
     {
         DB::beginTransaction();
@@ -72,7 +78,8 @@ class PublicPageController extends Controller
                 'id_number' => $request->id_number,
                 'education_qualifications' => $request->education_qualifications,
                 'other_qualification' => $request->other_qualification,
-                'sponsor_id' => $sponsor->id
+                'sponsor_id' => $sponsor->id,
+                'branch_id' => $request->branch_id,
             ]);
 
             $enquiry = $student->enquiry()->create([
@@ -82,6 +89,7 @@ class PublicPageController extends Controller
                 'other_preferred_timing' => $request->other_preferred_timing,
                 'heard' => $request->heard,
                 'other_heard' => $request->other_heard,
+                'branch_id' => $request->branch_id,
                 'school_name' => $request->school_name
             ]);
 

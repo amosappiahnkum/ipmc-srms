@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Branch;
 use App\Models\Program;
 use App\Models\Student;
 use App\Models\User;
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->string('school_name')->nullable();
             $table->foreignIdFor(User::class, 'evaluated_by')->nullable();
             $table->date('evaluation_date')->nullable();
+            $table->foreignIdFor(Branch::class)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -44,7 +44,12 @@ function PersonalInfo() {
                 </Form.Item>
             </Col>
             <Col span={24} xs={12} md={8}>
-                <Form.Item name="id_number" label="National ID">
+                <Form.Item rules={[
+                    {
+                        min: 10,
+                        message: 'Must be at least 10 digit'
+                    }
+                ]} name="id_number" label="National ID">
                     <Input size={'large'}/>
                 </Form.Item>
             </Col>

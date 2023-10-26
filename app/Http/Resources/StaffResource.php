@@ -24,6 +24,8 @@ class StaffResource extends JsonResource
             'email' => $this->user->email ?? '',
             'username' => $this->user->username ?? '',
             'type' => $this->type,
+            'branch' => $this->branch->name,
+            'branch_id' => $this->branch_id,
             'permissions' => $this->user?->getPermissionsViaRoles()->pluck('id')->merge
             ($this->user?->getDirectPermissions()->pluck('id'))
         ];

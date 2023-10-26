@@ -6,7 +6,7 @@ import {
     applySearch,
     getAllBatches,
     getBatch,
-    getBatches,
+    getBatches, getBatchStudents,
     removeBatch,
     updateBatch,
 } from './ActionCreators'
@@ -37,6 +37,17 @@ export const handleGetAllBatches = (params) => (dispatch) => {
             dispatch(getBatches(res.data))
             params?.delete('page')
             params && dispatch(addFilter(Object.fromEntries(params)))
+            resolve(res)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+export const handleGetBatchStudents = (batchId) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        api().get(`/ongoing-programs/${batchId}/students`).then((res) => {
+            dispatch(getBatchStudents(res.data))
             resolve(res)
         }).catch((err) => {
             reject(err)
@@ -91,6 +102,7 @@ export const handleGetAllBatch = (params) => (dispatch) => {
         })
     })
 }
+
 /**
  * Update the specified resource in storage.
  * @param data

@@ -1,7 +1,7 @@
 import {Button, Form, Spin, Steps} from 'antd'
 import dayjs from "dayjs";
 import PropTypes from 'prop-types'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {useLocation, useNavigate} from "react-router-dom";
 import PersonalInfo from "./personal-info";
@@ -10,7 +10,7 @@ import Logo from '../assets/img/logo.png'
 import Programs from "./programs";
 import Sponsor from "./sponsor";
 import ConfirmInfo from "./confirm-info";
-import {handleSubmitEnquiry} from "../actions/enquiry/EnquiryAction";
+import {handleGetEnquiryBranches, handleSubmitEnquiry} from "../actions/enquiry/EnquiryAction";
 
 
 const steps = [
@@ -42,13 +42,19 @@ const inputFields = [
     'email'
 ]
 
-function Enquiry({submitEnquiry}) {
+function Enquiry({submitEnquiry, getBranches}) {
+    const [loading, setLoading] = useState(true)
     const [openConfirm, setOpenConfirm] = useState(false)
     const [submitting, setSubmitting] = useState(false)
     const [current, setCurrent] = useState(0);
     let [formValues, setFormValues] = useState({})
     const [form] = Form.useForm();
     const navigate = useNavigate()
+
+    useEffect(() => {
+        getBranches().then(() => setLoading(false))
+    }, []);
+
     const prev = () => {
         setCurrent(current - 1);
     };
@@ -77,9 +83,9 @@ function Enquiry({submitEnquiry}) {
                 setOpenConfirm(true)
             }
         }).catch(() => {
-            // console.log(form.getFieldValue)
         });
     }
+
     return (
         <div>
             <ConfirmInfo
@@ -97,13 +103,12 @@ function Enquiry({submitEnquiry}) {
                         })
                     }).catch(() => setSubmitting(false))
                 }}/>
-            <Spin spinning={submitting}>
+            <Spin spinning={submitting || loading}>
                 <div className={'flex flex-col md:flex-row items-center justify-center'}>
                     <div
                         className={'w-full md:w-2/6 bg-gray-200 chat-list h-fit md:h-screen flex flex-col items-between justify-center pt-5 enquiry-side'}>
                         <div className={'flex justify-center flex-col items-center'}>
-                            <img height={'auto'} width={100} src={Logo} alt="IPMC Takoradi"/>
-                            <h3 className={'uppercase mt-3 text-xl'}>Takoradi</h3>
+                            <img height={'auto'} width={100} src={Logo} alt="IPMC"/>
                             <h3 className={'text-4xl mb-2 md:mb-5 mt-5 md:mt-10 font-bold'}>Enquiry Form</h3>
                             <div className={'mt:2 md:mt-8'}>
                                 <div className={'hidden md:block'}>
@@ -149,11 +154,13 @@ function Enquiry({submitEnquiry}) {
 }
 
 Enquiry.propTypes = {
-    submitEnquiry: PropTypes.func.isRequired
+    submitEnquiry: PropTypes.func.isRequired,
+    getBranches: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    submitEnquiry: (payload) => dispatch(handleSubmitEnquiry(payload))
+    submitEnquiry: (payload) => dispatch(handleSubmitEnquiry(payload)),
+    getBranches: () => dispatch(handleGetEnquiryBranches()),
 })
 
 export default connect(null, mapDispatchToProps)(Enquiry)

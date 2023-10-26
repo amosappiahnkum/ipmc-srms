@@ -5,7 +5,7 @@ import CountUp from 'react-countup';
 import {useSelector} from "react-redux";
 import {Certificate, Student, UsersFour} from "@phosphor-icons/react";
 import {FiUser} from "react-icons/fi";
-import EnrollmentChart from "./enrollment-chart";
+import EnrollmentChart from "./registration-chart";
 
 CountUp.propTypes = {separator: PropTypes.string};
 

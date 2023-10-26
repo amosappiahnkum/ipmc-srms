@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {TlaModal} from "../../commons/pop-ups/tla-modal";
 import {Button} from "antd";
 import PersonalDetail from "./personal-detail";
-import Enrollments from "./enrollments";
+import Registrations from "./registrations";
 
 function StudentDetail() {
     const navigate = useNavigate()
@@ -16,8 +16,8 @@ function StudentDetail() {
         },
         {
             name: 'Enrollments',
-            key: 'enrollments',
-            component: <Enrollments/>
+            key: 'registrations',
+            component: <Registrations/>
         }
     ]
     return (

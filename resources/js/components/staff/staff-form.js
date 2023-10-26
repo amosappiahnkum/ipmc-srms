@@ -1,14 +1,15 @@
 import {Col, Form, Input, Row, Select} from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
-import {connect} from 'react-redux'
+import {connect, useSelector} from 'react-redux'
 import {useLocation} from "react-router-dom";
 import {handleAddStaff, handleUpdateStaff} from "../../actions/staff/StaffAction";
 import TlaFormWrapper from "../../commons/tla-form-wrapper";
+import ValidateRole from "../../commons/validate-role";
 
 function StaffForm(props) {
     const {addStaff, updateStaff} = props
-
+    const branches = useSelector(state => state.commonReducer.commons.branches)
     const {state} = useLocation()
 
     const formValues = {
@@ -92,6 +93,25 @@ function StaffForm(props) {
                         </Select>
                     </Form.Item>
                 </Col>
+                <ValidateRole roles={['super-admin']}>
+                    <Col span={24} xs={24} md={12}>
+                        <Form.Item
+                            name="branch_id"
+                            label={'Branch'}
+                            rules={[{
+                                required: true,
+                                message: 'Select a branch'
+                            }]}>
+                            <Select size={'large'} showSearch>
+                                {
+                                    branches.map(({id, name}) => (
+                                        <Select.Option key={id} value={id}>{name}</Select.Option>
+                                    ))
+                                }
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </ValidateRole>
                 <Form.Item
                     hidden name="id" label="ID"
                     rules={[

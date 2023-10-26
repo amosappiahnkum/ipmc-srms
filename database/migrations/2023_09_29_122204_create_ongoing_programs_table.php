@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\BatchStatus;
+use App\Models\Branch;
 use App\Models\Staff;
 use App\Models\Program;
 use App\Models\User;
@@ -18,11 +20,13 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Program::class);
             $table->foreignIdFor(Staff::class)->nullable();
-            $table->time('batch_time');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->time('batch_time')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->string('room')->nullable();
+            $table->string('status')->default(BatchStatus::PENDING)->nullable();
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Branch::class);
             $table->timestamps();
             $table->softDeletes();
         });

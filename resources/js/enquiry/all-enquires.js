@@ -1,15 +1,15 @@
 import {Button, Space, Table} from 'antd'
 import PropTypes from 'prop-types'
 import React, {useEffect, useState} from 'react'
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {useOutletContext} from 'react-router'
 import {FiMail, FiPhone} from "react-icons/fi";
 import TlaTableWrapper from "../commons/table/tla-table-wrapper";
 import TlaImage from "../commons/tla-image";
-import TlaAddNew from "../commons/tla-add-new";
 import {handleGetAllEnquiries} from "../actions/enquiry/EnquiryAction";
 import FilterEnquiries from "./filter-enquiries";
 import EnquiryActions from "./equiry-actions";
+import {useNavigate} from "react-router-dom";
 
 const {Column} = Table
 
@@ -18,6 +18,10 @@ function AllEnquires(props) {
     const {data, meta} = enquiries
     const [loading, setLoading] = useState(true)
     const {setPageInfo} = useOutletContext();
+    const dispatch = useDispatch()
+
+    const navigate = useNavigate()
+
     useEffect(() => {
         setPageInfo({title: 'Students', addLink: '/students/form', buttonText: 'Student'})
         getEnquiries(new URLSearchParams(filter)).then(() => {
@@ -38,9 +42,11 @@ function AllEnquires(props) {
                         <TlaImage size={40} src={'Avatar'} name={record.student.name}/>
                         <Space direction={'vertical'} size={1}>
                             {record.student.name}
-                            <TlaAddNew data={record} link={`${record.student.name}/details`}>
-                                <Button>Detail</Button>
-                            </TlaAddNew>
+                            <Button onClick={() => {
+                                dispatch({type: 'ENQUIRY_DETAIL', payload: record})
+                                navigate(`${record.student.name}/details`)
+                            }} type={'primary'} size={'small'}>Detail</Button>
+
                         </Space>
                     </Space>
                 )}/>
@@ -56,6 +62,7 @@ function AllEnquires(props) {
                     </Space>
                 )}/>
                 <Column title="D.o.B" dataIndex={['student', 'dob']}/>
+                <Column title="follow ups" dataIndex={'follow_ups_count'}/>
                 <Column title="Contact" render={(_, {student}) => (
                     <Space direction={'vertical'} size={1}>
                         <a className={'link-icon'} href={`mailto:${student.email}`}><FiMail/>{student.email}</a>
@@ -66,7 +73,7 @@ function AllEnquires(props) {
                     </Space>
                 )}/>
                 <Table.Column title={'Actions'} render={(_, record) => (
-                   <EnquiryActions record={record}/>
+                    <EnquiryActions record={record}/>
                 )}/>
             </TlaTableWrapper>
         </div>

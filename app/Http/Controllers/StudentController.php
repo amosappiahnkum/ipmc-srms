@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RegistrationType;
 use App\Enums\StudentStatus;
 use App\Exports\StudentExport;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\EnquiryResource;
-use App\Http\Resources\EnrollmentResource;
+use App\Http\Resources\RegistrationResource;
 use App\Http\Resources\StudentResource;
 use App\Models\AllPrograms;
 use App\Models\Enquiry;
-use App\Models\Enrollment;
+use App\Models\Registration;
 use App\Models\Program;
 use App\Models\Sponsor;
 use App\Models\Student;
@@ -50,13 +51,16 @@ class StudentController extends Controller
 
         $studentsQuery->when($request->has('program_id') &&
             $request->program_id !== 'all', function ($q) use ($request) {
-            return $q->whereRelation('enrollments', static function ($jQuery) use ($request) {
+            return $q->whereRelation('registrations', static function ($jQuery) use ($request) {
                 return $jQuery->whereRelation('ongoingProgram', function ($q) use ($request) {
                     return $q->where('program_id', $request->program_id);
                 });
             });
         });
 
+        if(!Auth::user()->hasRole('super-admin')) {
+            $studentsQuery->where('branch_id', Auth::user()->userable->branch_id);
+        }
 
         if ($request->has('export') && $request->export === 'true') {
             return Excel::download(new StudentExport(StudentResource::collection($studentsQuery->get())),
@@ -162,11 +166,11 @@ class StudentController extends Controller
     /**
      * @param Request $request
      * @param Student $student
-     * @return EnrollmentResource|JsonResponse
+     * @return RegistrationResource|JsonResponse
      */
-    public function enrollStudent(Request $request, Student $student): EnrollmentResource|JsonResponse
+    public function enrollStudent(Request $request, Student $student): RegistrationResource|JsonResponse
     {
-        $checkEnrollment = Enrollment::query()
+        $checkEnrollment = Registration::query()
             ->where('student_id', $student->id)
             ->where('ongoing_program_id', $request->ongoing_program_id)
             ->first();
@@ -177,17 +181,23 @@ class StudentController extends Controller
             ], 400);
         }
 
+        if(!$request->has('branch_id')) {
+            $request['branch_id'] = Auth::user()->userable->branch_id;
+        }
+
         DB::beginTransaction();
         try {
             $program = Program::find($request->program_id);
             $discount = ($request->discount / 100) * $program->fee;
 
-            $enrollment = $student->enrollments()->create([
+            $registration = $student->registrations()->create([
                 'ongoing_program_id' => $request->ongoing_program_id,
                 'total_course_fee' => $program->total_fee,
                 'registration_fee' => $program->registration_fee,
                 'discounted_fee' => $discount,
                 'net_payable_fee' => $program->total_fee - $discount,
+                'branch_id' => $request->branch_id,
+                'status' => RegistrationType::IN_SCHOOL
             ]);
 
             if ($student->status != StudentStatus::IN_SCHOOL){
@@ -198,11 +208,11 @@ class StudentController extends Controller
 
             DB::commit();
 
-            return new EnrollmentResource($enrollment);
+            return new RegistrationResource($registration);
 
         } catch (Exception $exception) {
             DB::rollBack();
-            Log::error('New Enrollment Error', [$exception]);
+            Log::error('New Registration Error', [$exception]);
 
             return response()->json([
                 'message' => 'Something went wrong'

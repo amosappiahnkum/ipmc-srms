@@ -42,6 +42,9 @@ class StaffController extends Controller
             });
         });
 
+        if(!Auth::user()->hasRole('super-admin')) {
+            $staffQuery->where('branch_id', Auth::user()->userable->branch_id);
+        }
 
         if ($request->has('export') && $request->export === 'true') {
             return Excel::download(new StaffExport(StaffResource::collection($staffQuery->get())),
@@ -63,9 +66,13 @@ class StaffController extends Controller
     {
         DB::beginTransaction();
         try {
+            if (!$request->has('branch_id')) {
+                $request['branch_id'] = Auth::user()->userable->branch_id;
+            }
             $staff = Staff::create($request->all());
 
             $userName = Helper::createUserName($request->first_name, $request->last_name);
+
             $user = $staff->user()->create([
                 'username' => $userName,
                 'email' => $request->email,

@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {Button, Drawer} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Drawer} from 'antd';
 import AppMenus from "./app-menus";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {useLocation} from "react-router-dom";
+import {FiMenu} from "react-icons/fi";
 
 const MobileMenu = (props) => {
     const {name, collapsed} = props
@@ -22,9 +23,7 @@ const MobileMenu = (props) => {
     }, [location])
     return (
         <>
-            <Button type="default" onClick={showDrawer}>
-                MENU
-            </Button>
+            <FiMenu onClick={showDrawer} size={25}/>
             <Drawer title="" placement="right" onClose={onClose} open={open}>
                 <AppMenus showProfile={false} collapsed={collapsed} name={name}/>
             </Drawer>

@@ -44,6 +44,7 @@ class Student extends Model
         'education_qualifications',
         'other_qualification',
         'sponsor_id',
+        'branch_id',
         'status',
         'user_id'
     ];
@@ -75,9 +76,9 @@ class Student extends Model
     /**
      * @return HasMany
      */
-    public function enrollments(): HasMany
+    public function registrations(): HasMany
     {
-        return $this->hasMany(Enrollment::class);
+        return $this->hasMany(Registration::class);
     }
 
     /**

@@ -8,24 +8,28 @@ import TlaFormWrapper from "../../commons/tla-form-wrapper";
 import {handleGetAllStaff} from "../../actions/staff/StaffAction";
 import dayjs from "dayjs";
 import AllProgramsFilter from "../../commons/filter/all-programs-filter";
+import ValidateRole from "../../commons/validate-role";
 
 function BatchForm(props) {
     const [loading, setLoading] = useState(false)
     const {state} = useLocation()
-
+    const programs = useSelector(state => state.programReducer.allPrograms)
     const [endDate, setEndDate] = useState(state?.data?.end_date ? dayjs(state?.data.start_date) : null)
-    const [selectedProgram, setSelectedProgram] = useState(null)
+    const [selectedProgram, setSelectedProgram] = useState(state?.data ? programs.find(pro => pro.id === state?.data?.program_id) : null)
     const {addBatch, updateBatch, getStaffs} = props
     const durationsTypes = {
         'Months': 'month',
         'Weeks': 'week'
     }
+    const branches = useSelector(state => state.commonReducer.commons.branches)
     const staffs = useSelector((state) => state.staffReducer.staffs.data)
     const [form] = Form.useForm();
 
     const formValues = {
         id: 0,
         staff_id: null,
+        room: null,
+        status: 'pending',
         ...state.data,
         start_date: state?.data?.start_date ? dayjs(state?.data.start_date) : null,
         end_date: endDate,
@@ -40,29 +44,27 @@ function BatchForm(props) {
             onSubmit={formValues.id === 0 ? addBatch : updateBatch}
             formTitle={`${(formValues.id === 0 ? "New" : "Edit")} Batch`}>
             <Row gutter={10}>
-                <Col span={24} xs={24} md={24}>
-                    <AllProgramsFilter findProgram callBack={(va) => {
+                <Col span={24} xs={24} md={18}>
+                    <AllProgramsFilter required findProgram callBack={(va) => {
                         setSelectedProgram(va)
                     }}/>
                 </Col>
+                <Col span={24} xs={24} md={6}>
+                    <Form.Item name="status" label="status">
+                        <Select loading={loading} showSearch size={'large'}>
+                            <Select.Option value={'pending'}>Pending</Select.Option>
+                            <Select.Option value={'current'}>Current</Select.Option>
+                            <Select.Option value={'completed'}>Completed</Select.Option>
+                        </Select>
+                    </Form.Item>
+                </Col>
                 <Col span={24} xs={24} md={12}>
-                    <Form.Item name="batch_time" label="batch time" rules={[
-                        {
-                            required: true,
-                            message: 'Batch Time is Required'
-                        }
-                    ]}>
+                    <Form.Item name="batch_time" label="batch time">
                         <DatePicker className={'!w-full'} format={'h:mm a'} picker={'time'} size={'large'}/>
                     </Form.Item>
                 </Col>
                 <Col span={24} xs={24} md={12}>
-                    <Form.Item name="start_date" label="start date"
-                               rules={[
-                                   {
-                                       required: true,
-                                       message: 'Start Date is Required'
-                                   }
-                               ]}>
+                    <Form.Item name="start_date" label="start date">
                         <DatePicker
                             className={'!w-full'}
                             size={'large'}
@@ -105,18 +107,30 @@ function BatchForm(props) {
                         </Select>
                     </Form.Item>
                 </Col>
-
+                <ValidateRole roles={['super-admin']}>
+                    <Col span={24} xs={24} md={12}>
+                        <Form.Item
+                            name="branch_id"
+                            label={'Branch'}
+                            rules={[{
+                                required: true,
+                                message: 'Select a branch'
+                            }]}>
+                            <Select size={'large'} showSearch>
+                                {
+                                    branches.map(({id, name}) => (
+                                        <Select.Option key={id} value={id}>{name}</Select.Option>
+                                    ))
+                                }
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </ValidateRole>
                 <Col span={24} xs={24} md={24} className={'flex gap-3 mb-3'}>
-                   <p>Duration: {`${selectedProgram?.duration ?? ''} ${selectedProgram?.type ?? ''}`}</p>
-                   <p>End Date: {endDate ? dayjs(endDate).format('YYYY-MM-DD') : ''}</p>
+                    <p>Duration: {`${selectedProgram?.duration ?? ''} ${selectedProgram?.type ?? ''}`}</p>
+                    <p>End Date: {endDate ? dayjs(endDate).format('YYYY-MM-DD') : ''}</p>
 
-                    <Form.Item hidden name="end_date" label="end_date"
-                               rules={[
-                                   {
-                                       required: true,
-                                       message: 'Start Date is Required'
-                                   }
-                               ]}>
+                    <Form.Item hidden name="end_date" label="end_date">
                         <DatePicker/>
                     </Form.Item>
                 </Col>

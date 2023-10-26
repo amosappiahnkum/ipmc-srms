@@ -8,6 +8,13 @@ export const getBatches = (payload) => {
     }
 }
 
+export const getBatchStudents = (payload) => {
+    return {
+        type: Types.GET_BATCH_STUDENTS,
+        payload: payload
+    }
+}
+
 
 export const getAllBatches = (payload) => {
     return {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\StaffResource;
 use App\Models\Staff;
-use App\Models\Enrollment;
+use App\Models\Registration;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -34,16 +34,16 @@ class HomeController extends Controller
 
     public function getEnrollmentChart(): JsonResponse
     {
-        $enrollment = Enrollment::query()->get()->groupBy('ongoingProgram.program.allPrograms.name')->map->count();
+        $registration = Registration::query()->get()->groupBy('ongoingProgram.program.allPrograms.name')->map->count();
 
-        $enrollmentByMonth = Enrollment::query()
+        $enrollmentByMonth = Registration::query()
             ->whereYear('created_at','2023')
             ->get()
             ->groupBy(function ($val) {
                 return Carbon::parse($val->created_at)->format('M');
             })->map->count();
         return response()->json([
-            'enrollment' => $enrollment,
+            'registrations' => $registration,
             'byMonth' => $enrollmentByMonth
         ]);
     }

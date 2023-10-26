@@ -14,7 +14,6 @@ export const getAge = (dateString) => {
 
 export const activeRoles = () => {
     const state = Store.getState()
-    console.log(state)
     return state.userReducer.activeRoles
 }
 

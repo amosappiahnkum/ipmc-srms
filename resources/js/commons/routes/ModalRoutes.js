@@ -5,11 +5,11 @@ import PreviewFile from "../preview-file";
 import ProgramForm from "../../components/programs/program-form";
 import StaffForm from "../../components/staff/staff-form";
 import BatchForm from "../../components/batches/batch-form";
-import EnrollmentForm from "../../components/students/enrollment-form";
+import EnrollmentForm from "../../components/students/registration-form";
 import StudentDetail from "../../components/students/student-details";
-import EnquiryDetail from "../../enquiry/enquiry-details";
 import GenerateAttendanceForm from "../../components/batches/generate-attendance-form";
 import GenerateBatchPlan from "../../components/batches/generate-batch-plan";
+import FollowUpForm from "../../enquiry/follow-up-form";
 
 export const ModalRoutes = () => {
     return (
@@ -17,7 +17,7 @@ export const ModalRoutes = () => {
             <Route exact path="students/form" element={<StudentForm/>}/>
             <Route exact path="students/enroll" element={<EnrollmentForm/>}/>
             <Route exact path="students/:name/details" element={<StudentDetail/>}/>
-            <Route exact path="enquires/:name/details" element={<EnquiryDetail/>}/>
+            <Route exact path="enquires/follow-up" element={<FollowUpForm/>}/>
             <Route exact path="batches/form" element={<BatchForm/>}/>
             <Route exact path="batches/generate-attendance" element={<GenerateAttendanceForm/>}/>
             <Route exact path="batches/print-batch-plan" element={<GenerateBatchPlan/>}/>

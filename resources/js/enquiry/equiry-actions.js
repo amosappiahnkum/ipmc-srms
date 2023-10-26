@@ -6,7 +6,7 @@ import {handlePrintEnquiry} from "../actions/enquiry/EnquiryAction";
 import TblDropdown from "../commons/tbl-dropdown";
 
 
-function EnquiryActions({ record, printEnquiry }) {
+function EnquiryActions({record, printEnquiry}) {
     const [printing, setPrinting] = useState(false)
 
 
@@ -14,6 +14,11 @@ function EnquiryActions({ record, printEnquiry }) {
         <TblDropdown loading={printing}>
             <TlaAddNew data={{studentId: record?.student_id}} link={'/students/enroll'}>
                 <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm'}>Enroll</p>
+            </TlaAddNew>
+            <TlaAddNew data={{enquiry_id: record.id}} link={`/enquires/follow-up`}>
+                <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm'}>
+                    Follow Up
+                </p>
             </TlaAddNew>
             <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm cursor-pointer'}
                onClick={() => {

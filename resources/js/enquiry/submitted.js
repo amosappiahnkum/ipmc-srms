@@ -10,8 +10,7 @@ function Submitted() {
         <div className={'flex justify-center items-center h-screen bg-gray-100'}>
             <div className={'w-11/12 md:w-2/5 text-center shadow-lg p-10 flex flex-col items-center justify-center rounded-lg bg-white gap-5'}>
                 <div className={'flex items-center justify-between gap-2 w-full'}>
-                    <img height={'auto'} width={70} src={Logo} alt="IPMC Takoradi"/>
-                    <p className={'uppercase'}>Takoradi</p>
+                    <img height={'auto'} width={70} src={Logo} alt="IPMC"/>
                 </div>
                 <Divider className={'!m-1'}/>
                 <FiCheckCircle size={50} className={'text-error-600'}/>

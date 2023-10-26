@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RegistrationType;
 use App\Exports\OngoingProgramExport;
+use App\Http\Resources\BatchStudentsResource;
 use App\Http\Resources\OngoingProgramResource;
 use App\Models\Holiday;
 use App\Models\OngoingProgram;
+use App\Models\Registration;
 use App\Traits\UsePrint;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class OngoingProgramController extends Controller
 {
@@ -26,7 +31,7 @@ class OngoingProgramController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response|BinaryFileResponse|AnonymousResourceCollection
     {
         $ongoingProgramsQuery = OngoingProgram::query();
         $ongoingProgramsQuery->when($request->has('program_id') && $request->program_id !== 'all',
@@ -49,6 +54,10 @@ class OngoingProgramController extends Controller
             return $q->where('end_date', $request->end_date);
         });
 
+        if (!Auth::user()->hasRole('super-admin')) {
+            $ongoingProgramsQuery->where('branch_id', Auth::user()->userable->branch_id);
+        }
+
         if ($request->has('export') && $request->export === 'true') {
             return Excel::download(new OngoingProgramExport(OngoingProgramResource::collection($ongoingProgramsQuery->get())),
                 'Batches.xlsx');
@@ -68,22 +77,17 @@ class OngoingProgramController extends Controller
      */
     public function store(Request $request)
     {
-
-        $time = Carbon::parse($request->batch_time)->format('H:i');
-        $endDate = Carbon::parse($request->end_date)->format('Y-m-d');
-//        $check = OngoingProgram::query()
-//            ->where('staff_id', $request->staff_id)
-//            ->whereDate('end_date', '>', $endDate)
-//            ->where('batch_time', $time)->count();
-
-        Log::info('staff_id', [$request->staff_id]);
         DB::beginTransaction();
         try {
+            if (!$request->has('branch_id')) {
+                $request['branch_id'] = Auth::user()->userable->branch_id;
+            }
+
             $request['user_id'] = Auth::id();
-            $request['batch_time'] = $time;
-            $request['staff_id'] = $request->staff_id == "null" ? null : $request->staff_id;
-            $request['start_date'] = Carbon::parse($request->start_date)->format('Y-m-d');
-            $request['end_date'] = $endDate;
+            $request['batch_time'] = $request->batch_time;
+            $request['staff_id'] = $request->staff_id;
+            $request['start_date'] = $request->start_date;
+            $request['end_date'] = $request->end_date;
 
             $ongoingProgram = OngoingProgram::create($request->all());
             DB::commit();
@@ -108,15 +112,26 @@ class OngoingProgramController extends Controller
         DB::beginTransaction();
         try {
             $request['user_id'] = Auth::id();
-            $request['batch_time'] = Carbon::parse($request->batch_time);
-            $request['start_date'] = Carbon::parse($request->batch_time)->format('Y-m-d');
-            $request['end_date'] = Carbon::parse($request->batch_time)->format('Y-m-d');
+            $request['batch_time'] = $request->batch_time;
+            $request['start_date'] = $request->start_date;
+            $request['end_date'] = $request->end_date;
             $ongoingProgram->update($request->all());
+
+            $registrations = $ongoingProgram->registrations();
+            if ($request->status === 'completed') {
+                $registrations->update([
+                    'status' => RegistrationType::COMPLETED
+                ]);
+            } else {
+                $registrations->update([
+                    'status' => RegistrationType::IN_SCHOOL
+                ]);
+            }
             DB::commit();
             return new OngoingProgramResource($ongoingProgram);
         } catch (Exception $exception) {
             DB::rollBack();
-            Log::error('Add OngoingProgram Error', [$exception]);
+            Log::error('Update OngoingProgram Error', [$exception->getMessage()]);
 
             return response()->json([
                 'message' => 'Something went wrong'
@@ -137,7 +152,7 @@ class OngoingProgramController extends Controller
     {
         $ongoingProgram = OngoingProgram::find($request->batch_id);
 
-        if ($ongoingProgram->enrollments->count() == 0) {
+        if ($ongoingProgram->registrations->count() == 0) {
             return response()->json([
                 'message' => 'There is no student in this batch'
             ], 400);
@@ -189,9 +204,9 @@ class OngoingProgramController extends Controller
     {
         $ongoingProgram = OngoingProgram::find($request->batch_id);
 
-        if ($request->has('sem') && $request->sem > 0){
+        if ($request->has('sem') && $request->sem > 0) {
             $modules = $ongoingProgram->program->modules->where('semester', $request->sem);
-        }else {
+        } else {
             $modules = $ongoingProgram->program->modules;
         }
 
@@ -216,8 +231,18 @@ class OngoingProgramController extends Controller
         $ongoingProgramsQuery = OngoingProgram::query();
         $ongoingProgramsQuery->when($request->has('staff_id')
             && $request->staff_id !== '', function ($q) use ($request) {
-                return $q->where('staff_id', $request->staff_id);
-            });
+            return $q->where('staff_id', $request->staff_id);
+        });
         return response()->json(OngoingProgramResource::collection($ongoingProgramsQuery->get()));
+    }
+
+    /**
+     * @param $ongoingProgramId
+     * @return AnonymousResourceCollection
+     */
+    public function getBatchStudents($ongoingProgramId): AnonymousResourceCollection
+    {
+        $enrollments = Registration::where('ongoing_program_id', $ongoingProgramId)->paginate(10);
+        return BatchStudentsResource::collection($enrollments);
     }
 }

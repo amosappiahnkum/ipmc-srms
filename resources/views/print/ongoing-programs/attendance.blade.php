@@ -64,11 +64,11 @@
         </thead>
         <tbody>
         @php($i= 1)
-        @foreach($data['batch']->enrollments as $enrollment)
+        @foreach($data['batch']->registrations as $registration)
             <tr>
                 <td>{{$i}}</td>
-                <td>{{$enrollment->student->name}}</td>
-                <td>{{$enrollment->student->phone_number}}</td>
+                <td>{{$registration->student->name}}</td>
+                <td>{{$registration->student->phone_number}}</td>
                 @foreach($data['dates'] as $date)
                     <td>&nbsp;</td>
                 @endforeach

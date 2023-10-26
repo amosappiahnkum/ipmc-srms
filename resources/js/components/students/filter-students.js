@@ -1,12 +1,10 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from "react-redux";
-import {Button, Col, Row} from "antd";
+import {Col, Row} from "antd";
 import FilterWrapper from "../../commons/filter/filter-wrapper";
 import {handleExportStudents, handleGetAllStudents} from "../../actions/students/StudentAction";
 import AllProgramsFilter from "../../commons/filter/all-programs-filter";
-import {FiFilter} from "react-icons/fi";
-import TlaSearch from "../../commons/search/tla-search";
 
 function FilterStudents(props) {
     const [open, setOpen] = useState(false);

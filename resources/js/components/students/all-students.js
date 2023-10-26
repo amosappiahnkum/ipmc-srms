@@ -67,12 +67,11 @@ function AllStudents(props) {
                     </Space>
                 )}/>
                 <Column title="D.o.B" dataIndex={'dob'}/>
-                <Column title="enrollments" render={(_, {enrollments}) => (
+                <Column title="registrations" render={(_, {registrations}) => (
                     <Space direction={'vertical'} size={1}>
-                        {enrollments.length}
+                        {registrations.length}
                     </Space>
                 )}/>
-                <Column title="D.o.B" dataIndex={'dob'}/>
                 <Column title="Contact" render={(_, {phone_number, alt_phone_number, email}) => (
                     <Space direction={'vertical'} size={1}>
                         <a className={'link-icon'} href={`mailto:${email}`}><FiMail/>{email}</a>

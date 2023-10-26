@@ -27,7 +27,7 @@ class Program extends Model
 
     public function students (): HasManyThrough
     {
-        return $this->hasManyThrough(Enrollment::class,OngoingProgram::class);
+        return $this->hasManyThrough(Registration::class,OngoingProgram::class);
     }
 
     public function allPrograms(): BelongsTo

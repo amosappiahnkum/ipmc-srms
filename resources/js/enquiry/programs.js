@@ -14,6 +14,7 @@ function Programs({getEnquiryPrograms}) {
     const programs = useSelector(state => state.enquiryReducer.enquiryPrograms)
 
     const programTypes = Object.keys(programs)
+
     return (
         <Spin spinning={loading}>
             {

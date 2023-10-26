@@ -5,6 +5,10 @@ const initialState = {
         data: [],
         meta: {}
     },
+    batchStudents: {
+        data: [],
+        meta: {}
+    },
     batch: {},
     allBatches: [],
     filter: {
@@ -19,6 +23,9 @@ export default function batchReducer(state = initialState, action) {
     switch (action.type) {
         case Types.GET_BATCHES:
             return {...state, batches: action.payload}
+
+        case Types.GET_BATCH_STUDENTS:
+            return {...state, batchStudents: action.payload}
 
         case Types.GET_ALL_BATCHES:
             return {...state, allBatches: action.payload}

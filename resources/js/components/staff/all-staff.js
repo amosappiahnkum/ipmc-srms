@@ -45,6 +45,7 @@ function AllStaff(props) {
                     </Space>
                 )}/>
                 <Column title="username" dataIndex={'username'}/>
+                <Column title="branch" dataIndex={'branch'}/>
                 <Column title="phone number" dataIndex={'phone_number'}/>
                 <Column title="email" dataIndex={'email'}/>
                 <Column title="Permissions" render={(_, {permissions, id}) => (

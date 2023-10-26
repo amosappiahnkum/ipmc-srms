@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Statuses;
+use App\Enums\StaffType;
 use App\Enums\StudentStatus;
 use App\Models\AllPrograms;
-use App\Models\Staff;
+use App\Models\Branch;
 use App\Models\OngoingProgram;
+use App\Models\Staff;
 use App\Models\Student;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
 
 class Controller extends BaseController
@@ -32,9 +31,11 @@ class Controller extends BaseController
         }
 
         $programs = AllPrograms::query()->count();
+        $branches = Branch::all();
         $staffs = Staff::query()->count();
+        $instructors = Staff::query()->where('type', StaffType::INSTRUCTOR)->count();
         $batches = OngoingProgram::query()->count();
-        $students = Student::query()->where('status', StudentStatus::IN_SCHOOL)->get();
+        $students = Student::query()->get();
         $permissions = Permission::all()->groupBy('group');
 
         $user = Auth::user();
@@ -46,7 +47,9 @@ class Controller extends BaseController
 
         return response([
             'programs' => $programs,
+            'branches' => $branches,
             'staff' => $staffs,
+            'instructors' => $instructors,
             'batches' => $batches,
             'students' => [
                 'total' => $students->count(),

@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled, { createGlobalStyle } from 'styled-components'
 import TlaImage from "../tla-image";
+import {Tag} from "antd";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -17,10 +18,6 @@ const GlobalStyles = createGlobalStyle`
   .profile-name {
     color: var(--Gray-900);
     margin-top: 10px;
-  }
-
-  .profile-job-title {
-    margin-top: -28px;
   }
 `
 
@@ -41,10 +38,13 @@ function Profile({user, size, collapsed}) {
                 <TlaImage name={ user.name ?? user.username } size={ size } src={ '' }/>
                 {
                     !collapsed &&
-                    <h3 className={ 'text-md-medium profile-name' }>{ user.name ?? user.username }</h3>
+                    <React.Fragment>
+                        <h3 className={ 'text-md-medium profile-name' }>{ user.name ?? user.username }</h3>
+                        <h6 className={'text-sm-normal'}>{user.branch ?? ''}</h6>
+                        <Tag color={'blue'} className={'text-sm-normal'}>{user.type ?? ''}</Tag>
+                    </React.Fragment>
                 }
 
-                {/*<h4 className={'text-sm-normal profile-job-title'}>Product Designer</h4>*/ }
             </AvatarContainer>
         </>
     )

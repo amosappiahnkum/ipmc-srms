@@ -15,7 +15,7 @@ export const handleGetCommonData = () => (dispatch) => {
 
 export const handleGetEnrollmentChart = () => (dispatch) => {
     return new Promise((resolve, reject) => {
-        api().get('/report/chart/enrollment').then((res) => {
+        api().get('/report/chart/registrations').then((res) => {
             dispatch(getEnrollmentChart(res.data))
             resolve(res)
         }).catch((err) => {
