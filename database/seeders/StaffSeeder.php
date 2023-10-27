@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Staff;
 use Illuminate\Database\Seeder;
 
-class InstructorSeeder extends Seeder
+class StaffSeeder extends Seeder
 {
     /**
      * Run the database seeds.

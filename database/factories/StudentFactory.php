@@ -2,11 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Branch;
 use App\Models\Sponsor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
+ * @extends Factory<\App\Models\Student>
  */
 class StudentFactory extends Factory
 {
@@ -35,7 +36,8 @@ class StudentFactory extends Factory
             ]),
             'id_number' => $this->faker->creditCardNumber,
             'sponsor_id' => Sponsor::query()->inRandomOrder()->first()->id,
-            'user_id' => 1
+            'user_id' => 1,
+            'branch_id' => Branch::query()->inRandomOrder()->first()->id,
         ];
     }
 }

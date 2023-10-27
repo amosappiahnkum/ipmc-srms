@@ -34,10 +34,10 @@ class AppSetup extends Command
             $this->output->title('Application Setup Started');
 
             Artisan::call('migrate:fresh');
-            Artisan::call('db:seed');
             Artisan::call('import:programs');
             Artisan::call('import:modules');
             Artisan::call('update:holidays');
+            Artisan::call('db:seed');
 
             $this->output->success('Setup Complete');
 

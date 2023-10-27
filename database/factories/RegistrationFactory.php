@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Branch;
 use App\Models\OngoingProgram;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -27,6 +28,8 @@ class RegistrationFactory extends Factory
             'registration_fee' => 0,
             'discounted_fee' => $discount,
             'net_payable_fee' => $program?->program?->fee - $discount,
+            'status' => $this->faker->randomElement(['deferred', 'in-school', 'completed', 'discontinued']),
+            'branch_id' => Branch::query()->inRandomOrder()->first()->id,
             'created_at' => $this->faker->dateTimeBetween('2020-01-01'),
         ];
     }

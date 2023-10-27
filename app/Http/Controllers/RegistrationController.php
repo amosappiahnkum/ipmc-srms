@@ -67,7 +67,6 @@ class RegistrationController extends Controller
     {
         DB::beginTransaction();
         try {
-            Log::info('ddd', [$request->all()]);
             $registration->update($request->all());
 
             DB::commit();

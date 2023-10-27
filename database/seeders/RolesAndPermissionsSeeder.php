@@ -39,13 +39,6 @@ class RolesAndPermissionsSeeder extends Seeder
                 }
             }
         }
-
-        $superAdminRole = Role::firstOrCreate(['name' => 'super-admin']);
-        $superAdminRole->givePermissionTo(Permission::all());
-
-        $user = User::query()->where('username', 'israelnkum')->first();
-        $user?->assignRole($superAdminRole);
-
 //        $perms = json_decode(file_get_contents(database_path('seed-data/permissions.json')),
 //            false, 512, JSON_THROW_ON_ERROR);
 //        foreach ($perms as $permission) {
