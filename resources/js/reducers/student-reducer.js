@@ -4,11 +4,15 @@ const initialState = {
         data: [],
         meta: {}
     },
-    people: {
+    myPrograms: {
         data: [],
         meta: {}
     },
     student: {},
+    programDetail: {},
+    exam: {
+        module: {}
+    },
     filter: {
         program_id: 'all',
         status: 'in-school',
@@ -20,6 +24,18 @@ export default function studentReducer (state = initialState, action) {
     switch (action.type) {
         case Types.GET_STUDENTS:
             return { ...state, students: action.payload }
+
+        case Types.TAKE_EXAM:
+            return {
+                ...state,
+                exam: { ...state.exam, module: action.payload }
+            }
+
+        case Types.MY_PROGRAMS:
+            return { ...state, myPrograms: action.payload }
+
+        case Types.MY_PROGRAM_DETAIL:
+            return { ...state, programDetail: action.payload }
 
         case Types.ADD_STUDENT_FILTER:
             return { ...state, filter: action.payload}

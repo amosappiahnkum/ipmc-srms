@@ -24,6 +24,7 @@ class RegistrationResource extends JsonResource
             'registration_fee' => $this->registration_fee,
             'discounted_fee' => $this->discounted_fee,
             'net_payable_fee' => $this->net_payable_fee,
+            'branch_id' => $this->branch_id,
             'status' => $this->status,
         ];
     }

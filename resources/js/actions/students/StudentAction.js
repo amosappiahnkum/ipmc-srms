@@ -7,7 +7,7 @@ import {
     getStudent,
     getStudents,
     removeStudent,
-    updateStudent, enroll,
+    updateStudent, enroll, getMyPrograms, getMyProgramDetail,
 } from './ActionCreators'
 
 /**
@@ -36,6 +36,30 @@ export const handleGetAllStudents = (params) => (dispatch) => {
             dispatch(getStudents(res.data))
             params?.delete('page')
             params && dispatch(addFilter(Object.fromEntries(params)))
+            resolve(res)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+export const handleGetMyPrograms = (studentId, params) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        api().get(`/students/${studentId}/my-programs?${params}`).then((res) => {
+            dispatch(getMyPrograms(res.data))
+            // params?.delete('page')
+            // params && dispatch(addFilter(Object.fromEntries(params)))
+            resolve(res)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+export const handleGetMyProgramDetail = (programId) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        api().get(`/students/my-programs/${programId}`).then((res) => {
+            dispatch(getMyProgramDetail(res.data))
             resolve(res)
         }).catch((err) => {
             reject(err)

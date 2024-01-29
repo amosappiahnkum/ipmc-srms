@@ -35,7 +35,8 @@ class EnquiryController extends Controller
             return $q->whereBetween('created_at', $this->dateRange($request->date));
         });
 
-        if(!Auth::user()->hasRole('super-admin')) {
+        if(!Auth::user()?->hasRole('super-admin')) {
+            Log::info('super', [Auth::user()->userable->branch_id]);
             $enquiryQuery->where('branch_id', Auth::user()->userable->branch_id);
         }
 

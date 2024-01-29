@@ -10,7 +10,6 @@ import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 import {persistor, Store} from './utils/Store'
 import {BrowserRouter as Router} from 'react-router-dom'
-import AppLayout from "./commons/app-layout";
 import ProtectedRoutes from "./commons/routes/ProtectedRoutes";
 
 require('./bootstrap')
@@ -25,9 +24,7 @@ if (document.getElementById('root')) {
         <Provider store={Store}>
             <PersistGate loading={null} persistor={persistor}>
                 <Router>
-                    <AppLayout>
-                        <ProtectedRoutes/>
-                    </AppLayout>
+                    <ProtectedRoutes/>
                 </Router>
             </PersistGate>
         </Provider>

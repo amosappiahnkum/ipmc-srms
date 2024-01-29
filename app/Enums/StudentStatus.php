@@ -9,4 +9,9 @@ enum StudentStatus: string
     case IN_SCHOOL = 'in-school';
 
     case ENQUIRY = 'enquiry';
+
+
+    case COMPLETED = 'completed';
+
+    case DISCONTINUED = 'discontinued';
 }

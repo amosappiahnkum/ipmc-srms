@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Enums\RegistrationType;
 use App\Exports\OngoingProgramExport;
+use App\Helpers\Helper;
 use App\Http\Resources\BatchStudentsResource;
 use App\Http\Resources\OngoingProgramResource;
+use App\Models\Exam;
 use App\Models\Holiday;
 use App\Models\OngoingProgram;
+use App\Models\ProgramModule;
 use App\Models\Registration;
+use App\Models\RegularExam;
+use App\Models\Module;
 use App\Traits\UsePrint;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -21,6 +26,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -54,7 +60,7 @@ class OngoingProgramController extends Controller
             return $q->where('end_date', $request->end_date);
         });
 
-        if (!Auth::user()->hasRole('super-admin')) {
+        if (!Auth::user()?->hasRole('super-admin')) {
             $ongoingProgramsQuery->where('branch_id', Auth::user()->userable->branch_id);
         }
 
@@ -75,7 +81,7 @@ class OngoingProgramController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse|OngoingProgramResource
     {
         DB::beginTransaction();
         try {
@@ -148,7 +154,7 @@ class OngoingProgramController extends Controller
         //
     }
 
-    public function printAttendance(Request $request)
+    public function printAttendance(Request $request): Response|JsonResponse
     {
         $ongoingProgram = OngoingProgram::find($request->batch_id);
 
@@ -200,7 +206,7 @@ class OngoingProgramController extends Controller
     }
 
 
-    public function printBatchPlan(Request $request)
+    public function printBatchPlan(Request $request): Response
     {
         $ongoingProgram = OngoingProgram::find($request->batch_id);
 
@@ -210,11 +216,6 @@ class OngoingProgramController extends Controller
             $modules = $ongoingProgram->program->modules;
         }
 
-//        return \response()->json([
-//            'batch' => $ongoingProgram,
-//            'modules' => $modules,
-//            'totalDuration' => $modules->sum('duration.duration')
-//        ]);
         return $this->pdf('print.ongoing-programs.batch-plan',
             [
                 'batch' => $ongoingProgram,
@@ -224,6 +225,7 @@ class OngoingProgramController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return JsonResponse
      */
     public function getAllBatches(Request $request): JsonResponse
@@ -233,6 +235,10 @@ class OngoingProgramController extends Controller
             && $request->staff_id !== '', function ($q) use ($request) {
             return $q->where('staff_id', $request->staff_id);
         });
+
+        if (!Auth::user()?->hasRole('super-admin')) {
+            $ongoingProgramsQuery->where('branch_id', Auth::user()->userable->branch_id);
+        }
         return response()->json(OngoingProgramResource::collection($ongoingProgramsQuery->get()));
     }
 
@@ -244,5 +250,62 @@ class OngoingProgramController extends Controller
     {
         $enrollments = Registration::where('ongoing_program_id', $ongoingProgramId)->paginate(10);
         return BatchStudentsResource::collection($enrollments);
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function scheduleExam(Request $request)
+    {
+        $programModule = ProgramModule::query()->findOrFail($request->program_module_id);
+
+        $data = Helper::getQuestions($programModule->module_id, $request->total_questions);
+
+        DB::beginTransaction();
+        try {
+            $regularExam = RegularExam::create([
+                'ongoing_program_id' => $request->batch_id,
+                'program_module_id' => $request->program_module_id,
+            ]);
+
+
+            $regularExam->exam()->create([
+                'program_module_id' => $request->program_module_id,
+                'ongoing_program_id' => $request->batch_id,
+                'questions' => $data['questions'],
+                'answer' => $data['answers'],
+                'date' => Carbon::parse($request->date)->format('Y-m-d'),
+                'time' => Carbon::parse($request->time)->format('h:m:i'),
+                'duration' => Helper::timeInMinutes($request->duration),
+                'shuffle' => true
+            ]);
+
+            DB::commit();
+            return response()->json([
+                "message" => "Exam created"
+            ]);
+        }catch (Exception $exception) {
+            DB::rollBack();
+
+            Log::error('schedule exam', [$exception]);
+            return response()->json([
+                "message" => "Something went wrong"
+            ], 400);
+        }
+    }
+
+    public function getExamQuestions(Request $request, ProgramModule $programModule)
+    {
+        $exam = Exam::query()->where('ongoing_program_id', $request->ongoing_program_id)
+            ->where('program_module_id', $programModule->id)
+            ->firstOrFail();
+
+        if (!$exam) {
+            return response()->json([
+                'message'  => 'Exam not valid or has expired'
+            ], 400);
+        }
+
+        return $exam;
     }
 }

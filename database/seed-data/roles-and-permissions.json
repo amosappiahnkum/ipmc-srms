@@ -112,5 +112,34 @@
             "edit-registrations",
             "change-registrations-status"
         ]
+    },
+    {
+        "roles": [
+            "student"
+        ],
+        "group": "Exam",
+        "permissions": [
+            "take-exam",
+            "view-exam"
+        ]
+    },
+    {
+        "roles": [
+            "administrator"
+        ],
+        "group": "Exam",
+        "permissions": [
+            "create-exam",
+            "delete-exam"
+        ]
+    },
+    {
+        "roles": [
+            "instructor"
+        ],
+        "group": "Exam",
+        "permissions": [
+            "mark-exam"
+        ]
     }
 ]

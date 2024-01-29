@@ -8,6 +8,27 @@ export const getStudents = (payload) => {
     }
 }
 
+export const getMyPrograms = (payload) => {
+    return {
+        type: Types.MY_PROGRAMS,
+        payload: payload
+    }
+}
+
+export const getMyProgramDetail = (payload) => {
+    return {
+        type: Types.MY_PROGRAM_DETAIL,
+        payload: payload
+    }
+}
+
+export const setTakeExam = (payload) => {
+    return {
+        type: Types.TAKE_EXAM,
+        payload: payload
+    }
+}
+
 export const applySearch = (payload) => {
     return {
         type: Types.APPLY_SEARCH_RESULTS,

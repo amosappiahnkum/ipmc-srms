@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\OngoingProgram;
 use App\Models\Program;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -9,7 +10,7 @@ use App\Models\Staff;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\OngoingProgram>
+ * @extends Factory<OngoingProgram>
  */
 class OngoingProgramFactory extends Factory
 {
@@ -23,7 +24,6 @@ class OngoingProgramFactory extends Factory
         $staff = Staff::query()->inRandomOrder()->first();
 
         $superadminRole = Role::where('name', 'administrator')->first();
-        $user = User::role($superadminRole)->get();
         return [
             'program_id' => Program::query()->inRandomOrder()->first()->id,
             'staff_id' => $staff->id,

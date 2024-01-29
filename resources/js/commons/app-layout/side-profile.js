@@ -35,11 +35,10 @@ function Profile({user, size, collapsed}) {
         <>
             <GlobalStyles/>
             <AvatarContainer>
-                <TlaImage name={ user.name ?? user.username } size={ size } src={ '' }/>
                 {
                     !collapsed &&
                     <React.Fragment>
-                        <h3 className={ 'text-md-medium profile-name' }>{ user.name ?? user.username }</h3>
+                        {/*<h3 className={ 'text-md-medium profile-name' }>{ user.name ?? user.username }</h3>*/}
                         <h6 className={'text-sm-normal'}>{user.branch ?? ''}</h6>
                         <Tag color={'blue'} className={'text-sm-normal'}>{user.type ?? ''}</Tag>
                     </React.Fragment>

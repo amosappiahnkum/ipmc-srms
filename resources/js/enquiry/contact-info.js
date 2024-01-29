@@ -53,11 +53,11 @@ function ContactInfo() {
                     <Input size={'large'}/>
                 </Form.Item>
             </Col>
-            <Col span={24}>
+            {/*<Col span={24}>
                 <Form.Item name="address" label="Address">
                     <Input.TextArea/>
                 </Form.Item>
-            </Col>
+            </Col>*/}
         </Row>
     )
 }

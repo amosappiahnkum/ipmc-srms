@@ -2,9 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Helpers\Helper;
 use App\Models\Branch;
 use App\Models\Sponsor;
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 /**
  * @extends Factory<\App\Models\Student>
@@ -39,5 +43,20 @@ class StudentFactory extends Factory
             'user_id' => 1,
             'branch_id' => Branch::query()->inRandomOrder()->first()->id,
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(static function (Student $staff) {
+            $userName = Helper::createUserName($staff->first_name, $staff->last_name);
+            $user = $staff->user()->create([
+                'username' => $userName,
+                'email' => strtolower($staff->first_name.'.'.$staff->last_name.'@ipmcghana.com'),
+                'password' => Hash::make($userName),
+            ]);
+
+            $role = Role::query()->where('name', 'student')->first();
+            $user->roles()->syncWithoutDetaching($role?->id);
+        });
     }
 }

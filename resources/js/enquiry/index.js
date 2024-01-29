@@ -4,27 +4,27 @@ import PropTypes from 'prop-types'
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {useLocation, useNavigate} from "react-router-dom";
-import PersonalInfo from "./personal-info";
 import ContactInfo from "./contact-info";
 import Logo from '../assets/img/logo.png'
 import Programs from "./programs";
 import Sponsor from "./sponsor";
 import ConfirmInfo from "./confirm-info";
 import {handleGetEnquiryBranches, handleSubmitEnquiry} from "../actions/enquiry/EnquiryAction";
+import PersonalInfo from "./personal-info";
 
 
 const steps = [
     {
-        title: 'Personal Information',
-        // content: <Programs/>,
+        title: 'Personal Info.',
+        // content:  <Sponsor/>,
         content: <PersonalInfo/>,
     },
     {
-        title: 'Contact Information',
+        title: 'Contact Info.',
         content: <ContactInfo/>,
     },
     {
-        title: 'Which courses are you interested in?',
+        title: 'Interested Courses',
         content: <Programs/>,
     },
     {
@@ -87,7 +87,7 @@ function Enquiry({submitEnquiry, getBranches}) {
     }
 
     return (
-        <div>
+        <div className={'enquiry-body'}>
             <ConfirmInfo
                 open={openConfirm}
                 onClose={() => setOpenConfirm(false)}
@@ -104,48 +104,38 @@ function Enquiry({submitEnquiry, getBranches}) {
                     }).catch(() => setSubmitting(false))
                 }}/>
             <Spin spinning={submitting || loading}>
-                <div className={'flex flex-col md:flex-row items-center justify-center'}>
-                    <div
-                        className={'w-full md:w-2/6 bg-gray-200 chat-list h-fit md:h-screen flex flex-col items-between justify-center pt-5 enquiry-side'}>
-                        <div className={'flex justify-center flex-col items-center'}>
-                            <img height={'auto'} width={100} src={Logo} alt="IPMC"/>
-                            <h3 className={'text-4xl mb-2 md:mb-5 mt-5 md:mt-10 font-bold'}>Enquiry Form</h3>
-                            <div className={'mt:2 md:mt-8'}>
-                                <div className={'hidden md:block'}>
-                                    <Steps direction={'vertical'} current={current} items={items}/>
-                                </div>
-                                <div className={'block md:hidden mobile-steps'}>
-                                    <Steps direction={'horizontal'} current={current} items={items}/>
-                                </div>
-                            </div>
-                        </div>
+                <div className={'w-11/12 md:w-8/12 p-3 mx-auto bg-white rounded-lg shadow-md max-h-[700px]'}>
+                    <div className={'flex justify-center flex-col items-center'}>
+                        <img height={'auto'} width={100} src={Logo} alt="IPMC"/>
+                        <h3 className={'text-4xl my-2 font-bold'}>Enquiry Form</h3>
+                        <Steps size={'small'} type={'inline'}
+                               direction={'horizontal'} labelPlacement={'vertical'} current={current}
+                               items={items}/>
                     </div>
-                    <div className={'w-full md:w-4/6 chat-content h-[calc(100vh-230px)] md:h-[calc(100vh-10px)]'}>
-                        <div className={'flex items-center h-fit overflow-hidden md:h-screen'}>
-                            <Form onFinish={submit} form={form} layout={'vertical'} initialValues={initialValues}>
-                                <React.Fragment>
-                                    <h3 className={'text-lg md:text-3xl font-bold mb-3 text-red-600'}>{steps[current].title}</h3>
-                                    {steps[current].content}
-                                </React.Fragment>
-                                <div>
-                                    {current < steps.length - 1 && (
-                                        <Button htmlType={'submit'} size={'large'}>Next</Button>
-                                    )}
-                                    {current === steps.length - 1 && (
-                                        <Button htmlType={'submit'} size={'large'}>
-                                            Submit
-                                        </Button>
-                                    )}
-                                    {current > 0 && (
-                                        <Button
-                                            size={'large'} style={{margin: '0 8px'}}
-                                            onClick={() => prev()}>
-                                            Previous
-                                        </Button>
-                                    )}
-                                </div>
-                            </Form>
-                        </div>
+                    <div>
+                        <Form scrollToFirstError onFinish={submit} form={form} layout={'vertical'} initialValues={initialValues}>
+                            <div>
+                                <h3 className={'text-lg md:text-3xl font-bold px-5 text-red-600'}>{steps[current].title}</h3>
+                                {steps[current].content}
+                            </div>
+                            <div>
+                                {current < steps.length - 1 && (
+                                    <Button htmlType={'submit'} size={'large'}>Next</Button>
+                                )}
+                                {current === steps.length - 1 && (
+                                    <Button htmlType={'submit'} size={'large'}>
+                                        Submit
+                                    </Button>
+                                )}
+                                {current > 0 && (
+                                    <Button
+                                        size={'large'} style={{margin: '0 8px'}}
+                                        onClick={() => prev()}>
+                                        Previous
+                                    </Button>
+                                )}
+                            </div>
+                        </Form>
                     </div>
                 </div>
             </Spin>

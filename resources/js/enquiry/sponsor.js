@@ -7,7 +7,7 @@ function Sponsor() {
 
     const branches = useSelector(state => state.enquiryReducer.branches)
     return (
-        <div>
+        <div className={'chat-content h-[calc(100vh-500px)] md:h-[calc(100vh-300px)]'}>
             <div>
                 <h3 className={'font-bold'}>Sponsor Information</h3>
                 <Row gutter={[10, 10]}>

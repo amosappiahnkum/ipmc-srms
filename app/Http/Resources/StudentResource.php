@@ -34,6 +34,7 @@ class StudentResource extends JsonResource
             'box_address' => $this->box_address,
             'address' => $this->address,
             'id_type' => $this->id_type,
+            'branch_id' => $this->branch_id,
             'id_number' => $this->id_number,
             'status' => $this->status,
             'sponsor_id' => $this->sponsor_id,

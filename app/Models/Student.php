@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Student extends Model
@@ -89,11 +90,21 @@ class Student extends Model
         return $this->hasOne(Enquiry::class);
     }
 
-    protected function education_qualifications(): Attribute
+    protected function educational_qualifications(): Attribute
     {
         return Attribute::make(
             get: static fn(string $value) => json_decode($value, JSON_THROW_ON_ERROR, 512, JSON_THROW_ON_ERROR),
             set: static fn(string $value) => json_encode($value, JSON_THROW_ON_ERROR)
         );
+    }
+
+    public function user(): MorphOne
+    {
+        return $this->morphOne(User::class,'userable');
+    }
+
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
     }
 }

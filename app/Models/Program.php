@@ -48,6 +48,6 @@ class Program extends Model
      */
     public function modules(): HasMany
     {
-        return $this->hasMany(Subjects::class);
+        return $this->hasMany(ProgramModule::class);
     }
 }

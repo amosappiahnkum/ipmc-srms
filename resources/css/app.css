@@ -118,3 +118,37 @@ button {
     outline: none !important;
     border-radius: 5px !important;
 }
+
+.detail-item {
+    @apply bg-white p-3 rounded-lg flex items-center gap-x-3;
+}
+
+.detail-item svg {
+    @apply h-6 w-6;
+}
+
+.quiz-button {
+    @apply flex items-center justify-center;
+}
+
+.glass-cover {
+    background-size: cover !important;
+    background: url("/images/glass-bg.jpg") center center;
+}
+
+.course-cover {
+    background-size: cover !important;
+    background: url("/images/glass-bg.jpg") center center;
+}
+
+.glass-bg {
+    background: rgb(51 51 51 / 45%);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+
+.course-glass-bg {
+    background: rgb(51 51 51 / 45%);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(8px);
+}

@@ -33,6 +33,19 @@ function PersonalInfo() {
                 </Form.Item>
             </Col>
             <Col span={24} xs={12} md={8}>
+                <Form.Item rules={[
+                    {
+                        required: true,
+                        message: 'Required'
+                    }
+                ]} name="gender" label="Gender">
+                    <Select size={'large'} showSearch>
+                        <Select.Option value={'Male'}>Male</Select.Option>
+                        <Select.Option value={'Female'}>Female</Select.Option>
+                    </Select>
+                </Form.Item>
+            </Col>
+            <Col span={24} xs={12} md={8}>
                 <Form.Item name="id_type" label="National ID Type">
                     <Select size={'large'} showSearch>
                         {
@@ -43,6 +56,7 @@ function PersonalInfo() {
                     </Select>
                 </Form.Item>
             </Col>
+
             <Col span={24} xs={12} md={8}>
                 <Form.Item rules={[
                     {
@@ -58,20 +72,7 @@ function PersonalInfo() {
                     <DatePicker style={{width: '100%'}} size={'large'}/>
                 </Form.Item>
             </Col>
-            <Col span={24} xs={12} md={8}>
-                <Form.Item rules={[
-                    {
-                        required: true,
-                        message: 'Required'
-                    }
-                ]} name="gender" label="Gender">
-                    <Select size={'large'} showSearch>
-                        <Select.Option value={'Male'}>Male</Select.Option>
-                        <Select.Option value={'Female'}>Female</Select.Option>
-                    </Select>
-                </Form.Item>
-            </Col>
-            <Col span={24} xs={12} md={8}>
+            {/*<Col span={24} xs={12} md={8}>
                 <Form.Item name="country" label="Country">
                     <Input size={'large'}/>
                 </Form.Item>
@@ -103,11 +104,12 @@ function PersonalInfo() {
                     </Select>
                 </Form.Item>
             </Col>
+
             <Col span={24} xs={24} md={8}>
                 <Form.Item name="school_name" label="School Name/Institution Studied">
                     <Input size={'large'}/>
                 </Form.Item>
-            </Col>
+            </Col>*/}
             <Col span={16} xs={24} md={16}>
                 <Form.Item name="education_qualifications" label="Educational Qualifications (You can select multiple)">
                     <Select maxTagCount={'responsive'} mode={'multiple'} size={'large'} showSearch>
@@ -119,11 +121,11 @@ function PersonalInfo() {
                     </Select>
                 </Form.Item>
             </Col>
-            <Col span={24} xs={24} md={24}>
+            {/*<Col span={24} xs={24} md={24}>
                 <Form.Item name="other_qualification" label="Any Other Qualification (Specify)">
                     <Input size={'large'}/>
                 </Form.Item>
-            </Col>
+            </Col>*/}
             <Form.Item
                 hidden name="id" label="ID"
                 rules={[

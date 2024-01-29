@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\StaffResource;
-use App\Models\Staff;
 use App\Models\Registration;
+use App\Models\Staff;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
@@ -34,12 +35,19 @@ class HomeController extends Controller
 
     public function getEnrollmentChart(): JsonResponse
     {
-        $registration = Registration::query()->get()->groupBy('ongoingProgram.program.allPrograms.name')->map->count();
+        $branchId = Auth::user()->userable->branch_id;
+        $registration = Registration::query()
+            ->whereYear('created_at', '2023')
+            ->when(!Auth::user()?->hasRole('super-admin'), function ($query) use ($branchId) {
+                return $query->where('branch_id', $branchId);
+            })->get()->groupBy('ongoingProgram.program.allPrograms.name')
+            ->map->count();
 
         $enrollmentByMonth = Registration::query()
-            ->whereYear('created_at','2023')
-            ->get()
-            ->groupBy(function ($val) {
+            ->whereYear('created_at', '2023')
+            ->when(!Auth::user()?->hasRole('super-admin'), function ($query) use ($branchId) {
+                return $query->where('branch_id', $branchId);
+            })->get()->groupBy(function ($val) {
                 return Carbon::parse($val->created_at)->format('M');
             })->map->count();
         return response()->json([
@@ -47,7 +55,6 @@ class HomeController extends Controller
             'byMonth' => $enrollmentByMonth
         ]);
     }
-
 
 
     public function getAllPermissions($id): JsonResponse

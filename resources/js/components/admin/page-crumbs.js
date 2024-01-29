@@ -39,7 +39,7 @@ const PageCrumbs = () => {
         })
     })
     return (
-        <div className={'p-3'}>
+        <div className={'bg-white rounded-lg p-3'}>
             <GlobalStyles/>
             <Breadcrumb items={ items } className={ 'flex' } separator={ <IoIosArrowForward/> }/>
         </div>

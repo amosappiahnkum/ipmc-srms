@@ -117,6 +117,27 @@ export const SidebarMenus = [
         permissions: ['add-batch', 'view-batch', 'generate-attendance'],
         icon: 'batch'
     },
+    {
+        title: 'My Programs',
+        link: '/my-programs',
+        children: [],
+        permissions: ['take-exam', 'view-exam'],
+        icon: 'home'
+    },
+    {
+        title: 'Upcoming Exam',
+        link: '/my-programs',
+        children: [],
+        permissions: ['view-exam'],
+        icon: 'home'
+    },
+    {
+        title: 'Completed Exam',
+        link: '/my-programs',
+        children: [],
+        permissions: ['view-exam'],
+        icon: 'home'
+    },
     // {
     //     title: 'Config',
     //     link: '/app/configs/departments',

@@ -5,30 +5,30 @@ namespace App\Console\Commands;
 use App\Imports\AllProgramsImport;
 use Illuminate\Console\Command;
 
-class ImportModules extends Command
+class ImportProgramsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:modules';
+    protected $signature = 'import:programs';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Laravel Excel Importer';
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $this->output->title('Importing Programs');
 
-        (new \App\Imports\ImportModules)->withOutput($this->output)->import(public_path('data/modules.xlsx'));
+        (new AllProgramsImport)->withOutput($this->output)->import(public_path('data/programs.xlsx'));
 
         $this->output->success('Programs Import successful');
     }

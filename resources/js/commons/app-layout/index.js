@@ -8,11 +8,12 @@ import AppHeader from "./app-header";
 import AppSidebar from "./app-sidebar";
 import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
 import MobileMenu from "./mobile-menu";
+import {Outlet} from "react-router";
 
 const AppLayout = (props) => {
     const [loading, setLoading] = useState(true)
 
-    const {children, getRoles, getCommonData} = props
+    const {getRoles, getCommonData} = props
     const [collapsed, setCollapsed] = useState(false);
 
     useEffect(() => {
@@ -45,7 +46,7 @@ const AppLayout = (props) => {
                     }/>
                 <Layout.Content
                     style={{margin: '5px', minHeight: '100vh'}}>
-                    {children}
+                    <Outlet/>
                 </Layout.Content>
             </Layout>
         </Layout>

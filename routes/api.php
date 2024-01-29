@@ -49,12 +49,18 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/programs', ProgramController::class);
     Route::get('/all-programs', [ProgramController::class, 'allPrograms']);
-    Route::post('/students/{student}/enroll', [StudentController::class, 'enrollStudent']);
+    Route::prefix('students')->group(static function () {
+        Route::post('/{student}/enroll', [StudentController::class, 'enrollStudent']);
+        Route::get('/{student}/my-programs', [StudentController::class, 'getMyPrograms']);
+        Route::get('/my-programs/{ongoing_program}', [StudentController::class, 'getProgramDetail']);
+    });
     Route::apiResource('/students', StudentController::class);
     Route::apiResource('/staff', StaffController::class);
     Route::prefix('ongoing-programs')->group(function () {
         Route::post('attendance', [OngoingProgramController::class, 'printAttendance']);
         Route::post('batch-plan', [OngoingProgramController::class, 'printBatchPlan']);
+        Route::post('/{program_module}/get-questions', [OngoingProgramController::class, 'getExamQuestions']);
+        Route::post('schedule-exam', [OngoingProgramController::class, 'scheduleExam']);
         Route::get('{ongoing_program}/students', [OngoingProgramController::class, 'getBatchStudents']);
     });
     Route::apiResource('/ongoing-programs', OngoingProgramController::class);

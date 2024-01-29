@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Enums\RegistrationType;
 use App\Enums\StudentStatus;
 use App\Exports\StudentExport;
+use App\Helpers\Helper;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\EnquiryResource;
+use App\Http\Resources\ProgramDetailResource;
 use App\Http\Resources\RegistrationResource;
 use App\Http\Resources\StudentResource;
-use App\Models\AllPrograms;
 use App\Models\Enquiry;
-use App\Models\Registration;
+use App\Models\OngoingProgram;
 use App\Models\Program;
+use App\Models\Registration;
 use App\Models\Sponsor;
 use App\Models\Student;
 use App\Traits\UsePrint;
@@ -21,12 +23,15 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Permission\Models\Role;
 
 class StudentController extends Controller
 {
@@ -58,7 +63,7 @@ class StudentController extends Controller
             });
         });
 
-        if(!Auth::user()->hasRole('super-admin')) {
+        if(!Auth::user()?->hasRole('super-admin')) {
             $studentsQuery->where('branch_id', Auth::user()->userable->branch_id);
         }
 
@@ -94,8 +99,23 @@ class StudentController extends Controller
 
             $request['user_id'] = Auth::id();
             $request['sponsor_id'] = $sponsor->id;
+            $request['branch_id'] = Auth::user()->userable->branch_id;
             $request['dob'] = Carbon::parse($request->dob)->format('Y-m-d');
+            $request['status'] = StudentStatus::IN_SCHOOL->value;
+
             $student = Student::create($request->all());
+
+            $userName = Helper::createUserName($request->first_name, $request->last_name);
+
+            $user = $student->user()->create([
+                'username' => $userName,
+                'email' => $request->email,
+                'password' => Hash::make($userName)
+            ]);
+
+            $role = Role::query()->where('name', 'student')->first();
+
+            $user->roles()->syncWithoutDetaching($role?->id);
 
             DB::commit();
             return new StudentResource($student);
@@ -237,5 +257,17 @@ class StudentController extends Controller
     {
         $data = new EnquiryResource($enquiry);
         return $this->pdf('print.students.enquiry', $data , 'Enquiry');
+    }
+
+    public function getMyPrograms(Student $student): AnonymousResourceCollection
+    {
+        $programs = Registration::query()->where('student_id', $student->id)->paginate(10);
+
+        return RegistrationResource::collection($programs);
+    }
+
+    public function getProgramDetail(OngoingProgram $ongoingProgram): ProgramDetailResource
+    {
+        return new ProgramDetailResource($ongoingProgram);
     }
 }

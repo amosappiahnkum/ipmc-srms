@@ -50,6 +50,11 @@ class OngoingProgram extends Model
         return $this->hasMany(Registration::class);
     }
 
+    public function exams(): HasMany
+    {
+        return $this->hasMany(Exam::class);
+    }
+
     protected function batchTime(): Attribute
     {
         return Attribute::make(

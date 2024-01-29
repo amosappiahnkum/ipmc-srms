@@ -14,7 +14,7 @@ use App\Models\OngoingProgram;
 use App\Models\Program;
 use App\Models\Sponsor;
 use App\Models\Student;
-use App\Models\Subjects;
+use App\Models\Module;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;

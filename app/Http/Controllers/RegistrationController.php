@@ -7,6 +7,7 @@ use App\Http\Requests\StoreRegistrationRequest;
 use App\Http\Requests\UpdateRegistrationRequest;
 use App\Http\Resources\RegistrationResource;
 use App\Models\Registration;
+use App\Models\Student;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class RegistrationController extends Controller
             return $q->whereBetween('created_at', $this->dateRange($request->date));
         });
 
-        if (!Auth::user()->hasRole('super-admin')) {
+        if (!Auth::user()?->hasRole('super-admin')) {
             $registrationQuery->where('branch_id', Auth::user()->userable->branch_id);
         }
 
@@ -63,11 +64,18 @@ class RegistrationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRegistrationRequest $request, Registration $registration): RegistrationResource|\Illuminate\Http\JsonResponse
-    {
+    public function update(
+        UpdateRegistrationRequest $request,
+        Registration $registration
+    ): RegistrationResource|\Illuminate\Http\JsonResponse {
         DB::beginTransaction();
         try {
             $registration->update($request->all());
+
+            $student = Student::find($registration->student_id);
+            $student->update([
+                'status' => $request->status
+            ]);
 
             DB::commit();
 

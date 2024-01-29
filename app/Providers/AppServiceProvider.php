@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\RegularExam;
+use App\Models\ResitExam;
 use App\Models\Staff;
+use App\Models\Student;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -34,7 +37,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Relation::morphMap([
-            'Staff' => Staff::class
+            'Staff' => Staff::class,
+            'Student' => Student::class,
+            'Resit' => ResitExam::class,
+            'Regular' => RegularExam::class,
         ]);
     }
 }

@@ -42,7 +42,7 @@ function PageWrapper() {
         </Row>
     )
     return (
-        <div className={'bg-white rounded-lg'}>
+        <div className={'rounded-lg'}>
             <PageCrumbs/>
             <div className={'m-2'}>
                 {/*{PageTitle}*/}

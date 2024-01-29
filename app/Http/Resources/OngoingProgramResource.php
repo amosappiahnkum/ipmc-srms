@@ -30,6 +30,7 @@ class OngoingProgramResource extends JsonResource
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'students' => $this->registrations->count(),
+            'modules' => SubjectResource::collection($this->program->modules)
         ];
     }
 }

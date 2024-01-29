@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\QuestionBank;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -80,5 +81,39 @@ class Helper
         }
 
         return $username;
+    }
+
+    /**
+     * @param string $duration
+     * @return int
+     */
+    public static function timeInMinutes(string $duration): int
+    {
+        $base = Carbon::now();
+        $modified = $base->copy()->modify($duration);
+        return $base->diffInMinutes($modified);
+    }
+
+    public static function getQuestions(int $subjectId, int $total): array
+    {
+        $questions = QuestionBank::query()->where('module_id', $subjectId)
+            ->inRandomOrder()->limit($total)->get();
+
+        return [
+            'questions' => $questions->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'text' => $item->text,
+                    'options' => $item->options,
+                    'type' => $item->type,
+                    'mark' => $item->mark,
+                    'timed' => $item->timed,
+                    'time' => $item->time,
+                ];
+            }),
+            'answers' => $questions->map(function ($item) {
+                return $item->correct_answer;
+            })
+        ];
     }
 }

@@ -24,7 +24,7 @@ function PersonalDetail() {
             <Descriptions.Item label="Sponsor Name">{data?.sponsor_name ?? '-'}</Descriptions.Item>
             <Descriptions.Item label="Sponsor Email">{data?.sponsor_email ?? '-'}</Descriptions.Item>
             <Descriptions.Item label="Sponsor Number">{data?.sponsor_number ?? '-'}</Descriptions.Item>
-            <Descriptions.Item label="Educational Qualification">{data?.education_qualifications.toString() ?? '-'}</Descriptions.Item>
+            <Descriptions.Item label="Educational Qualification">{data?.education_qualifications?.toString() ?? '-'}</Descriptions.Item>
         </Descriptions>
     )
 }

@@ -10,6 +10,7 @@ function AppSidebar(props) {
     return (
         <Affix offsetTop={1}>
             <Layout.Sider
+                className={'shadow-md'}
                 style={{overflow: 'auto', height: '100vh'}}
                 theme={'light'}
                 trigger={null}

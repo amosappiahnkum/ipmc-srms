@@ -19,7 +19,7 @@ function Programs({getEnquiryPrograms}) {
         <Spin spinning={loading}>
             {
                 !loading &&
-                <>
+                <div className={'chat-content h-[calc(100vh-500px)] md:h-[calc(100vh-300px)]'}>
                     <div>
                         <Form.Item rules={[
                             {
@@ -27,55 +27,27 @@ function Programs({getEnquiryPrograms}) {
                                 message: 'Choose at least one program'
                             }
                         ]} name="programs" label="">
-                            <Checkbox.Group>
-                                <div className={'grid grid-cols-1 md:grid-cols-2 gap-2'}>
-                                    <div className={`p-2 rounded-lg bg-gray-100`}>
-                                        <p className={'text-lg'}>{programTypes[0]}</p>
-                                        <div>
-                                            {
-                                                programs[programTypes[0]].map((program) => (
-                                                    <Checkbox
-                                                        key={program.id}
-                                                        value={program.id}
-                                                        style={{lineHeight: '32px'}}>
-                                                        {program.name}
-                                                    </Checkbox>
-                                                ))
-                                            }
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className={'p-2 rounded-lg bg-gray-200 mb-2'}>
-                                            <p className={'text-lg'}>{programTypes[1]}</p>
-                                            <div>
-                                                {
-                                                    programs[programTypes[1]].map((program) => (
-                                                        <Checkbox
-                                                            key={program.id}
-                                                            value={program.id}
-                                                            style={{lineHeight: '32px'}}>
-                                                            {program.name}
-                                                        </Checkbox>
-                                                    ))
-                                                }
+                            <Checkbox.Group rootClassName={'program-check'}>
+                                <div className={'grid grid-cols-1 md:grid-cols-3 gap-2'}>
+                                    {
+                                        programTypes.map((item, index) => (
+                                            <div key={item} className={`p-2 rounded-lg bg-gray-${index + 1}00`}>
+                                                <p className={'text-base'}>{item}</p>
+                                                <div>
+                                                    {
+                                                        programs[item].map((program) => (
+                                                            <Checkbox
+                                                                key={program.id}
+                                                                value={program.id}
+                                                                style={{lineHeight: '32px'}}>
+                                                                {program.name}
+                                                            </Checkbox>
+                                                        ))
+                                                    }
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className={'p-2 rounded-lg bg-gray-200'}>
-                                            <p className={'text-lg'}>{programTypes[2]}</p>
-                                            <div>
-                                                {
-                                                    programs[programTypes[2]].map((program) => (
-                                                        <Checkbox
-                                                            key={program.id}
-                                                            value={program.id}
-                                                            style={{lineHeight: '32px'}}>
-                                                            {program.name}
-                                                        </Checkbox>
-                                                    ))
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
+                                        ))
+                                    }
                                 </div>
                             </Checkbox.Group>
                         </Form.Item>
@@ -85,7 +57,7 @@ function Programs({getEnquiryPrograms}) {
                             <Input size={'large'}/>
                         </Form.Item>
                     </div>
-                </>
+                </div>
             }
 
         </Spin>

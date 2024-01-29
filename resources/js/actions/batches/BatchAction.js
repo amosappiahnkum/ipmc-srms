@@ -6,8 +6,8 @@ import {
     applySearch,
     getAllBatches,
     getBatch,
-    getBatches, getBatchStudents,
-    removeBatch,
+    getBatches, getBatchStudents, getExamQuestions,
+    removeBatch, scheduleExam,
     updateBatch,
 } from './ActionCreators'
 
@@ -20,6 +20,27 @@ export const handleAddBatch = (batch) => (dispatch) => {
     return new Promise((resolve, reject) => {
         api().post('/ongoing-programs', batch).then((res) => {
             dispatch(addBatch(res.data))
+            resolve(res)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+export const handleScheduleExam = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        api().post('/ongoing-programs/schedule-exam', data).then((res) => {
+            dispatch(scheduleExam(res.data))
+            resolve(res)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+export const handleGetExamQuestions = (subjectId, data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        api().post(`/ongoing-programs/${subjectId}/get-questions`, data).then((res) => {
+            dispatch(getExamQuestions(res.data))
             resolve(res)
         }).catch((err) => {
             reject(err)

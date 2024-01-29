@@ -76,7 +76,7 @@ class StaffController extends Controller
             $user = $staff->user()->create([
                 'username' => $userName,
                 'email' => $request->email,
-                'password' => Hash::make($userName),
+                'password' => Hash::make($userName)
             ]);
 
             $role = Role::query()->where('name', $request->type)->first();

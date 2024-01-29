@@ -42,13 +42,12 @@ function AllBatches(props) {
                 filterObj={filter}
                 callbackFunction={getBatches}
                 data={data} meta={meta}>
-                <Table.Column title={'Students'} render={(text, {program, status}) => (
+                <Table.Column title={'Program'} render={(text, {program, status}) => (
                     <>
                         <p>{program}</p>
                         <Tag color={colors[status]}>{status}</Tag>
                     </>
                 )}/>
-                <Column title="Program" dataIndex={''}/>
                 <Column title="room" dataIndex={'room'}/>
                 <Column title="instructor" dataIndex={'staff'}/>
                 <Column title="start time" dataIndex={'batch_time'}/>

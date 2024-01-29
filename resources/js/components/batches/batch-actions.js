@@ -29,6 +29,13 @@ function BatchActions({record}) {
                     </p>
                 </TlaAddNew>
             </ValidateComponent>
+            <ValidateComponent permissions={['view-batch-plan']}>
+                <TlaAddNew data={{batch_id: record.id, modules: record.modules}} link={'/batches/schedule-exam'}>
+                    <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm'}>
+                        Schedule Exam
+                    </p>
+                </TlaAddNew>
+            </ValidateComponent>
         </TblDropdown>
     )
 }

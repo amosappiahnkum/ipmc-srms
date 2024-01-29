@@ -11,6 +11,7 @@ const initialState = {
     },
     batch: {},
     allBatches: [],
+    exam: {},
     filter: {
         program_id: 'all',
         staff_id: 'all',
@@ -42,6 +43,11 @@ export default function batchReducer(state = initialState, action) {
                 batches: {...state.batches, data: state.batches.data.concat(action.payload)}
             }
 
+        case Types.GET_EXAM_QUESTIONS:
+            return {
+                ...state,
+                exam: action.payload
+            }
         case Types.UPDATE_BATCH:
             return {
                 ...state,

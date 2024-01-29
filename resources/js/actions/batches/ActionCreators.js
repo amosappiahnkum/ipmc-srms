@@ -44,6 +44,19 @@ export const addBatch = (payload) => {
     }
 }
 
+export const scheduleExam = (payload) => {
+    return {
+        type: Types.SCHEDULE_EXAM,
+        payload: payload
+    }
+}
+export const getExamQuestions = (payload) => {
+    return {
+        type: Types.GET_EXAM_QUESTIONS,
+        payload: payload
+    }
+}
+
 export const removeBatch = (id) => {
     return {
         type: Types.REMOVE_BATCH,

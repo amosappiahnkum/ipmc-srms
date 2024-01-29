@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSubjectsRequest;
 use App\Http\Requests\UpdateSubjectsRequest;
-use App\Models\Subjects;
+use App\Models\Module;
 
 class SubjectsController extends Controller
 {
@@ -35,7 +35,7 @@ class SubjectsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Subjects $subjects)
+    public function show(Module $subjects)
     {
         //
     }
@@ -43,7 +43,7 @@ class SubjectsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Subjects $subjects)
+    public function edit(Module $subjects)
     {
         //
     }
@@ -51,7 +51,7 @@ class SubjectsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSubjectsRequest $request, Subjects $subjects)
+    public function update(UpdateSubjectsRequest $request, Module $subjects)
     {
         //
     }
@@ -59,7 +59,7 @@ class SubjectsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Subjects $subjects)
+    public function destroy(Module $subjects)
     {
         //
     }
