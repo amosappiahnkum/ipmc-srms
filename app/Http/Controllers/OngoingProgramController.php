@@ -13,11 +13,13 @@ use App\Models\OngoingProgram;
 use App\Models\ProgramModule;
 use App\Models\Registration;
 use App\Models\RegularExam;
-use App\Models\Module;
+use App\Models\Result;
 use App\Traits\UsePrint;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -25,6 +27,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use JsonException;
 use Maatwebsite\Excel\Facades\Excel;
@@ -268,7 +271,6 @@ class OngoingProgramController extends Controller
                 'program_module_id' => $request->program_module_id,
             ]);
 
-
             $regularExam->exam()->create([
                 'program_module_id' => $request->program_module_id,
                 'ongoing_program_id' => $request->batch_id,
@@ -284,7 +286,7 @@ class OngoingProgramController extends Controller
             return response()->json([
                 "message" => "Exam created"
             ]);
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
 
             Log::error('schedule exam', [$exception]);
@@ -294,7 +296,7 @@ class OngoingProgramController extends Controller
         }
     }
 
-    public function getExamQuestions(Request $request, ProgramModule $programModule)
+    public function getExamQuestions(Request $request, ProgramModule $programModule): Model|Builder|JsonResponse
     {
         $exam = Exam::query()->where('ongoing_program_id', $request->ongoing_program_id)
             ->where('program_module_id', $programModule->id)
@@ -302,10 +304,77 @@ class OngoingProgramController extends Controller
 
         if (!$exam) {
             return response()->json([
-                'message'  => 'Exam not valid or has expired'
+                'message' => 'Exam not valid or has expired'
             ], 400);
         }
 
         return $exam;
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function submitResult(Request $request): JsonResponse
+    {
+        $exam = Exam::findOrFail($request->exam_id);
+        DB::beginTransaction();
+
+        try {
+            $totalMark = $this->calculateMarks($request->answers, $exam);
+            Result::updateOrCreate([
+                'student_id' => $request->student_id,
+                'exam_id' => $exam->id,
+                'program_module_id' => $request->program_module_id,
+            ], [
+                'current_question' => null,
+                'student_id' => $request->student_id,
+                'exam_id' => $exam->id,
+                'program_module_id' => $request->program_module_id,
+                'total_questions' => $request->total_questions,
+                'total_mark' => $request->total_questions * 2,
+                'time_left' => $request->time_left,
+                'key_strokes' => json_encode($request->key_strokes, JSON_THROW_ON_ERROR),
+                'mark' => $totalMark * 2
+            ]);
+
+            DB::commit();
+            return response()->json([
+                'mark' => $totalMark,
+                'total_questions' => $request->total_questions
+            ]);
+        }catch (\Exception $exception) {
+            Log::info('Save Result', [$exception]);
+
+            DB::rollBack();
+
+            return response()->json([
+                'message' => 'Oops! Could not save your result, try again!'
+            ], 400);
+        }
+    }
+
+    /**
+     * @param array $studentAnswers
+     * @param Exam $exam
+     * @return int
+     */
+    public function calculateMarks(array $studentAnswers, Exam $exam): int
+    {
+
+        $answers = collect($studentAnswers);
+        $correctAnswers = collect($exam->answer);
+
+        $totalMark = 0;
+
+        foreach ($answers as $answer) {
+            $correctA = $correctAnswers->where('id', $answer['id'])->first();
+
+            if ($correctA && Hash::check($answer['answer'], $correctA['answer'])) {
+                ++$totalMark;
+            }
+        }
+
+        return $totalMark;
     }
 }

@@ -12,12 +12,22 @@ const initialState = {
     batch: {},
     allBatches: [],
     exam: {},
+    examAnswers: [],
+    currentExamQuestion: 0,
     filter: {
         program_id: 'all',
         staff_id: 'all',
         start_date: null,
         end_date: null
     }
+}
+
+export const addOrRemoveItem = (items, newItem) => {
+    const i = items.findIndex(itm => itm.id === newItem.id)
+
+    if (i > -1) items[i] = newItem
+    else items.push(newItem)
+    return items
 }
 
 export default function batchReducer(state = initialState, action) {
@@ -66,6 +76,19 @@ export default function batchReducer(state = initialState, action) {
                 batches: {...state.batches, data: state.batches.data.filter((batch) => batch.id !== action.id)}
             }
 
+        case Types.SWITCH_QUESTION:
+            return {
+                ...state,
+                currentExamQuestion: action.payload === 'next' ? (state.currentExamQuestion + 1) : (state.currentExamQuestion - 1)
+            }
+
+        case Types.ANSWER_QUESTION:
+            // eslint-disable-next-line no-case-declarations
+            const answers = addOrRemoveItem(state.examAnswers, action.payload);
+            return {
+                ...state,
+                examAnswers: [...answers]
+            }
         default:
             return state
     }

@@ -37,6 +37,7 @@ class AppSetup extends Command
             Artisan::call('import:programs');
             Artisan::call('import:modules');
             Artisan::call('update:holidays');
+            Artisan::call('import:questions');
             Artisan::call('db:seed');
 
             $this->output->success('Setup Complete');

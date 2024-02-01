@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Instruction from '../../assets/img/instruction.svg'
 import {Checkbox, Spin} from "antd";
 import {FiCheck, FiChevronsLeft} from "react-icons/fi";
@@ -15,7 +15,19 @@ function Instructions() {
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        window.addEventListener("DOMContentLoaded", () => {
+            const button = document.getElementById("btn");
+            button.addEventListener("click", (e) => {
+                // console.log(e.target.checked)
+                document.body.requestFullscreen();
+            });
+        });
+    }, [])
+
     const getExamQuestions = () => {
+
         setLoading(true)
         dispatch(handleGetExamQuestions(data?.module?.id, data?.module?.exam_available))
             .then(() => {
@@ -38,7 +50,7 @@ function Instructions() {
                         <p className={'flex items-center gap-x-2'}><FiCheck/> Do not switch browser tabs</p>
                     </div>
                 </div>
-                <Checkbox>
+                <Checkbox id={'my-check'}>
                     <span className={'text-error-600 '}>I agree to follow all the instruction listed above.</span>
                 </Checkbox>
                 <div className={'flex items-center gap-x-2'}>
@@ -49,7 +61,7 @@ function Instructions() {
                         </button>
                     </Link>
                     <Spin spinning={loading} indicator={<LoadingOutlined/>} tip={'Please wait'}>
-                        <button
+                        <button id={'btn'}
                             onClick={getExamQuestions}
                             className={'bg-error-600 text-white px-3 h-12 text-base font-medium !rounded-lg mt-3 flex items-center gap-x-2'}>
                             Start Exam

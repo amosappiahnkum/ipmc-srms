@@ -50,9 +50,30 @@ export const scheduleExam = (payload) => {
         payload: payload
     }
 }
+
 export const getExamQuestions = (payload) => {
     return {
         type: Types.GET_EXAM_QUESTIONS,
+        payload: payload
+    }
+}
+
+export const submitResult = (payload) => {
+    return {
+        type: Types.SUBMIT_RESULT,
+        payload: payload
+    }
+}
+export const switchQuestion = (payload) => {
+    return {
+        type: Types.SWITCH_QUESTION,
+        payload: payload
+    }
+}
+
+export const answerQuestion = (payload) => {
+    return {
+        type: Types.ANSWER_QUESTION,
         payload: payload
     }
 }

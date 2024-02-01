@@ -13,7 +13,7 @@ class ProgramModule extends Model
     use HasFactory;
 
     protected $fillable = [
-        'program_module_id',
+        'module_id',
         'ongoing_program_id',
         'program_id',
         'duration_id',

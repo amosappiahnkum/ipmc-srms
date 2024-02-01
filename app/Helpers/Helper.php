@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
@@ -91,7 +92,8 @@ class Helper
     {
         $base = Carbon::now();
         $modified = $base->copy()->modify($duration);
-        return $base->diffInMinutes($modified);
+
+        return $base->diffInSeconds($modified);
     }
 
     public static function getQuestions(int $subjectId, int $total): array
@@ -99,12 +101,14 @@ class Helper
         $questions = QuestionBank::query()->where('module_id', $subjectId)
             ->inRandomOrder()->limit($total)->get();
 
+        Log::info('qu', [$questions]);
+
         return [
             'questions' => $questions->map(function ($item) {
                 return [
                     'id' => $item->id,
                     'text' => $item->text,
-                    'options' => $item->options,
+                    'options' => json_decode($item->answers, false, 512, JSON_THROW_ON_ERROR),
                     'type' => $item->type,
                     'mark' => $item->mark,
                     'timed' => $item->timed,
@@ -112,7 +116,10 @@ class Helper
                 ];
             }),
             'answers' => $questions->map(function ($item) {
-                return $item->correct_answer;
+                return [
+                    'id' => $item->id,
+                    'answer' => $item->correct_answer
+                ];
             })
         ];
     }

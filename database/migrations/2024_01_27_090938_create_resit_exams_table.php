@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('resit_exams', static function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
             $table->foreignIdFor(Student::class);
             $table->foreignIdFor(ProgramModule::class);
             $table->timestamps();

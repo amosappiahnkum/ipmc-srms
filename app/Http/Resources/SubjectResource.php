@@ -12,7 +12,7 @@ class SubjectResource extends JsonResource
 
     public function checkExamDate($data)
     {
-        if ($data && Carbon::parse($data->exam->date)->isToday()) {
+        if ($data && Carbon::parse($data?->exam?->date)->isToday()) {
             return [
                 'id' => $data->id,
                 'ongoing_program_id' => $data->ongoing_program_id,

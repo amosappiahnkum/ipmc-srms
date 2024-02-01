@@ -16,15 +16,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('exams', static function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
             $table->foreignIdFor(ProgramModule::class);
             $table->foreignIdFor(OngoingProgram::class);
-            $table->morphs('examable');
+            $table->uuidMorphs('examable');
             $table->jsonb('questions');
             $table->longText('answer');
             $table->date('date');
             $table->time('time');
-            $table->string('duration')->comment('in-minutes');
+            $table->string('duration')->comment('in-seconds');
             $table->boolean('shuffle')->nullable()->default(true)->comment('shuffle questions');
             $table->timestamps();
         });

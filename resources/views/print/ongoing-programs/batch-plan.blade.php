@@ -82,7 +82,7 @@
         @foreach($data['modules'] as $key => $module)
             <tr>
                 <td style="width: 20px !important;">{{$i}}</td>
-                <td>{{ucwords(strtolower($module->name))}}</td>
+                <td>{{ucwords(strtolower($module->module->name))}}</td>
                 <td>{{$module->duration->duration}} Week{{$module->duration->duration > 1 ? 's' : ''}}</td>
                 @php($endDate = \App\Helpers\Helper::getDate($key == 0 ? $data['batch']->start_date : $startDate, $module->duration->duration, $key))
                 <td>

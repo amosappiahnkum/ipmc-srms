@@ -10,12 +10,18 @@ class Result extends Model
     use HasFactory;
 
     protected $fillable = [
+        'current_question',
         'student_id',
         'exam_id',
-        'module_id',
-        'current_question',
+        'program_module_id',
         'total_questions',
         'total_mark',
+        'time_left',
+        'key_strokes',
         'mark'
+    ];
+
+    protected $casts = [
+      'key_strokes' => 'array'
     ];
 }

@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
         Route::post('batch-plan', [OngoingProgramController::class, 'printBatchPlan']);
         Route::post('/{program_module}/get-questions', [OngoingProgramController::class, 'getExamQuestions']);
         Route::post('schedule-exam', [OngoingProgramController::class, 'scheduleExam']);
+        Route::post('submit-result', [OngoingProgramController::class, 'submitResult']);
         Route::get('{ongoing_program}/students', [OngoingProgramController::class, 'getBatchStudents']);
     });
     Route::apiResource('/ongoing-programs', OngoingProgramController::class);

@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Http\Traits\UseUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Exam extends Model
 {
-    use HasFactory;
+    use HasFactory, UseUuid;
 
     protected $fillable = [
         'program_module_id',
@@ -20,6 +21,10 @@ class Exam extends Model
         'duration',
         'time_left',
         'shuffle'
+    ];
+
+    protected $hidden = [
+      'answer'
     ];
 
     protected $casts = [
