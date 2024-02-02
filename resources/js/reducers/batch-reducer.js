@@ -77,9 +77,19 @@ export default function batchReducer(state = initialState, action) {
             }
 
         case Types.SWITCH_QUESTION:
+            // eslint-disable-next-line no-case-declarations
+            let current = 0;
+
+            if (action.payload === 'next') {
+                current = state.currentExamQuestion + 1
+            } else if (action.payload === 'prev') {
+                current = state.currentExamQuestion - 1
+            } else {
+                current = action.payload
+            }
             return {
                 ...state,
-                currentExamQuestion: action.payload === 'next' ? (state.currentExamQuestion + 1) : (state.currentExamQuestion - 1)
+                currentExamQuestion: current
             }
 
         case Types.ANSWER_QUESTION:

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Traits\UseUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Exam extends Model
@@ -35,5 +36,15 @@ class Exam extends Model
     public function exam_type(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function ongoingProgram(): BelongsTo
+    {
+        return $this->belongsTo(OngoingProgram::class);
+    }
+
+    public function programModule(): BelongsTo
+    {
+        return $this->belongsTo(ProgramModule::class);
     }
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import Instruction from '../../assets/img/instruction.svg'
 import {Checkbox, Spin} from "antd";
 import {FiCheck, FiChevronsLeft} from "react-icons/fi";
@@ -16,15 +16,16 @@ function Instructions() {
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-        window.addEventListener("DOMContentLoaded", () => {
-            const button = document.getElementById("btn");
-            button.addEventListener("click", (e) => {
-                // console.log(e.target.checked)
-                document.body.requestFullscreen();
-            });
-        });
-    }, [])
+    const toggleFullScreen = () => {
+        const isFullScreen = document.fullscreenElement
+
+        if (isFullScreen) {
+            document.exitFullscreen();
+        }else {
+            document.body.requestFullscreen();
+        }
+
+    }
 
     const getExamQuestions = () => {
 
@@ -46,16 +47,17 @@ function Instructions() {
                         Read the following instructions <br/> carefully before you start the exam
                     </h3>
                     <div className={'mt-3'}>
-                        <p className={'flex items-center gap-x-2'}><FiCheck/> Do not open any browser</p>
+                        <p className={'flex items-center gap-x-2'}><FiCheck/> Do not open any browser tab</p>
                         <p className={'flex items-center gap-x-2'}><FiCheck/> Do not switch browser tabs</p>
+                        <p className={'flex items-center gap-x-2'}><FiCheck/> Do not use the keyboard</p>
                     </div>
                 </div>
-                <Checkbox id={'my-check'}>
+                <Checkbox onChange={toggleFullScreen}>
                     <span className={'text-error-600 '}>I agree to follow all the instruction listed above.</span>
                 </Checkbox>
                 <div className={'flex items-center gap-x-2'}>
                     <Link to={'/'}>
-                        <button
+                        <button onClick={() => {document.exitFullscreen()}}
                             className={'bg-white border-gray-300 text-black px-3 h-12 text-base font-medium !rounded-lg mt-3 flex items-center gap-x-1'}>
                             <FiChevronsLeft/> Go Back
                         </button>

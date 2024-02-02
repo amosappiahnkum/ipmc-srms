@@ -15,15 +15,17 @@ class ExamResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $here = Arr::except($this->exam->questions, ['correct_answer']);
         return [
+            'ongoing_program_id' => $this->ongoing_program_id,
+            'program' => $this->ongoingProgram->program->allPrograms->name,
+            'subject' => $this->programModule->module->name,
+            'shuffle' => $this->shuffle,
             'id' => $this->id,
-            'subject_id' => $this->subject_id,
-            'questions' => $here,
-            'date' => $this->exam->date,
-            'time' => $this->exam->time,
-            'duration' => $this->exam->duration,
-            'time_left' => $this->exam->time_left
+            'questions' => $this->questions,
+            'date' => $this->date,
+            'time' => $this->time,
+            'duration' => $this->duration,
+            'time_left' => $this->time_left
         ];
     }
 }

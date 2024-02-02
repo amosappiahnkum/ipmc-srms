@@ -101,8 +101,6 @@ class Helper
         $questions = QuestionBank::query()->where('module_id', $subjectId)
             ->inRandomOrder()->limit($total)->get();
 
-        Log::info('qu', [$questions]);
-
         return [
             'questions' => $questions->map(function ($item) {
                 return [

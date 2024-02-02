@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Http\Traits\UseUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model
 {
-    use HasFactory;
+    use HasFactory, UseUuid;
 
     protected $fillable = [
         'current_question',

@@ -6,6 +6,7 @@ use App\Enums\RegistrationType;
 use App\Exports\OngoingProgramExport;
 use App\Helpers\Helper;
 use App\Http\Resources\BatchStudentsResource;
+use App\Http\Resources\ExamResource;
 use App\Http\Resources\OngoingProgramResource;
 use App\Models\Exam;
 use App\Models\Holiday;
@@ -296,7 +297,7 @@ class OngoingProgramController extends Controller
         }
     }
 
-    public function getExamQuestions(Request $request, ProgramModule $programModule): Model|Builder|JsonResponse
+    public function getExamQuestions(Request $request, ProgramModule $programModule)
     {
         $exam = Exam::query()->where('ongoing_program_id', $request->ongoing_program_id)
             ->where('program_module_id', $programModule->id)
@@ -308,7 +309,7 @@ class OngoingProgramController extends Controller
             ], 400);
         }
 
-        return $exam;
+        return new ExamResource($exam);
     }
 
     /**
@@ -322,6 +323,7 @@ class OngoingProgramController extends Controller
 
         try {
             $totalMark = $this->calculateMarks($request->answers, $exam);
+
             Result::updateOrCreate([
                 'student_id' => $request->student_id,
                 'exam_id' => $exam->id,
@@ -369,6 +371,10 @@ class OngoingProgramController extends Controller
 
         foreach ($answers as $answer) {
             $correctA = $correctAnswers->where('id', $answer['id'])->first();
+
+            if (is_array($answer['answer'])) {
+                $answer['answer'] = implode(',', $answer['answer']);
+            }
 
             if ($correctA && Hash::check($answer['answer'], $correctA['answer'])) {
                 ++$totalMark;

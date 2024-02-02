@@ -15,7 +15,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('results', static function (Blueprint $table) {
-            $table->uuid();
+            $table->uuid('id');
             $table->integer('current_question')->nullable();
             $table->foreignIdFor(Student::class);
             $table->foreignIdFor(ProgramModule::class);
