@@ -3,19 +3,18 @@ import Instruction from '../../assets/img/instruction.svg'
 import {Checkbox, Spin} from "antd";
 import {FiCheck, FiChevronsLeft} from "react-icons/fi";
 import {Link, useNavigate} from "react-router-dom";
-import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {handleGetExamQuestions} from "../../actions/batches/BatchAction";
 import {LoadingOutlined} from "@ant-design/icons";
 
 function Instructions() {
-    const {name} = useParams()
     const data = useSelector(state => state.studentReducer.exam)
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
+    console.log(data)
     const toggleFullScreen = () => {
         const isFullScreen = document.fullscreenElement
 
@@ -30,7 +29,7 @@ function Instructions() {
     const getExamQuestions = () => {
 
         setLoading(true)
-        dispatch(handleGetExamQuestions(data?.module?.id, data?.module?.exam_available))
+        dispatch(handleGetExamQuestions(data?.module?.id))
             .then(() => {
                 navigate('begin')
                 setLoading(false)
@@ -38,12 +37,12 @@ function Instructions() {
     }
 
     return (
-        <div className={'flex justify-between items-start p-5 md:p-0 gap-x-3 w-full md:w-[900px] mx-auto h-screen'}>
+        <div className={'flex justify-between items-center p-5 md:p-0 gap-x-3 w-full md:w-[900px] mx-auto h-screen pt-10'}>
             <div>
                 <div className={'mb-3'}>
-                    <p className={'capitalize font-medium text-sm'}>{name}</p>
-                    <p className={'text-lg text-error-600 font-medium mb-2'}>Instructions</p>
-                    <h3 className={'text-2xl font-medium'}>
+                    <p className={'capitalize font-medium text-sm'}>Program: {data?.module?.program}</p>
+                    <p className={'capitalize font-medium text-sm'}>Module: {data?.module?.subject}</p>
+                    <h3 className={'text-2xl text-error-600 font-medium my-5'}>
                         Read the following instructions <br/> carefully before you start the exam
                     </h3>
                     <div className={'mt-3'}>

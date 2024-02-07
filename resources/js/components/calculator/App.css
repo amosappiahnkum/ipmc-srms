@@ -1,0 +1,13 @@
+.component-app {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 300px;
+  width: 300px;
+}
+
+.calculator {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}

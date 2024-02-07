@@ -9,14 +9,12 @@
 
     <title>{{ config('app.name', 'Student Resource Management System') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <style>
         button {
             border-radius: 0 !important;
@@ -27,6 +25,7 @@
             border-radius: 0 !important;
             background: none !important;
             font-size: 15px !important;
+            padding: 10px 20px;
         }
 
         /* Change the white to any color */
@@ -53,21 +52,20 @@
         }
 
         ::placeholder {
-            font-family: Montserrat, sans-serif !important;
+            font-family: Poppins, sans-serif !important;
         }
     </style>
-    <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
 </head>
 <body>
 <div style="background-image: url({{asset('/images/login.jpg')}});
-    background-size: cover; background-position: center center">
+    background-size: cover; background-position: left center">
     <main>
         <div class="container-fluid">
             <div class="relative">
-                <a class="btn btn-outline-dark absolute" style="top: 20px; right: 30px"
+                <a class="border broder-black p-3 rounded-lg absolute" style="top: 20px; right: 30px"
                    href="{{ route('make-enquiry') }}" target="_blank">Make Enquiry</a>
             </div>
-            <div class="row justify-content-center align-items-center " style="height: 100vh">
+            <div>
                 <div class="text-center position-absolute" style="top: 20px;">
                     @if(count($errors) > 0)
                         @foreach( $errors->all() as $message )
@@ -86,15 +84,24 @@
                         </div>
                     @endif
                 </div>
-                <div class="col-md-4 text-center" style="max-width: 400px">
-                    <div class="login-body shadow-md p-4 bg-white">
-                        <img height="auto" class="mx-auto" width="100" alt="logo" src="{{asset('images/logo.png')}}"/>
-                        <div>
-                            <div class="card-body">
-                                @yield('content')
+                <div class="grid grid-cols-2 h-screen">
+                    <div class="text-center flex flex-col items-center justify-center">
+
+                    </div>
+                    <div class="text-center bg-white flex items-center justify-center">
+                        <div class="p-4">
+                            <div class="mb-5">
+                                <img height="auto" class="mx-auto mb-5" width="100" alt="logo"
+                                     src="{{asset('images/logo.png')}}"/>
+
+                                <h3 class="text-3xl font-bold">Welcome!</h3>
+                                <p class="text-gray-500 text-sm">Enter your credential to access your Portal.</p>
                             </div>
-                            <div class="text-center">
-                                <p>&copy; {{date('Y')}} - Powered by TechLineAfrica</p>
+                            <div>
+                                @yield('content')
+                                <div class="text-center">
+                                    <small>&copy; {{date('Y')}} - Powered by TechLineAfrica</small>
+                                </div>
                             </div>
                         </div>
                     </div>

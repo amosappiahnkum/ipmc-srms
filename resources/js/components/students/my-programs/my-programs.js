@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {useEffect, useState} from 'react'
 import {connect, useDispatch, useSelector} from "react-redux";
-import {useOutletContext} from 'react-router'
 import {handleGetMyPrograms} from "../../../actions/students/StudentAction";
 import {FiCalendar} from "react-icons/fi";
 import {BiTime} from "react-icons/bi";
@@ -17,10 +16,7 @@ function MyPrograms(props) {
     const studentId = useSelector(state => state.userReducer?.loggedInUser?.staff_id)
     const {data} = useSelector(state => state.studentReducer.myPrograms)
     const [loading, setLoading] = useState(true)
-    const {setPageInfo} = useOutletContext();
     useEffect(() => {
-        setPageInfo({title: 'Students', addLink: '/students/form', buttonText: 'Student'})
-
         getMyPrograms(studentId, new URLSearchParams(filter)).then(() => {
             setLoading(false)
         })
@@ -31,18 +27,20 @@ function MyPrograms(props) {
 
     const goToDetails = (record) => {
         dispatch(getMyProgramDetail(record))
-        navigate(`${record?.ongoing_program?.id}/details`)
+        navigate(`/${record?.ongoing_program?.id}/${record?.ongoing_program?.program}`)
     }
 
     return (
         <Spin spinning={loading} indicator={<LoadingOutlined/>}>
+            <div className={'bg-white rounded-lg p-3 mb-2'}>
+                <p>My Programs</p>
+            </div>
             <div className={'pb-10 flex flex-wrap gap-3'}>
                 {
                     data.map((item) => (
-                        <div key={item.id}
-                             className={'bg-white shadow-md w-full md:w-[350px]'}>
-                            <div className={'glass-cover'}>
-                                <div className={'p-3 glass-bg h-40'}>
+                        <div key={item.id} className={'bg-white shadow-md w-full md:w-[350px] rounded-lg'}>
+                            <div className={'glass-cover rounded-t-lg'}>
+                                <div className={'p-3 glass-bg h-40 rounded-t-lg'}>
                                     <small className={'text-gray-300 uppercase font-bold'}>Program</small>
                                     <h3 className={'text-white text-xl text-wrap font-thin'}>{item?.ongoing_program?.program}</h3>
                                 </div>
@@ -66,7 +64,7 @@ function MyPrograms(props) {
                             </div>
                             <div onClick={() => {
                                 goToDetails(item)
-                            }} className={'cursor-pointer bg-primary-500 text-white py-3 text-center text-xs uppercase'}>
+                            }} className={'cursor-pointer bg-primary-500 text-white py-5 text-center text-xs uppercase rounded-b-lg'}>
                                 Detail
                             </div>
                         </div>
@@ -78,7 +76,6 @@ function MyPrograms(props) {
 }
 
 MyPrograms.propTypes = {
-    pageInfo: PropTypes.object,
     getMyPrograms: PropTypes.func,
     filter: PropTypes.object,
 }

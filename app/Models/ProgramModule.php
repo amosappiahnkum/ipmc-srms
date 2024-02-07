@@ -42,9 +42,9 @@ class ProgramModule extends Model
         return $this->belongsTo(Duration::class);
     }
 
-    public function regularExams(): HasOne
+    public function regularExams(): HasMany
     {
-        return $this->hasOne(RegularExam::class)->withDefault(null);
+        return $this->hasMany(RegularExam::class);
     }
 
     public function resitExams(): HasMany

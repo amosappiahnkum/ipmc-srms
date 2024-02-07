@@ -6,21 +6,22 @@ use App\Enums\RegistrationType;
 use App\Exports\OngoingProgramExport;
 use App\Helpers\Helper;
 use App\Http\Resources\BatchStudentsResource;
+use App\Http\Resources\ExamQuestionResource;
 use App\Http\Resources\ExamResource;
 use App\Http\Resources\OngoingProgramResource;
+use App\Http\Resources\RegularExamResource;
 use App\Models\Exam;
 use App\Models\Holiday;
 use App\Models\OngoingProgram;
 use App\Models\ProgramModule;
 use App\Models\Registration;
 use App\Models\RegularExam;
+use App\Models\ResitExam;
 use App\Models\Result;
 use App\Traits\UsePrint;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -256,6 +257,18 @@ class OngoingProgramController extends Controller
         return BatchStudentsResource::collection($enrollments);
     }
 
+    public function getExam(OngoingProgram $ongoingProgram): array
+    {
+        $regular = RegularExam::query()->where('ongoing_program_id', $ongoingProgram->id)->get();
+        $resit = ResitExam::query()->where('ongoing_program_id', $ongoingProgram->id)
+            ->where('student_id', Auth::id())->get();
+
+        return [
+            'regular' => RegularExamResource::collection($regular),
+            'resit' => $resit,
+        ];
+    }
+
     /**
      * @throws JsonException
      */
@@ -297,19 +310,9 @@ class OngoingProgramController extends Controller
         }
     }
 
-    public function getExamQuestions(Request $request, ProgramModule $programModule)
+    public function getExamQuestions(Exam $exam)
     {
-        $exam = Exam::query()->where('ongoing_program_id', $request->ongoing_program_id)
-            ->where('program_module_id', $programModule->id)
-            ->firstOrFail();
-
-        if (!$exam) {
-            return response()->json([
-                'message' => 'Exam not valid or has expired'
-            ], 400);
-        }
-
-        return new ExamResource($exam);
+        return $exam;
     }
 
     /**
@@ -345,7 +348,7 @@ class OngoingProgramController extends Controller
                 'mark' => $totalMark,
                 'total_questions' => $request->total_questions
             ]);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             Log::info('Save Result', [$exception]);
 
             DB::rollBack();

@@ -14,6 +14,12 @@ export const getBatchStudents = (payload) => {
         payload: payload
     }
 }
+export const getExams = (payload) => {
+    return {
+        type: Types.GET_EXAMS,
+        payload: payload
+    }
+}
 
 
 export const getAllBatches = (payload) => {

@@ -11,7 +11,7 @@ export default function TlaDrawer({children, extra}) {
                 <div className="ant-drawer-mask"></div>
                 <div tabIndex="0" aria-hidden="true" data-sentinel="start"
                      style={{ width: '0px', height: '0px', overflow: 'hidden', outline: 'none', position: 'absolute' }}></div>
-                <div className="ant-drawer-content-wrapper" style={{width: '680px'}}>
+                <div className="ant-drawer-content-wrapper w-[calc(100vw_-_50px)] md:w-[calc(100vw_-_800px)]">
                     <div className="ant-drawer-content" aria-modal="true" role="dialog">
                         <div className="ant-drawer-wrapper-body">
                             <div className="ant-drawer-header">

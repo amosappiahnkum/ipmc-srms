@@ -7,6 +7,7 @@ import {switchQuestion} from "../../actions/batches/ActionCreators";
 import {createGlobalStyle} from 'styled-components'
 import {CountdownCircleTimer} from "react-countdown-circle-timer";
 import {handleSubmitResult} from "../../actions/batches/BatchAction";
+import Tools from "./tools";
 
 
 const PageStyles = createGlobalStyle`
@@ -15,10 +16,31 @@ const PageStyles = createGlobalStyle`
         -ms-user-select: none; /* IE 10 and IE 11 */
         user-select: none; /* Standard syntax */
     }
+
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .content {
+        padding: 20px;
+        overflow-y: scroll;
+        //height: calc(100vh - 300px);
+        scrollbar-width: thin; /* "auto" or "thin" */
+        scrollbar-color: rgba(166, 166, 176, 0.11) #ffffff;
+    }
+
+    .chat-list {
+        overflow-y: auto;
+        height: calc(100vh - 70px);
+        scrollbar-width: thin;
+        scrollbar-color: rgba(166, 166, 176, 0.11) #ffffff;
+    }
 `
 
 function TakeExam() {
-    document.addEventListener('contextmenu', event => {
+    /*document.addEventListener('contextmenu', event => {
         event.preventDefault();
     });
 
@@ -27,7 +49,7 @@ function TakeExam() {
         setKeyStrokes([ ...keyStrokes, event.key ])
         event.preventDefault();
         return false;
-    });
+    });*/
 
     const {questions, duration, id, program_module_id, program, subject} = useSelector(state => state.batchReducer.exam)
     const studentName = useSelector(state => state.userReducer.loggedInUser.name)
@@ -49,7 +71,7 @@ function TakeExam() {
             answers: examAnswers,
             total_questions: questions.length,
             time_left: timeLeft,
-            key_strokes: keyStrokes
+            // key_strokes: keyStrokes
         }
         dispatch(handleSubmitResult(data)).then(() => {
             setLoading(false)
@@ -67,22 +89,12 @@ function TakeExam() {
     }
 
     return (
-        <div className={'flex justify-center items-center h-screen bg-primary-100'}>
+        <div className={'bg-white h-screen'}>
             <PageStyles/>
-            <div className={'w-full md:w-[60%] shadow-lg p-5 rounded-lg bg-white'}>
-                <div className={'flex items-center justify-between mb-3'}>
-                    <Popconfirm
-                        title="Confirm Submission"
-                        description="Are you sure you want to end the exam?"
-                        onConfirm={onFinish}
-                        okText="Yes"
-                        cancelText="No">
-                        <Button danger>
-                            End Exam
-                        </Button>
-                    </Popconfirm>
-                    <div className={'flex items-center justify-end gap-x-5'}>
-                        <span>{currentExamQuestion + 1}/{questions?.length}</span>
+            <div className={'h-14 shadow-sm flex items-center justify-between mb-3 px-5'}>
+                <div className={'flex items-center justify-end gap-x-5'}>
+                    <span>{currentExamQuestion + 1}/{questions?.length}</span>
+                    <div className={'bg-white p-2 rounded-full mt-5 shadow-sm z-[999]'}>
                         <CountdownCircleTimer
                             isPlaying={isPlaying}
                             duration={duration}
@@ -96,9 +108,23 @@ function TakeExam() {
                         </CountdownCircleTimer>
                     </div>
                 </div>
-                <CurrentQuestion question={questions[currentExamQuestion]}/>
-                <div className={'flex items-center justify-end gap-x-2 mt-5'}>
-                    <div className={'flex items-center gap-x-2'}>
+                <Popconfirm
+                    title="Confirm Submission"
+                    description="Are you sure you want to end the exam?"
+                    onConfirm={onFinish}
+                    okText="Yes"
+                    cancelText="No">
+                    <Button danger>
+                        End Exam
+                    </Button>
+                </Popconfirm>
+            </div>
+            <div className={'grid grid-cols-4'}>
+                <div className={'col-span-3 relative'}>
+                    <div className={'content h-[calc(100vh_-_200px)] md:h-[calc(100vh_-_150px)] p-5 bg-white'}>
+                        <CurrentQuestion question={questions[currentExamQuestion]}/>
+                    </div>
+                    <div className={'flex items-center gap-x-2 bottom-52 py-3 px-5 absolute w-full bg-white'}>
                         {
                             currentExamQuestion > 0 &&
                             <Button onClick={() => {
@@ -130,21 +156,21 @@ function TakeExam() {
                         }
                     </div>
                 </div>
-            </div>
-            <div className={'shadow-lg p-5 rounded-lg w-[20%]'}>
-                <div className={'mb-3'}>
-                    <small className={'text-xs !font-medium'}>STUDENT</small>
-                    <p>{studentName}</p>
-                </div>
-                <div className={'mb-3'}>
-                    <small className={'text-xs !font-medium'}>CLASS</small>
-                    <p>{program}</p>
-                </div>
-                <div>
-                    <small className={'text-xs !font-medium'}>MODULE</small>
-                    <p>{subject}</p>
-                </div>
-                {/*{
+                <div className={'bg-white chat-list px-3 py-5 border-l'}>
+                    <Tools/>
+                    <div className={'mb-3'}>
+                        <small className={'text-xs !font-medium'}>STUDENT</small>
+                        <p>{studentName}</p>
+                    </div>
+                    <div className={'mb-3'}>
+                        <small className={'text-xs !font-medium'}>CLASS</small>
+                        <p>{program}</p>
+                    </div>
+                    <div>
+                        <small className={'text-xs !font-medium'}>MODULE</small>
+                        <p>{subject}</p>
+                    </div>
+                    {/*{
                     [...Array(questions.length).keys()].map(item => (
                         <div onClick={() => { handleSwitch(item) }}
                              className={'bg-white p-1 text-xs cursor-pointer'} key={item}>
@@ -152,6 +178,7 @@ function TakeExam() {
                         </div>
                     ))
                 }*/}
+                </div>
             </div>
         </div>
     )

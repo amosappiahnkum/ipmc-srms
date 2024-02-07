@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {Checkbox, Radio, Space} from 'antd';
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
@@ -53,7 +53,17 @@ function CurrentQuestion({question}) {
     return (
         <div>
             <Styles/>
-            <p className={'text-base mb-3'}>{question?.text}</p>
+            <p className={'text-base mb-3'}>{question?.text}
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Animi at aut autem blanditiis explicabo impedit laboriosam nam necessitatibus perspiciatis possimus
+                provident quo, quod rerum sit vitae. Ea illum suscipit unde!
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Animi at aut autem blanditiis explicabo impedit laboriosam nam necessitatibus perspiciatis possimus
+                provident quo, quod rerum sit vitae. Ea illum suscipit unde!
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Animi at aut autem blanditiis explicabo impedit laboriosam nam necessitatibus perspiciatis possimus
+                provident quo, quod rerum sit vitae. Ea illum suscipit unde!
+            </p>
             <div>
                 {
                     question?.type === 'multi' ?

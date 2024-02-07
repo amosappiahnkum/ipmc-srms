@@ -15,15 +15,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('results', static function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
+            $table->uuidMorphs('examable');
             $table->integer('current_question')->nullable();
             $table->foreignIdFor(Student::class);
             $table->foreignIdFor(ProgramModule::class);
-            $table->foreignUuid('exam_id');
             $table->integer('total_questions');
             $table->integer('total_mark');
             $table->jsonb('key_strokes')->nullable();
-            $table->string('time_left')->comment('in-minutes');
+            $table->string('time_left')->comment('in-seconds');
             $table->integer('mark');
             $table->timestamps();
         });

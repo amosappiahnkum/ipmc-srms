@@ -59,10 +59,11 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::prefix('ongoing-programs')->group(function () {
         Route::post('attendance', [OngoingProgramController::class, 'printAttendance']);
         Route::post('batch-plan', [OngoingProgramController::class, 'printBatchPlan']);
-        Route::post('/{program_module}/get-questions', [OngoingProgramController::class, 'getExamQuestions']);
+        Route::post('/{exam}/get-questions', [OngoingProgramController::class, 'getExamQuestions']);
         Route::post('schedule-exam', [OngoingProgramController::class, 'scheduleExam']);
         Route::post('submit-result', [OngoingProgramController::class, 'submitResult']);
         Route::get('{ongoing_program}/students', [OngoingProgramController::class, 'getBatchStudents']);
+        Route::get('{ongoing_program}/get-exams', [OngoingProgramController::class, 'getExam']);
     });
     Route::apiResource('/ongoing-programs', OngoingProgramController::class);
     Route::get('/all-batches', [OngoingProgramController::class, 'getAllBatches']);

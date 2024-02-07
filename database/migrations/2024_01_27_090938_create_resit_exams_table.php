@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\OngoingProgram;
 use App\Models\ProgramModule;
 use App\Models\Student;
 use Illuminate\Database\Migrations\Migration;
@@ -14,9 +15,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('resit_exams', static function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->foreignIdFor(Student::class);
             $table->foreignIdFor(ProgramModule::class);
+            $table->foreignIdFor(OngoingProgram::class);
             $table->timestamps();
         });
     }

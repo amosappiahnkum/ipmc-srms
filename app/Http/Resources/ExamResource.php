@@ -21,7 +21,6 @@ class ExamResource extends JsonResource
             'subject' => $this->programModule->module->name,
             'shuffle' => $this->shuffle,
             'id' => $this->id,
-            'questions' => $this->questions,
             'date' => $this->date,
             'time' => $this->time,
             'duration' => $this->duration,

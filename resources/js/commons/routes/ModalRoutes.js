@@ -11,6 +11,7 @@ import GenerateAttendanceForm from "../../components/batches/generate-attendance
 import GenerateBatchPlan from "../../components/batches/generate-batch-plan";
 import FollowUpForm from "../../enquiry/follow-up-form";
 import ScheduleExam from "../../components/batches/schedule-exam";
+import Exams from "../../components/students/my-programs/exams";
 
 export const ModalRoutes = () => {
     return (
@@ -26,6 +27,7 @@ export const ModalRoutes = () => {
             <Route exact path="programs/form" element={<ProgramForm/>}/>
             <Route exact path="staff/form" element={<StaffForm/>}/>
             <Route exact path="preview/:fileName" element={<PreviewFile/>}/>
+            <Route exact path="my-programs/:id/details/exams" element={<Exams/>}/>
         </Routes>
     )
 }

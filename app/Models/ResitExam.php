@@ -14,6 +14,7 @@ class ResitExam extends Model
     protected $fillable = [
         'student_id',
         'program_module_id',
+        'ongoing_program_id',
     ];
 
     public function exam(): MorphOne

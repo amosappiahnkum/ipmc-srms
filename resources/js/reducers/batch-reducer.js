@@ -11,6 +11,7 @@ const initialState = {
     },
     batch: {},
     allBatches: [],
+    exams: {},
     exam: {},
     examAnswers: [],
     currentExamQuestion: 0,
@@ -98,6 +99,12 @@ export default function batchReducer(state = initialState, action) {
             return {
                 ...state,
                 examAnswers: [...answers]
+            }
+
+        case Types.GET_EXAMS:
+            return {
+                ...state,
+                exams: action.payload
             }
         default:
             return state
