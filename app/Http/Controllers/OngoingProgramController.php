@@ -6,8 +6,6 @@ use App\Enums\RegistrationType;
 use App\Exports\OngoingProgramExport;
 use App\Helpers\Helper;
 use App\Http\Resources\BatchStudentsResource;
-use App\Http\Resources\ExamQuestionResource;
-use App\Http\Resources\ExamResource;
 use App\Http\Resources\OngoingProgramResource;
 use App\Http\Resources\RegularExamResource;
 use App\Models\Exam;
@@ -17,7 +15,6 @@ use App\Models\ProgramModule;
 use App\Models\Registration;
 use App\Models\RegularExam;
 use App\Models\ResitExam;
-use App\Models\Result;
 use App\Traits\UsePrint;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -310,7 +307,7 @@ class OngoingProgramController extends Controller
         }
     }
 
-    public function getExamQuestions(Exam $exam)
+    public function getExamQuestions(Exam $exam): Exam
     {
         return $exam;
     }
@@ -322,30 +319,38 @@ class OngoingProgramController extends Controller
     public function submitResult(Request $request): JsonResponse
     {
         $exam = Exam::findOrFail($request->exam_id);
-        DB::beginTransaction();
 
+        if ($request->type == 'Regular') {
+            $examType = RegularExam::findOrFail($request->exam_type);
+        } else {
+            $examType = ResitExam::findOrFail($request->exam_type);
+        }
+
+        DB::beginTransaction();
         try {
             $totalMark = $this->calculateMarks($request->answers, $exam);
 
-            Result::updateOrCreate([
-                'student_id' => $request->student_id,
-                'exam_id' => $exam->id,
-                'program_module_id' => $request->program_module_id,
-            ], [
-                'current_question' => null,
-                'student_id' => $request->student_id,
-                'exam_id' => $exam->id,
-                'program_module_id' => $request->program_module_id,
-                'total_questions' => $request->total_questions,
-                'total_mark' => $request->total_questions * 2,
-                'time_left' => $request->time_left,
-                'key_strokes' => json_encode($request->key_strokes, JSON_THROW_ON_ERROR),
-                'mark' => $totalMark * 2
-            ]);
+            $examType->result()->updateOrCreate(
+                [
+                    'student_id' => $request->student_id,
+                    'program_module_id' => $request->program_module_id,
+                    'examable_id' => $request->exam_type,
+                ],
+                [
+                    'current_question' => null,
+                    'student_id' => $request->student_id,
+                    'program_module_id' => $request->program_module_id,
+                    'total_questions' => $request->total_questions,
+                    'total_mark' => $request->total_questions * 2,
+                    'time_left' => $request->time_left,
+                    'key_strokes' => json_encode($request->key_strokes, JSON_THROW_ON_ERROR),
+                    'mark' => $totalMark * 2
+                ]);
 
             DB::commit();
             return response()->json([
-                'mark' => $totalMark,
+                'mark' => $totalMark * 2,
+                'total_mark' =>  $request->total_questions * 2,
                 'total_questions' => $request->total_questions
             ]);
         } catch (\Exception $exception) {

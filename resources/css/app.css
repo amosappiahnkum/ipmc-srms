@@ -152,3 +152,11 @@ button {
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(8px);
 }
+
+:where(.css-dev-only-do-not-override-mxhywb).ant-segmented .ant-segmented-item {
+    @apply flex items-center;
+}
+
+.segment-label {
+    @apply flex items-center flex-col justify-center h-full min-w-[60px] px-3 py-2;
+}

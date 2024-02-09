@@ -19,6 +19,7 @@ class RegularExamResource extends JsonResource
             'ongoing_program_id' => $this->ongoing_program_id,
             'program_module_id' => $this->program_module_id,
             'exam' => new ExamResource($this->exam),
+            'result' => $this->result,
         ];
     }
 }

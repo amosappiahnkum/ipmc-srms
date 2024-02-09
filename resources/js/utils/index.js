@@ -86,3 +86,5 @@ export const formatUrl = (text = '') => {
 }
 
 export const formatLabel = (text) => (capitalize(text.replaceAll('_', ' ')))
+
+export const getTotalMark = (mark, totalMark) => (mark / totalMark) * 100

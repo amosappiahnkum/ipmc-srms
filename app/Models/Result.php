@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Traits\UseUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Result extends Model
 {
@@ -13,7 +14,6 @@ class Result extends Model
     protected $fillable = [
         'current_question',
         'student_id',
-        'exam_id',
         'program_module_id',
         'total_questions',
         'total_mark',
@@ -25,4 +25,9 @@ class Result extends Model
     protected $casts = [
       'key_strokes' => 'array'
     ];
+
+    public function examType(): MorphTo
+    {
+        return $this->morphTo();
+    }
 }

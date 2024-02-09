@@ -21,7 +21,8 @@ class UserResource extends JsonResource
             'username' => $this->username,
             'branch' => $this->userable->branch->name ?? '-',
             'type' => $this->userable->type ?? 'Student',
-            'staff_id' => $this->userable_id
+            'staff_id' => $this->userable_id,
+            'password_changed' => $this->password_changed,
         ];
     }
 }

@@ -77,6 +77,13 @@ export const switchQuestion = (payload) => {
     }
 }
 
+export const addToReview = (payload) => {
+    return {
+        type: Types.ADD_TO_REVIEW,
+        payload: payload
+    }
+}
+
 export const answerQuestion = (payload) => {
     return {
         type: Types.ANSWER_QUESTION,

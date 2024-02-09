@@ -15,7 +15,7 @@ export default class ButtonPanel extends React.Component {
 
   render() {
     return (
-      <div className="component-button-panel">
+      <div className="component-button-panel rounded-b-lg">
         <div>
           <Button name="AC" clickHandler={this.handleClick} />
           <Button name="+/-" clickHandler={this.handleClick} />

@@ -22,7 +22,7 @@ const StudentLayout = (props) => {
         })
     }, [])
     return (
-        <div>
+        <div className={'max-w-screen-2xl mx-auto'}>
             <div className={'flex items-center justify-between px-5 py-3 bg-white shadow-sm'}>
                 <img width={70} src={NoTextLogo} alt="IPMC"/>
                 <NavProfile/>

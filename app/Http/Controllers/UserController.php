@@ -13,9 +13,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserController extends Controller
 {
@@ -50,7 +49,7 @@ class UserController extends Controller
             'user' => new UserResource($loggedInUser),
             'roles' => $loggedInUser->getRoleNames(),
             'permissions' => $loggedInUser->getPermissionsViaRoles()->pluck('name')->merge($loggedInUser->getDirectPermissions()->pluck('name')),
-            'staff_id' =>  $loggedInUser->userable_id
+            'staff_id' => $loggedInUser->userable_id
         ];
     }
 
@@ -86,6 +85,56 @@ class UserController extends Controller
         }
     }
 
+    public function getUserRoles($id): array
+    {
+        $userRoles = User::find($id)->roles;
+        $otherRoles = Role::whereNotIn('id', $userRoles->pluck('pivot.roleId'))->get();
+
+        return [$userRoles, $otherRoles];
+    }
+
+    public function changePassword(Request $request)
+    {
+        $this->validate($request, [
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        DB::beginTransaction();
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 400);
+        }
+        try {
+            if (!Hash::check($request['currentPassword'], $user->password)) {
+                return response()->json([
+                    'message' => 'Current Password is incorrect'
+                ], 400);
+            }
+
+            if (Hash::check($request['password'], $user->password)) {
+                return response()->json([
+                    'message' => 'New Password is the same as current'
+                ], 400);
+            }
+
+            $user->update([
+                'password' => Hash::make($request->password),
+                'password_changed' => null,
+            ]);
+
+            DB::commit();
+            return [$user->only(['id', 'name', 'username', 'password_changed']), []];
+        } catch (Exception $exception) {
+
+            Log::error('change-password', [$exception]);
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Something went wrong!'
+            ], 400);
+        }
+    }
 
     /**
      * Update the specified resource in storage.
@@ -110,13 +159,5 @@ class UserController extends Controller
 
             return response('Something went wrong', 422);
         }
-    }
-
-    public function getUserRoles($id): array
-    {
-        $userRoles = User::find($id)->roles;
-        $otherRoles = Role::whereNotIn('id', $userRoles->pluck('pivot.roleId'))->get();
-
-        return [$userRoles, $otherRoles];
     }
 }

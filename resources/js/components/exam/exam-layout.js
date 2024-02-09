@@ -6,14 +6,14 @@ import {Link} from "react-router-dom";
 
 function ExamLayout() {
     return (
-        <div className={'bg-white rounded-lg h-screen overflow-hidden'}>
+        <div className={'bg-white rounded-lg h-screen overflow-hidden max-w-screen-2xl mx-auto'}>
             <div className={'flex items-center justify-between bg-white px-5 h-14'}>
                 <Link to={'/'}>
                     <img width={70} src={Logo} alt="IPMC"/>
                 </Link>
                 <NavProfile/>
             </div>
-            <div className={'flex items-center'}>
+            <div className={'flex h-full items-center'}>
                 <Outlet/>
             </div>
         </div>

@@ -141,3 +141,18 @@ export const roleActions = (data) => (dispatch) => {
     })
   })
 }
+
+
+export const handleChangePassword = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        api().post('/user/change-password', data).then((res) => {
+            dispatch({
+                type: Types.CHANGE_PASSWORD,
+                payload: res.data
+            })
+            resolve(res)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}

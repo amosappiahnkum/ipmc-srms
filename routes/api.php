@@ -36,6 +36,8 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
         Route::post('/{id}/delete', [UserController::class, 'deleteUser']);
         Route::post('/roles/add', [UserController::class, 'addUserRoles']);
         Route::post('/roles/actions', [UserController::class, 'enableOrDisableRole']);
+        Route::post('/change-password',[UserController::class, 'changePassword']);
+
     });
     Route::prefix('report')->group(function () {
         Route::get('/chart/registrations', [HomeController::class, 'getEnrollmentChart']);

@@ -2,29 +2,46 @@ import React from 'react';
 import {Segmented} from 'antd';
 import {AppstoreOutlined} from "@ant-design/icons";
 import {FiInfo} from "react-icons/fi";
-import { AiOutlineCalculator } from "react-icons/ai";
+import {AiOutlineCalculator} from "react-icons/ai";
+import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
+import Calculator from "../calculator";
+import Overview from "./overview";
 
-const items = {
-    info: 'Content of Tab Pane 1',
-    overview: 'Content of Tab Pane 2',
-    calculator: 'Content of Tab Pane 3',
-};
+const Tools = ({handleSwitch}) => {
+    const [current, setCurrent] = React.useState('overview');
+    const studentName = useSelector(state => state.userReducer.loggedInUser.name)
 
-const Tools = () => {
-    const [current, setCurrent] = React.useState('info');
+    const items = {
+        info: <div>
+            <div className={'mb-3'}>
+                <small className={'text-xs !font-medium'}>STUDENT</small>
+                <p>{studentName}</p>
+            </div>
+            <div className={'mb-3'}>
+                <small className={'text-xs !font-medium'}>CLASS</small>
+                <p>program</p>
+            </div>
+            <div>
+                <small className={'text-xs !font-medium'}>MODULE</small>
+                <p>subject</p>
+            </div>
+        </div>,
+        overview: <Overview handleSwitch={handleSwitch}/>,
+        calculator: <div className={'mt-2'}><Calculator/></div>,
+    };
+
     return (
         <>
             <Segmented
-                defaultValue="center"
-                style={{
-                    // width: '100%'
-                }}
+                defaultValue="overview"
+                style={{ width: '100%' }}
                 onChange={(value) => setCurrent(value)}
                 options={[
                     {
                         value: 'overview',
                         label: (
-                            <div style={{ padding: 4 }}>
+                            <div className={'segment-label'}>
                                 <AppstoreOutlined/>
                                 <div>Overview</div>
                             </div>
@@ -33,7 +50,7 @@ const Tools = () => {
                     {
                         value: 'info',
                         label: (
-                            <div style={{ padding: 4 }}>
+                            <div className={'segment-label'}>
                                 <FiInfo/>
                                 <div>Info</div>
                             </div>
@@ -42,7 +59,7 @@ const Tools = () => {
                     {
                         value: 'calculator',
                         label: (
-                            <div style={{ padding: 4 }}>
+                            <div className={'segment-label'}>
                                 <AiOutlineCalculator/>
                                 <div>Calculator</div>
                             </div>
@@ -56,4 +73,9 @@ const Tools = () => {
         </>
     );
 };
+
+Tools.propTypes = {
+    handleSwitch: PropTypes.func.isRequired
+}
+
 export default Tools;

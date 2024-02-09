@@ -13,6 +13,7 @@ const initialState = {
     allBatches: [],
     exams: {},
     exam: {},
+    reviews: [],
     examAnswers: [],
     currentExamQuestion: 0,
     filter: {
@@ -23,11 +24,16 @@ const initialState = {
     }
 }
 
-export const addOrRemoveItem = (items, newItem) => {
+export const addOrRemoveItem = (items, newItem, remove = false) => {
     const i = items.findIndex(itm => itm.id === newItem.id)
 
-    if (i > -1) items[i] = newItem
-    else items.push(newItem)
+    if (i > -1) {
+        if (remove) {
+            items = items.filter((item) => item.id !== newItem.id)
+        } else {
+            items[i] = newItem
+        }
+    } else items.push(newItem)
     return items
 }
 
@@ -99,6 +105,14 @@ export default function batchReducer(state = initialState, action) {
             return {
                 ...state,
                 examAnswers: [...answers]
+            }
+
+        case Types.ADD_TO_REVIEW:
+            // eslint-disable-next-line no-case-declarations
+            const reviews = addOrRemoveItem(state.reviews, action.payload, true);
+            return {
+                ...state,
+                reviews: [...reviews]
             }
 
         case Types.GET_EXAMS:

@@ -16,13 +16,16 @@ import AllFollowUps from "../../components/follow-ups/all-follow-ups";
 import AppLayout from "../app-layout";
 import {useSelector} from "react-redux";
 import studentsRoute from "./students-route";
+import ChangePassword from "../../components/commons/change-password";
 
 const ProtectedRoutes = () => {
+    const { password_changed } = useSelector(state => state.userReducer.loggedInUser)
     const roles = useSelector(state => state.userReducer.activeRoles)
     const location = useLocation()
     const background = location.state && location.state.background
 
     return (
+        !password_changed ? <ChangePassword/> :
         <React.Fragment>
             {background && (<React.Fragment><ModalRoutes/> <Outlet/></React.Fragment>)}
             <Routes location={background || location}>

@@ -4,7 +4,7 @@
   font-weight: 200;
   height: 50px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
 }
 

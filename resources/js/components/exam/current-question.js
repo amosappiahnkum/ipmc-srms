@@ -53,17 +53,7 @@ function CurrentQuestion({question}) {
     return (
         <div>
             <Styles/>
-            <p className={'text-base mb-3'}>{question?.text}
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Animi at aut autem blanditiis explicabo impedit laboriosam nam necessitatibus perspiciatis possimus
-                provident quo, quod rerum sit vitae. Ea illum suscipit unde!
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Animi at aut autem blanditiis explicabo impedit laboriosam nam necessitatibus perspiciatis possimus
-                provident quo, quod rerum sit vitae. Ea illum suscipit unde!
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Animi at aut autem blanditiis explicabo impedit laboriosam nam necessitatibus perspiciatis possimus
-                provident quo, quod rerum sit vitae. Ea illum suscipit unde!
-            </p>
+            <p className={'text-base mb-3'}>{question?.text}</p>
             <div>
                 {
                     question?.type === 'multi' ?

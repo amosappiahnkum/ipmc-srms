@@ -25,7 +25,7 @@ const AppLayout = (props) => {
         })
     }, [])
     return (
-        <Layout>
+        <Layout className={'max-w-screen-2xl mx-auto'}>
             <div className={'hidden md:block'}>
                 <AppSidebar collapsed={collapsed}/>
             </div>

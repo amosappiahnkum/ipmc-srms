@@ -21,4 +21,9 @@ class ResitExam extends Model
     {
         return $this->morphOne(Exam::class,'examable');
     }
+
+    public function result(): MorphOne
+    {
+        return $this->morphOne(Result::class, 'examable');
+    }
 }

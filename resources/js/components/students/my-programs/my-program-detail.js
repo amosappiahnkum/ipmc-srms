@@ -17,7 +17,7 @@ function MyProgramDetail() {
                         </div>
                         :
                         <>
-                            <div className={'rounded-lg mb-2'}>
+                            <div className={'hidden md:block rounded-lg mb-2'}>
                                 <div className={'grid grid-cols-3 gap-2'}>
                                     <div className={'detail-item'}>
                                         <FiFile/>
