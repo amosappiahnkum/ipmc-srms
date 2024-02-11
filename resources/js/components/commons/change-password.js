@@ -17,7 +17,7 @@ const ChangePassword = (props) => {
         setLoading(true)
         changePassword(values).then(() => {
             message.success('Password Changed Successfully')
-            navigate('/home')
+            navigate('/')
         }).catch((err) => {
             message.error(err.response.data.message)
             setLoading(false)
@@ -27,73 +27,71 @@ const ChangePassword = (props) => {
         forceUpdate({})
     }, [])
     return (
-        <div className={'flex items-center h-screen'}>
-            <div className={'w-9/12 md:w-2/6 mx-auto'}>
-                <div className={'w-fit flex flex-col justify-center items-center mx-auto mb-2'}>
-                    <FiLock size={50}/>
-                    <h3>Change Password</h3>
-                </div>
-                <div className={'bg-white p-5 rounded-lg'}>
-                    <Spin spinning={loading}>
-                        <Form layout={'vertical'}
-                              form={form}
-                              name="change password"
-                              onFinish={onFinish}>
-                            <Form.Item
-                                hasFeedback
-                                label="Current Password"
-                                name="currentPassword"
-                                rules={[{required: true, message: 'Current password is required!'}]}>
-                                <Input.Password size={'large'}/>
-                            </Form.Item>
-                            <Form.Item
-                                hasFeedback
-                                label="New Password"
-                                name="password"
-                                rules={[{required: true, message: 'New password is required!'}]}>
-                                <Input.Password size={'large'}/>
-                            </Form.Item>
-                            <Form.Item
-                                name="password_confirmation"
-                                label="Confirm Password"
-                                dependencies={['password']}
-                                hasFeedback
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please confirm your password!'
-                                    },
-                                    ({getFieldValue}) => ({
-                                        validator(_, value) {
-                                            if (!value || getFieldValue('password') === value) {
-                                                return Promise.resolve()
-                                            }
-                                            return Promise.reject(new Error('Passwords mismatch!'))
+        <div className={'w-9/12 md:w-2/6 mx-auto'}>
+            <div className={'w-fit flex flex-col justify-center items-center mx-auto mb-2'}>
+                <FiLock size={50}/>
+                <h3>Change Password</h3>
+            </div>
+            <div className={'bg-white p-5 rounded-lg'}>
+                <Spin spinning={loading}>
+                    <Form layout={'vertical'}
+                          form={form}
+                          name="change password"
+                          onFinish={onFinish}>
+                        <Form.Item
+                            hasFeedback
+                            label="Current Password"
+                            name="currentPassword"
+                            rules={[{required: true, message: 'Current password is required!'}]}>
+                            <Input.Password size={'large'}/>
+                        </Form.Item>
+                        <Form.Item
+                            hasFeedback
+                            label="New Password"
+                            name="password"
+                            rules={[{required: true, message: 'New password is required!'}]}>
+                            <Input.Password size={'large'}/>
+                        </Form.Item>
+                        <Form.Item
+                            name="password_confirmation"
+                            label="Confirm Password"
+                            dependencies={['password']}
+                            hasFeedback
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please confirm your password!'
+                                },
+                                ({getFieldValue}) => ({
+                                    validator(_, value) {
+                                        if (!value || getFieldValue('password') === value) {
+                                            return Promise.resolve()
                                         }
-                                    })
-                                ]}>
-                                <Input.Password size={'large'}/>
-                            </Form.Item>
-                            <Form.Item
-                                shouldUpdate>
-                                {() => (
-                                    <Button
-                                        loading={loading}
-                                        block
-                                        size={'large'}
-                                        type="primary"
-                                        htmlType="submit"
-                                        disabled={
-                                            !form.isFieldsTouched(true) ||
-                                            !!form.getFieldsError().filter(({errors}) => errors.length).length
-                                        }>
-                                        Change Password
-                                    </Button>
-                                )}
-                            </Form.Item>
-                        </Form>
-                    </Spin>
-                </div>
+                                        return Promise.reject(new Error('Passwords mismatch!'))
+                                    }
+                                })
+                            ]}>
+                            <Input.Password size={'large'}/>
+                        </Form.Item>
+                        <Form.Item
+                            shouldUpdate>
+                            {() => (
+                                <Button
+                                    loading={loading}
+                                    block
+                                    size={'large'}
+                                    type="primary"
+                                    htmlType="submit"
+                                    disabled={
+                                        !form.isFieldsTouched(true) ||
+                                        !!form.getFieldsError().filter(({errors}) => errors.length).length
+                                    }>
+                                    Change Password
+                                </Button>
+                            )}
+                        </Form.Item>
+                    </Form>
+                </Spin>
             </div>
         </div>
     )

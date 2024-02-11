@@ -121,7 +121,7 @@ class UserController extends Controller
 
             $user->update([
                 'password' => Hash::make($request->password),
-                'password_changed' => null,
+                'password_changed' => true,
             ]);
 
             DB::commit();

@@ -68,6 +68,12 @@ export default function userReducer(state = initialState, action) {
                 })
             }
 
+        case Types.CHANGE_PASSWORD:
+            return {
+                ...state,
+                loggedInUser: { ...state.loggedInUser, password_changed: true }
+            }
+
         case Types.GET_ACTIVE_USER_ROLES:
             return {
                 ...state,

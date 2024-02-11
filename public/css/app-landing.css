@@ -1181,6 +1181,9 @@ video {
 .w-\[calc\(100vw_-_50px\)\]{
   width: calc(100vw - 50px);
 }
+.w-9\/12{
+  width: 75%;
+}
 .w-10{
   width: 2.5rem;
 }
@@ -1189,12 +1192,6 @@ video {
 }
 .w-\[30\%\]{
   width: 30%;
-}
-.w-2\/6{
-  width: 33.333333%;
-}
-.w-9\/12{
-  width: 75%;
 }
 .max-w-6xl{
   max-width: 72rem;
@@ -1964,6 +1961,9 @@ h1, h2, h3, h4, h5, h6, p {
   .md\:w-\[calc\(100vw_-_800px\)\]{
     width: calc(100vw - 800px);
   }
+  .md\:w-2\/6{
+    width: 33.333333%;
+  }
   .md\:w-\[900px\]{
     width: 900px;
   }
@@ -1972,12 +1972,6 @@ h1, h2, h3, h4, h5, h6, p {
   }
   .md\:w-\[350px\]{
     width: 350px;
-  }
-  .md\:w-2\/6{
-    width: 33.333333%;
-  }
-  .md\:w-9\/12{
-    width: 75%;
   }
   .md\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
