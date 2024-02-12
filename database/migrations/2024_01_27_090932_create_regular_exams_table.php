@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('regular_exams', static function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('exam_code');
             $table->foreignIdFor(OngoingProgram::class);
             $table->foreignIdFor(ProgramModule::class);
             $table->timestamps();

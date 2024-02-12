@@ -13,6 +13,7 @@ class ResitExam extends Model
 
     protected $fillable = [
         'student_id',
+        'exam_code',
         'program_module_id',
         'ongoing_program_id',
     ];

@@ -3,13 +3,10 @@
 namespace App\Helpers;
 
 use App\Models\QuestionBank;
+use App\Models\Student;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
 
 class Helper
 {
@@ -20,26 +17,6 @@ class Helper
         $model->photo()->updateOrCreate(['photoable_id' => $model->id], [
             'file_name' => $image_name
         ]);
-    }
-
-    public static function createUserAccount($model, $data, $userName = null): void
-    {
-        $password = strtoupper(Str::random(10));
-        $user = $model::find($data['id'])->user()->updateOrCreate(
-            ['username' => $data['email']],
-            [
-                'username' => $data['email'],
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'email' => $data['email'],
-                'password' => Hash::make($password),
-                'default_password' => $password,
-            ]
-        );
-
-        $role = Role::where('name', 'Staff')->first();
-
-        $user->roles()->attach($role->id);
     }
 
     public static function formatDate($request)
@@ -96,6 +73,11 @@ class Helper
         return $base->diffInSeconds($modified);
     }
 
+    /**
+     * @param int $subjectId
+     * @param int $total
+     * @return array
+     */
     public static function getQuestions(int $subjectId, int $total): array
     {
         $questions = QuestionBank::query()->where('module_id', $subjectId)
@@ -120,5 +102,36 @@ class Helper
                 ];
             })
         ];
+    }
+
+    /**
+     * @param string $programCode
+     * @return string
+     */
+    public function generateStudentId(string $programCode): string
+    {
+
+        $countStudents = Student::query()->count();
+
+        if ($countStudents == 0) {
+            $studentId = $programCode . '001';
+        } else {
+            $lastStudentRecord = Student::query()->latest('id')->first();
+            if (empty($lastStudentRecord)) {
+                $studentId = $programCode . '001';
+            } else {
+                $lastStaffIdNumber = (int)substr($lastStudentRecord->student_id, strlen($programCode));
+                $std_num = $lastStaffIdNumber + 1;
+                if ($lastStaffIdNumber < 9) {
+                    $studentId = $programCode . "00" . $std_num;
+                } elseif ($lastStaffIdNumber < 99) {
+                    $studentId = $programCode . "0" . $std_num;
+                } else {
+                    $studentId = $programCode . $std_num;
+                }
+            }
+        }
+
+        return $studentId;
     }
 }

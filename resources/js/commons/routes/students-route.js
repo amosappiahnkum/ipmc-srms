@@ -19,5 +19,6 @@ export default [
         <Route index element={<Instructions/>}/>
     </Route>,
     <Route key={'begin'} path={'/take-exams/:name/begin'} element={<TakeExam/>}/>,
-    <Route key={'passed'} path={'/take-exams/:name/completed'} element={<ExamStatus/>}/>
+    <Route key={'passed'} path={'/take-exams/:name/completed'} element={<ExamStatus/>}/>,
+    <Route key={'none'} exact> <>not found</></Route>
 ]

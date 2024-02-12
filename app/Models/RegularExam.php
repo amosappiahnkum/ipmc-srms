@@ -12,6 +12,7 @@ class RegularExam extends Model
     use HasFactory, UseUuid;
 
     protected $fillable = [
+        'exam_code',
         'ongoing_program_id',
         'program_module_id',
     ];

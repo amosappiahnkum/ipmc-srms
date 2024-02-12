@@ -47,6 +47,7 @@ class Student extends Model
         'sponsor_id',
         'branch_id',
         'status',
+        'student_id',
         'user_id'
     ];
 
