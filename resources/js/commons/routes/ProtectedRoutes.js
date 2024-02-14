@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Outlet, useLocation} from 'react-router'
 import {Route, Routes} from 'react-router-dom'
 import PageWrapper from "../../components/admin/page-wrapper";
@@ -14,15 +14,27 @@ import AllRegistrations from "../../components/registrations/all-registrations";
 import EnquiryDetail from "../../enquiry/details";
 import AllFollowUps from "../../components/follow-ups/all-follow-ups";
 import AppLayout from "../app-layout";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import studentsRoute from "./students-route";
 import ChangePassword from "../../components/commons/change-password";
+import {getActiveRoles} from "../../actions/users/UserAction";
 
 const ProtectedRoutes = () => {
+    const [loading, setLoading] = useState(true)
     const { password_changed } = useSelector(state => state.userReducer.loggedInUser)
     const roles = useSelector(state => state.userReducer.activeRoles)
     const location = useLocation()
     const background = location.state && location.state.background
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getActiveRoles('21993de6')).then(() => {
+            setLoading(false)
+        })
+    }, [])
+
+    if (loading) return <div className={'w-full h-screen flex items-center justify-center'}>Please Wait</div>
 
     return (
         !password_changed ? <ChangePassword/> :

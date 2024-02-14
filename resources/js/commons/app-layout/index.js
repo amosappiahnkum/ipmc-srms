@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React, {useEffect, useState} from 'react'
 import {connect} from "react-redux";
 import {handleGetCommonData} from "../../actions/commons/CommonAction";
-import {getActiveRoles} from "../../actions/users/UserAction";
 import AppHeader from "./app-header";
 import AppSidebar from "./app-sidebar";
 import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
@@ -13,16 +12,11 @@ import {Outlet} from "react-router";
 const AppLayout = (props) => {
     const [loading, setLoading] = useState(true)
 
-    const {getRoles, getCommonData} = props
+    const {getCommonData} = props
     const [collapsed, setCollapsed] = useState(false);
 
     useEffect(() => {
-        getRoles().then(() => {
-            setLoading(false)
-        }).then(() => {
-            setLoading(true)
-            getCommonData().then(() => setLoading(false))
-        })
+        getCommonData().then(() => setLoading(false))
     }, [])
     return (
         <Layout className={'max-w-screen-2xl mx-auto'}>
@@ -55,12 +49,10 @@ const AppLayout = (props) => {
 
 AppLayout.propTypes = {
     children: PropTypes.any,
-    getCommonData: PropTypes.func,
-    getRoles: PropTypes.func,
+    getCommonData: PropTypes.func
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    getRoles: () => dispatch(getActiveRoles('21993de6')),
     getCommonData: () => dispatch(handleGetCommonData()),
 })
 
