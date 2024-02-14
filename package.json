@@ -37,8 +37,6 @@
     "dependencies": {
         "@ant-design/icons": "latest",
         "@babel/core": "^7.14.3",
-        "@ckeditor/ckeditor5-build-classic": "^27.1.0",
-        "@ckeditor/ckeditor5-react": "^3.0.2",
         "@phosphor-icons/react": "^2.0.13",
         "@react-pdf-viewer/core": "3.6.0",
         "@react-pdf-viewer/default-layout": "^2.5.0",

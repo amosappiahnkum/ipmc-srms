@@ -41,17 +41,18 @@ class StudentFactory extends Factory
             'id_number' => $this->faker->creditCardNumber,
             'sponsor_id' => Sponsor::query()->inRandomOrder()->first()->id,
             'user_id' => 1,
+            'student_number' => Helper::generateStudentNumber(),
             'branch_id' => Branch::query()->inRandomOrder()->first()->id,
         ];
     }
 
     public function configure(): static
     {
-        return $this->afterCreating(static function (Student $staff) {
-            $userName = Helper::createUserName($staff->first_name, $staff->last_name);
-            $user = $staff->user()->create([
+        return $this->afterCreating(static function (Student $student) {
+            $userName = Helper::createUserName($student->first_name, $student->last_name);
+            $user = $student->user()->create([
                 'username' => $userName,
-                'email' => strtolower($staff->first_name.'.'.$staff->last_name.'@ipmcghana.com'),
+                'email' => strtolower($student->first_name.'.'.$student->last_name.'@ipmcghana.com'),
                 'password' => Hash::make($userName),
             ]);
 

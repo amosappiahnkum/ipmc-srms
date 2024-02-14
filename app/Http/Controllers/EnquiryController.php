@@ -53,36 +53,4 @@ class EnquiryController extends Controller
 
         return EnquiryResource::collection($enquiryQuery->paginate(10));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreEnquiryRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Enquiry $enquiry)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEnquiryRequest $request, Enquiry $enquiry)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Enquiry $enquiry)
-    {
-        //
-    }
 }

@@ -102,6 +102,7 @@ class StudentController extends Controller
             $request['branch_id'] = Auth::user()->userable->branch_id;
             $request['dob'] = Carbon::parse($request->dob)->format('Y-m-d');
             $request['status'] = StudentStatus::IN_SCHOOL->value;
+            $request['student_number'] = Helper::generateStudentNumber();
 
             $student = Student::create($request->all());
 

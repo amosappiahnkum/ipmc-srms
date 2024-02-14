@@ -134,4 +134,20 @@ class Helper
 
         return $studentId;
     }
+
+    /**
+     * @return string
+     */
+    public static function generateStudentNumber(): string
+    {
+        $prefix = date('Y');
+
+        $lastStudent = Student::query()->latest('id')->first();
+
+        if (empty($lastStudent)) {
+           return $prefix . '001';
+        }
+
+        return $lastStudent->student_number + 1;
+    }
 }

@@ -35,7 +35,8 @@ return new class extends Migration
             $table->jsonb('education_qualifications')->nullable();
             $table->text('other_qualification')->nullable();
             $table->string('status')->default('enquiry');
-            $table->string('student_id')->nullable();
+            $table->string('student_number')->unique()->nullable();
+            $table->string('index_number')->unique()->nullable();
             $table->foreignIdFor(Sponsor::class);
             $table->foreignIdFor(User::class)->comment('added by')->nullable();
             $table->foreignIdFor(Branch::class);
