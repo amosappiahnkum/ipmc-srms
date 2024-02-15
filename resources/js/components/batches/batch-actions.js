@@ -11,27 +11,27 @@ function BatchActions({record}) {
         <TblDropdown loading={false}>
             <ValidateComponent permissions={['edit-batch']}>
                 <TlaAddNew data={record} link={'form'}>
-                    <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm'}>Edit</p>
+                    <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full'}>Edit</p>
                 </TlaAddNew>
             </ValidateComponent>
 
             <ValidateComponent permissions={['generate-attendance']}>
                 <TlaAddNew data={{batch_id: record.id}} link={'/batches/generate-attendance'}>
-                    <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm'}>
+                    <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full'}>
                         Attendance
                     </p>
                 </TlaAddNew>
             </ValidateComponent>
             <ValidateComponent permissions={['view-batch-plan']}>
-                <TlaAddNew data={{batch_id: record.id, sems: record.sems}} link={'/batches/print-batch-plan'}>
-                    <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm'}>
+                <TlaAddNew data={{batch_id: record.id, sems: record.sems, name: record.name }} link={'/batches/print-batch-plan'}>
+                    <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full'}>
                         Batch Plan
                     </p>
                 </TlaAddNew>
             </ValidateComponent>
             <ValidateComponent permissions={['view-batch-plan']}>
                 <TlaAddNew data={{batch_id: record.id, modules: record.modules}} link={'/batches/schedule-exam'}>
-                    <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full rounded-sm'}>
+                    <p className={'rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-black !w-full'}>
                         Schedule Exam
                     </p>
                 </TlaAddNew>

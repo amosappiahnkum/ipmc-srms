@@ -4,8 +4,9 @@ import Confetti from 'react-confetti'
 import {Button} from "antd";
 import {Link} from "react-router-dom";
 import Happy from "../../assets/icons/happy.png";
+import PropTypes from "prop-types";
 
-const Passed = () => {
+const Passed = ({ mark }) => {
     const { width, height } = useWindowSize()
     return (
         <div className={'flex items-center h-screen'}>
@@ -17,6 +18,7 @@ const Passed = () => {
             <div className={'bg-white w-fit mx-auto rounded-lg text-center p-10'}>
                 <img height={'auto'} width={100} className={'mx-auto m-5'} src={Happy} alt="Passed"/>
                 <h1 className={'text-4xl font-bold text-green-900 mb-4'}>Congratulations!</h1>
+                <h1 className={'text-4xl font-bold text-green-900 mb-4'}>{mark}%</h1>
                 <h1 className={'text-xl mb-5 uppercase text-green-900'}>You passed</h1>
 
                 <Link to={'/'}>
@@ -26,5 +28,10 @@ const Passed = () => {
         </div>
     )
 }
+
+Passed.propTypes = {
+    mark: PropTypes.number
+}
+
 
 export default Passed

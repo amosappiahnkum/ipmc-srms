@@ -1,13 +1,21 @@
 .pagination {
+    display: flex;
     gap: 5px;
     align-items: center;
 }
 
-.pagination-wrapper .ant-card-body{
-    padding: 5px !important;
+.page-item{
+    border: solid 1px white;
+    padding: 8px 15px;
+    cursor: pointer;
 }
 
-.page-item.active .page-link {
+.page-item:hover {
+    border-radius: 10px;
+    border: solid 1px var(--Blue-400)
+}
+
+.page-item.active {
     color: var(--Blue-400);
     background-color: var(--White);
     border: solid 1px var(--Blue-400);
@@ -23,8 +31,7 @@
     outline: none !important;
 }
 
-.page-item:first-child .page-link,
-.page-item:last-child .page-link {
-    border-radius: 10px;
-    padding: 10px;
+.page-item:first-child:hover,
+.page-item:last-child:hover {
+    border: solid white 1px;
 }

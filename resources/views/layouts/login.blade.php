@@ -66,30 +66,21 @@
                    href="{{ route('make-enquiry') }}" target="_blank">Make Enquiry</a>
             </div>
             <div>
-                <div class="text-center position-absolute" style="top: 20px;">
-                    @if(count($errors) > 0)
-                        @foreach( $errors->all() as $message )
-                            <div class="alert bg-danger text-white alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <span>{{ $message }}</span>
-                            </div>
-                        @endforeach
-                    @endif
-
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="grid grid-cols-2 h-screen">
-                    <div class="text-center flex flex-col items-center justify-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 h-screen">
+                    <div class="text-center flex-col items-center justify-center hidden md:block">
 
                     </div>
                     <div class="text-center bg-white flex items-center justify-center">
-                        <div class="p-4">
+                        <div class="p-4 relative">
+                            <div class="text-center absolute" style="top: -20px">
+                                @if(count($errors) > 0)
+                                    @foreach( $errors->all() as $message )
+                                        <div class="alert bg-red-600 text-white px-1 text-sm">
+                                            <span>{{ $message }}</span>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
                             <div class="mb-5">
                                 <img height="auto" class="mx-auto mb-5" width="100" alt="logo"
                                      src="{{asset('images/logo.png')}}"/>

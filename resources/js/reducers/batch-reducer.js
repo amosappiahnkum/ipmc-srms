@@ -54,6 +54,13 @@ export default function batchReducer(state = initialState, action) {
         case Types.GET_BATCH:
             return {...state, batch: action.payload}
 
+        case Types.SUBMIT_RESULT:
+            return {
+                ...state,
+                examAnswers: [],
+                currentExamQuestion: 0,
+                reviews: []
+            }
         case Types.ADD_BATCH:
             return {
                 ...state,

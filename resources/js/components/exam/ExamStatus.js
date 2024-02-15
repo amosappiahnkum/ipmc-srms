@@ -9,7 +9,9 @@ const ExamStatus = () => {
     const {state} = useLocation()
 
     return (
-        getTotalMark(state?.data?.mark, state?.data?.total_mark) >= 50 ? <Passed/> : <Failed/>
+        getTotalMark(state?.data?.mark, state?.data?.total_mark) >= 50 ?
+            <Passed mark={state?.data?.mark}/> :
+            <Failed mark={state?.data?.mark}/>
     )
 }
 

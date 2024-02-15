@@ -106,18 +106,6 @@ class StudentController extends Controller
 
             $student = Student::create($request->all());
 
-            $userName = Helper::createUserName($request->first_name, $request->last_name);
-
-            $user = $student->user()->create([
-                'username' => $userName,
-                'email' => $request->email,
-                'password' => Hash::make($userName)
-            ]);
-
-            $role = Role::query()->where('name', 'student')->first();
-
-            $user->roles()->syncWithoutDetaching($role?->id);
-
             DB::commit();
             return new StudentResource($student);
         } catch (Exception $exception) {
@@ -226,6 +214,18 @@ class StudentController extends Controller
                     'status' => StudentStatus::IN_SCHOOL
                 ]);
             }
+
+            $userName = Helper::createUserName($student->first_name, $student->last_name);
+
+            $student->user()->firstOrCreate([
+                'username' => $userName,
+                'email' => $student->email,
+                'password' => Hash::make($userName)
+            ]);
+
+            $role = Role::query()->where('name', 'student')->first();
+
+            $student->user->roles()->syncWithoutDetaching($role?->id);
 
             DB::commit();
 

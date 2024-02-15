@@ -42,10 +42,9 @@ const PageStyles = createGlobalStyle`
 `
 
 function TakeExam() {
-    /*document.addEventListener('contextmenu', event => {
+    document.addEventListener('contextmenu', event => {
         event.preventDefault();
     });
-*/
     const [keyStrokes, setKeyStrokes] = useState([])
     document.addEventListener('keydown', event => {
         setKeyStrokes([...keyStrokes, event.key])
@@ -88,7 +87,7 @@ function TakeExam() {
     };
 
     window.onblur = function () {
-        // onFinish()
+        onFinish()
     };
 
     const handleSwitch = (type) => {

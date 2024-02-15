@@ -2,13 +2,15 @@ import React from 'react'
 import {Button} from "antd";
 import {Link} from "react-router-dom";
 import Sad from '../../assets/icons/sad.png'
+import PropTypes from "prop-types";
 
-const Failed = () => {
+const Failed = ({ mark }) => {
     return (
         <div className={'flex items-center h-screen'}>
             <div className={'bg-white w-fit mx-auto rounded-lg text-center p-10'}>
                 <img height={'auto'} width={100} className={'mx-auto m-5'} src={Sad} alt="Failed"/>
                 <h1 className={'text-4xl font-bold text-red-700 mb-4'}>Better luck next time!</h1>
+                <h1 className={'text-4xl font-bold text-red-700 mb-4'}>{mark}%</h1>
                 <h1 className={'text-xl mb-5 uppercase text-red-700'}>You failed</h1>
 
                 <Link to={'/'}>
@@ -17,6 +19,10 @@ const Failed = () => {
             </div>
         </div>
     )
+}
+
+Failed.propTypes = {
+    mark: PropTypes.number
 }
 
 export default Failed

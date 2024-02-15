@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Http\Resources\AllProgramsResource;
 use App\Http\Resources\EnquiryResource;
 use App\Http\Resources\OngoingProgramResource;
@@ -80,6 +81,7 @@ class PublicPageController extends Controller
                 'other_qualification' => $request->other_qualification,
                 'sponsor_id' => $sponsor->id,
                 'branch_id' => $request->branch_id,
+                'student_number' => Helper::generateStudentNumber()
             ]);
 
             $enquiry = $student->enquiry()->create([

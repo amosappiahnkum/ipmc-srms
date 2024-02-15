@@ -22,7 +22,7 @@ function TlaPagination(props) {
             { children }
 
             <div className={ 'flex justify-end' }>
-                <Card size={ 'small' } className={ 'w-fit mt-2 pagination-wrapper' }>
+                <div className={ 'bg-white rounded-lg p-2 w-fit mt-2' }>
                     <Pagination
                         activePage={ meta.current_page }
                         itemsCountPerPage={ meta.per_page }
@@ -37,7 +37,7 @@ function TlaPagination(props) {
                         nextPageText={ <FiArrowRight/> }
                         prevPageText={ <FiArrowLeft/> }
                     />
-                </Card>
+                </div>
             </div>
         </div>
 

@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             'type' => $this->userable->type ?? 'Student',
             'staff_id' => $this->userable_id,
             'password_changed' => $this->password_changed,
+            'student_number' => $this->userable->student_number ?? '-',
         ];
     }
 }

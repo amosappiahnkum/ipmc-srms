@@ -269,7 +269,7 @@ class OngoingProgramController extends Controller
     /**
      * @throws JsonException
      */
-    public function scheduleExam(Request $request)
+    public function scheduleExam(Request $request): JsonResponse
     {
         $programModule = ProgramModule::query()->findOrFail($request->program_module_id);
 

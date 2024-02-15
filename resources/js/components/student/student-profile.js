@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 const StudentProfile = () => {
     const user = useSelector(state => state.userReducer.loggedInUser)
     return (
-        <div className={'bg-white rounded-lg p-5'}>
+        <div className={'bg-white rounded-lg p-5 hidden md:block'}>
             <div className={'text-center mx-auto w-fit'}>
                 <TlaImage name={user.name ?? user.username} size={70} src={''}/>
                 <p className={'mt-2 text-2xl'}>{user?.name}</p>

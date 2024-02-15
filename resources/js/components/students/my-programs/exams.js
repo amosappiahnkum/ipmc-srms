@@ -24,11 +24,14 @@ const Exams = ({batchId}) => {
         navigate(`/take-exams/${exam?.id}`)
     }
 
-    const checkStatus = (total, mark) => mark >= (total / 2)
     return (
         <div className={'flex flex-col bg-white h-fit p-5 rounded-lg'}>
             <p className={'text-base font-medium mb-2'}>Exams</p>
             <Spin spinning={loading} indicator={<LoadingOutlined/>} tip={'Loading Exams'}>
+                {
+                    (regular?.length === 0 && resit?.length === 0) &&
+                    <h3 className={'text-error-600 text-lg'}>Oops! No Exam Found</h3>
+                }
                 {
                     regular?.map(({id, exam, result}) => (
                         <div key={id} className={'border p-2 rounded-lg mb-2'}>

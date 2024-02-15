@@ -15,8 +15,7 @@ function MyProgramDetail() {
                         <div className={'mx-auto w-fit'}>
                             <h3 className={'text-error-600 mt-5 text-xl'}>Oops! No module assigned to this program</h3>
                         </div>
-                        :
-                        <>
+                        : <>
                             <div className={'hidden md:block rounded-lg mb-2'}>
                                 <div className={'grid grid-cols-3 gap-2'}>
                                     <div className={'detail-item'}>

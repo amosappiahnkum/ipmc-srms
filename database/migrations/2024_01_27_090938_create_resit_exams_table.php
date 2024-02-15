@@ -16,7 +16,6 @@ return new class extends Migration
     {
         Schema::create('resit_exams', static function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('exam_code');
             $table->foreignIdFor(Student::class);
             $table->foreignIdFor(ProgramModule::class);
             $table->foreignIdFor(OngoingProgram::class);
