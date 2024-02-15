@@ -5,7 +5,7 @@
         <div class="mb-2">
             <label for="username" class="sr-only">Email</label>
             <input id="username" placeholder="Enter your username" type="text"
-                   class="border bg-transparent"
+                   class="border bg-transparent w-full"
                    name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
         </div>
 
@@ -13,7 +13,7 @@
             <label for="password" class="sr-only">password</label>
             <input style="background: transparent !important;"
                    id="password" placeholder="Enter your password" type="password"
-                   class="border bg-transparent"
+                   class="border bg-transparent w-full"
                    name="password" required autocomplete="current-password">
         </div>
 

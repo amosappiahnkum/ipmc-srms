@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class Helper
 {
@@ -111,15 +112,11 @@ class Helper
     public function generateStudentId(string $programCode): string
     {
 
-        $countStudents = Student::query()->count();
-
-        if ($countStudents == 0) {
-            $studentId = $programCode . '001';
-        } else {
             $lastStudentRecord = Student::query()->latest('id')->first();
             if (empty($lastStudentRecord)) {
-                $studentId = $programCode . '001';
-            } else {
+                return $programCode . '001';
+            }
+
                 $lastStaffIdNumber = (int)substr($lastStudentRecord->student_id, strlen($programCode));
                 $std_num = $lastStaffIdNumber + 1;
                 if ($lastStaffIdNumber < 9) {
@@ -129,8 +126,6 @@ class Helper
                 } else {
                     $studentId = $programCode . $std_num;
                 }
-            }
-        }
 
         return $studentId;
     }

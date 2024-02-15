@@ -41,7 +41,6 @@ class StudentFactory extends Factory
             'id_number' => $this->faker->creditCardNumber,
             'sponsor_id' => Sponsor::query()->inRandomOrder()->first()->id,
             'user_id' => 1,
-            'student_number' => Helper::generateStudentNumber(),
             'branch_id' => Branch::query()->inRandomOrder()->first()->id,
         ];
     }
