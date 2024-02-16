@@ -72,13 +72,20 @@
                     </div>
                     <div class="text-center bg-white flex items-center justify-center">
                         <div class="p-4 relative">
-                            <div class="text-center absolute" style="top: -20px">
+                            <div class="text-center absolute" style="top: -50px">
                                 @if(count($errors) > 0)
                                     @foreach( $errors->all() as $message )
-                                        <div class="alert bg-red-600 text-white px-1 text-sm">
+                                        <div class="alert bg-red-600 text-white rounded-lg text-sm p-2 mx-auto text-center">
                                             <span>{{ $message }}</span>
                                         </div>
                                     @endforeach
+                                @endif
+                                @if (session('status'))
+                                    <div class="min-w-full" role="alert">
+                                        <p class="bg-green-700 text-white rounded-lg text-sm p-2 mx-auto text-center">
+                                            {{ session('status') }}
+                                        </p>
+                                    </div>
                                 @endif
                             </div>
                             <div class="mb-5">

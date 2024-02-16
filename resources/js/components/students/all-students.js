@@ -9,6 +9,7 @@ import TlaImage from "../../commons/tla-image";
 import TlaAddNew from "../../commons/tla-add-new";
 import {FiMail, FiMoreVertical, FiPhone} from "react-icons/fi";
 import FilterStudents from "./filter-students";
+import Validate from "../../commons/validate";
 
 const {Column} = Table
 const {useToken} = theme;
@@ -58,12 +59,16 @@ function AllStudents(props) {
                 <Column title="sponsor" render={(_, {sponsor_name, sponsor_email, sponsor_number}) => (
                     <Space direction={'vertical'} size={1}>
                         <p>{sponsor_name}</p>
-                        <a className={'link-icon'} href={`mailto:${sponsor_email}`}>
-                            <FiMail/>{sponsor_email}
-                        </a>
-                        <a className={'link-icon'} href={`tel:${sponsor_number}`}>
-                            <FiPhone/>{sponsor_number}
-                        </a>
+                        <Validate show={sponsor_email}>
+                            <a className={'link-icon'} href={`mailto:${sponsor_email}`}>
+                                <FiMail/>{sponsor_email}
+                            </a>
+                        </Validate>
+                        <Validate show={sponsor_number}>
+                            <a className={'link-icon'} href={`tel:${sponsor_number}`}>
+                                <FiPhone/>{sponsor_number}
+                            </a>
+                        </Validate>
                     </Space>
                 )}/>
                 <Column title="D.o.B" dataIndex={'dob'}/>
@@ -74,9 +79,15 @@ function AllStudents(props) {
                 )}/>
                 <Column title="Contact" render={(_, {phone_number, alt_phone_number, email}) => (
                     <Space direction={'vertical'} size={1}>
-                        <a className={'link-icon'} href={`mailto:${email}`}><FiMail/>{email}</a>
-                        <a className={'link-icon'} href={`tel:${phone_number}`}><FiPhone/>{phone_number}</a>
-                        <a className={'link-icon'} href={`tel:${alt_phone_number}`}><FiPhone/>{alt_phone_number}</a>
+                        <Validate show={email}>
+                            <a className={'link-icon'} href={`mailto:${email}`}><FiMail/>{email}</a>
+                        </Validate>
+                        <Validate show={phone_number}>
+                            <a className={'link-icon'} href={`tel:${phone_number}`}><FiPhone/>{phone_number}</a>
+                        </Validate>
+                        <Validate show={alt_phone_number}>
+                            <a className={'link-icon'} href={`tel:${alt_phone_number}`}><FiPhone/>{alt_phone_number}</a>
+                        </Validate>
                     </Space>
                 )}/>
                 <Table.Column title={'Actions'} render={(_, record) => (
