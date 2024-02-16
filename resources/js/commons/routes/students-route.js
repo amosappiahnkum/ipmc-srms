@@ -8,6 +8,7 @@ import Instructions from "../../components/exam/instructions";
 import TakeExam from "../../components/exam/take-exam";
 import ExamStatus from "../../components/exam/ExamStatus";
 import ChangePassword from "../../components/commons/change-password";
+import PageNotFound from "./page-not-found";
 
 export default [
     <Route key={'students'} path={'/'} element={<StudentLayout/>}>
@@ -20,5 +21,5 @@ export default [
     </Route>,
     <Route key={'begin'} path={'/take-exams/:name/begin'} element={<TakeExam/>}/>,
     <Route key={'passed'} path={'/take-exams/:name/completed'} element={<ExamStatus/>}/>,
-    <Route key={'none'} exact> <>not found</></Route>
+    <Route key={'not-found'} path={'*'} element={<PageNotFound/>}/>
 ]

@@ -1,28 +1,28 @@
 @extends('layouts.login')
-
+@section('header')
+    <h3 class="text-3xl font-bold">Forgot Password!</h3>
+    <p class="text-gray-500 text-sm">Enter your email to receive a reset link.</p>
+@endsection
 @section('content')
     <form method="POST" action="{{ route('password.email') }}">
         @csrf
 
-        <div class="form-group row">
-            <div class="col-md-12 text-left">
-                <label for="email">{{ __('E-Mail Address') }}</label>
+        <div class="mb-3">
+                <label for="email" class="sr-only">{{ __('E-Mail Address') }}</label>
                 <input placeholder="Enter your email address" id="email" type="email"
-                       style="border-radius: 10px !important;"
-                       class="form-control form-control-lg @error('email') is-invalid @enderror"
+                       class="border bg-transparent w-full @error('email') is-invalid @enderror"
                        name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-            </div>
         </div>
 
-        <div class="form-group row mb-2">
+        <div class="form-group row mb-5">
             <div class="col-md-12">
-                <button type="submit" class="btn btn-primary btn-lg btn-block">
-                    {{ __('Send Password Reset Link') }}
+                <button type="submit" class="btn bg-red-500 w-full p-3 text-center text-white uppercase">
+                    {{ __('Reset Password') }}
                 </button>
             </div>
         </div>
 
-        <div class="col-md-12 text-center">
+        <div class="mb-5 text-center">
             @if (Route::has('password.request'))
                 <a class="" href="/">
                     {{ __('Login Here') }}

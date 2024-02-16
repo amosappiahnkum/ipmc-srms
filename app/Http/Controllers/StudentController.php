@@ -219,7 +219,7 @@ class StudentController extends Controller
 
             $student->user()->firstOrCreate([
                 'username' => $userName,
-                'email' => $student->email,
+//                'email' => $student->email,
                 'password' => Hash::make($userName)
             ]);
 

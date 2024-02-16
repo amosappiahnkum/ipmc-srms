@@ -85,8 +85,7 @@
                                 <img height="auto" class="mx-auto mb-5" width="100" alt="logo"
                                      src="{{asset('images/logo.png')}}"/>
 
-                                <h3 class="text-3xl font-bold">Welcome!</h3>
-                                <p class="text-gray-500 text-sm">Enter your credential to access your Portal.</p>
+                                @yield('header')
                             </div>
                             <div>
                                 @yield('content')

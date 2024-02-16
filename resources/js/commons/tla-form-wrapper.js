@@ -32,7 +32,11 @@ function TlaFormWrapper(props) {
 
         for (const key in values) {
             if (Object.prototype.hasOwnProperty.call(values, key)) {
-                formData.append(key, values[key]);
+                if (values[key] === undefined || values[key] === 'undefined') {
+                    formData.append(key, '');
+                } else {
+                    formData.append(key, values[key]);
+                }
             }
         }
 

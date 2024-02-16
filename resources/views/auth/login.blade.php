@@ -1,4 +1,8 @@
 @extends('layouts.login')
+@section('header')
+    <h3 class="text-3xl font-bold">Welcome!</h3>
+    <p class="text-gray-500 text-sm">Enter your credential to access your Portal.</p>
+@endsection
 @section('content')
     <form method="POST" action="{{ route('login') }}">
         @csrf

@@ -18,6 +18,7 @@ import {useDispatch, useSelector} from "react-redux";
 import studentsRoute from "./students-route";
 import ChangePassword from "../../components/commons/change-password";
 import {getActiveRoles} from "../../actions/users/UserAction";
+import PageNotFound from "./page-not-found";
 
 const ProtectedRoutes = () => {
     const [loading, setLoading] = useState(true)
@@ -64,9 +65,7 @@ const ProtectedRoutes = () => {
                             </Route>
                         </React.Fragment>
                 }
-                <Route exact>
-                    <>not found</>
-                </Route>
+                <Route path={'*'} element={<PageNotFound/>}/>
             </Routes>
         </React.Fragment>
     )
