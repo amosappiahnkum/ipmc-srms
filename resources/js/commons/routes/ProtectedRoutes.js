@@ -9,7 +9,6 @@ import AllStaff from "../../components/staff/all-staff";
 import AllBatches from "../../components/batches/all-batches";
 import Dashboard from "../../components/dashboard";
 import AllEnquires from "../../enquiry/all-enquires";
-import BatchStudents from "../../components/batches/batch-students";
 import AllRegistrations from "../../components/registrations/all-registrations";
 import EnquiryDetail from "../../enquiry/details";
 import AllFollowUps from "../../components/follow-ups/all-follow-ups";
@@ -19,6 +18,8 @@ import studentsRoute from "./students-route";
 import ChangePassword from "../../components/commons/change-password";
 import {getActiveRoles} from "../../actions/users/UserAction";
 import PageNotFound from "./page-not-found";
+import BatchDetail from "../../components/batches/batch-detail";
+import BatchSubjectDetail from "../../components/batches/batch-subject-detail";
 
 const ProtectedRoutes = () => {
     const [loading, setLoading] = useState(true)
@@ -59,8 +60,8 @@ const ProtectedRoutes = () => {
                                     <Route path='programs' element={<AllPrograms/>}/>
                                     <Route path='staff' element={<AllStaff/>}/>
                                     <Route path='batches' element={<AllBatches/>}/>
-                                    <Route path='my-batches' element={<AllBatches/>}/>
-                                    <Route path='batches/students' element={<BatchStudents/>}/>
+                                    <Route path='batches/detail' element={<BatchDetail/>}/>
+                                    <Route path='batches/detail/:name' element={<BatchSubjectDetail/>}/>
                                 </Route>
                             </Route>
                         </React.Fragment>

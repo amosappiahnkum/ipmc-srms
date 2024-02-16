@@ -1,12 +1,13 @@
-import {Button, Table, Tag} from 'antd'
+import {Table, Tag} from 'antd'
 import PropTypes from 'prop-types'
 import React, {useEffect, useState} from 'react'
-import {connect, useSelector} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {useOutletContext} from 'react-router'
 import {handleGetAllBatches} from "../../actions/batches/BatchAction";
 import TlaTableWrapper from "../../commons/table/tla-table-wrapper";
 import BatchActions from "./batch-actions";
-import {Link, useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import {getBatch} from "../../actions/batches/ActionCreators";
 
 const {Column} = Table
 
@@ -34,6 +35,19 @@ function AllBatches(props) {
         completed: 'green',
         pending: 'red'
     }
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const Details = (record) => {
+        return {
+            onClick: () => {
+                dispatch(getBatch(record))
+                navigate('detail')
+            },
+        };
+    }
+
     return (
         <div className={'pb-10'}>
             {/*<FilterGetBatches/>*/}
@@ -42,23 +56,18 @@ function AllBatches(props) {
                 filterObj={filter}
                 callbackFunction={getBatches}
                 data={data} meta={meta}>
-                <Table.Column title={'Program'} render={(text, {program, status}) => (
+                <Column className={'cursor-pointer'} onCell={Details} title={'Program'} render={(text, {program, status}) => (
                     <>
                         <p>{program}</p>
                         <Tag color={colors[status]}>{status}</Tag>
                     </>
                 )}/>
-                <Column title="room" dataIndex={'room'}/>
-                <Column title="instructor" dataIndex={'staff'}/>
-                <Column title="start time" dataIndex={'batch_time'}/>
-                <Column title="start date" dataIndex={'start_date'}/>
-                <Column title="end date" dataIndex={'end_date'}/>
-                <Table.Column title={'Students'} render={(text, record) => (
-                    record.students > 0 ?
-                        <Link to={'students'} state={{data: record}} className={'!no-underline'}>
-                            <Button type={'primary'} size={'small'} icon={<>{record.students}</>}>&nbsp;View</Button>
-                        </Link> : <>{record.students}</>
-                )}/>
+                <Column className={'cursor-pointer'} onCell={Details} title="room" dataIndex={'room'}/>
+                <Column className={'cursor-pointer'} onCell={Details} title="instructor" dataIndex={'staff'}/>
+                <Column className={'cursor-pointer'} onCell={Details} title="start time" dataIndex={'batch_time'}/>
+                <Column className={'cursor-pointer'} onCell={Details} title="start date" dataIndex={'start_date'}/>
+                <Column className={'cursor-pointer'} onCell={Details} title="end date" dataIndex={'end_date'}/>
+                <Column className={'cursor-pointer'} onCell={Details} title={'Students'} dataIndex={"students"}/>
                 <Table.Column title={'Actions'} render={(text, record) => (
                     <BatchActions record={record}/>
                 )}/>

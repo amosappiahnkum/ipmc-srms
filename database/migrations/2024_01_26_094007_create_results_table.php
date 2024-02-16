@@ -21,7 +21,10 @@ return new class extends Migration
             $table->foreignIdFor(Student::class);
             $table->foreignIdFor(ProgramModule::class);
             $table->integer('total_questions');
-            $table->integer('total_mark');
+            $table->integer('attendance_score')->default(0);
+            $table->integer('class_score')->default(0);
+            $table->integer('exam_score')->default(0);
+            $table->integer('total_mark')->default(0);
             $table->jsonb('key_strokes')->nullable();
             $table->string('time_left')->comment('in-seconds');
             $table->integer('mark');

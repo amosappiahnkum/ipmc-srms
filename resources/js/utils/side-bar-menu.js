@@ -86,7 +86,7 @@ export const SidebarMenus = [
     },
     {
         title: 'My Batches',
-        link: '/my-batches',
+        link: '/batches',
         children: [],
         permissions: ['view-my-batches'],
         icon: 'batch'
