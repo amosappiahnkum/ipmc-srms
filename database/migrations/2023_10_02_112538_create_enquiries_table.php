@@ -17,6 +17,7 @@ return new class extends Migration
     {
         Schema::create('enquiries', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->foreignIdFor(Student::class);
             $table->jsonb('programs');
             $table->text('other_program')->nullable();

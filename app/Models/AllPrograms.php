@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
-class AllPrograms extends Model
+class AllPrograms extends BaseModel
 {
-    use HasFactory;
 
     protected $casts = [
         'type' => ProgramType::class

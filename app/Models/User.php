@@ -9,14 +9,16 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes, HasRoles, HasActivityLogs;
+    use HasFactory, HasApiTokens, Notifiable, SoftDeletes, HasRoles, HasActivityLogs;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that areuse HasApiTokens, HasFactory, Notifiable; mass assignable.
      *
      * @var array
      */
@@ -57,5 +59,16 @@ class User extends Authenticatable
             'email' => $this->email,
             'username' => $this->username
         ]);
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = (string) Str::uuid();
+            }
+        });
     }
 }

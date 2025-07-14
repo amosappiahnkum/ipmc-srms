@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Photo extends Model
+class Photo extends BaseModel
 {
-    use HasFactory, SoftDeletes;
 
     public function photoable(): MorphTo
     {
@@ -22,14 +21,4 @@ class Photo extends Model
         'photoable',
         'file_name',
     ];
-
-    /**
-     * @return MorphOne
-     */
-    public function informationUpdate(): MorphOne
-    {
-        return $this->morphOne(InformationUpdate::class, 'information')
-            ->where('status', 'pending')
-            ->latest();
-    }
 }

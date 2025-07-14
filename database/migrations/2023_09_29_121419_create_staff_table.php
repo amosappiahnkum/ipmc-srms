@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('staff', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('other_name')->nullable();

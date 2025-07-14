@@ -14,10 +14,12 @@ return new class extends Migration
     {
         Schema::create('modules', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->string('name');
             $table->string('code', 20);
             $table->foreignIdFor(User::class);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

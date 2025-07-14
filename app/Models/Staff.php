@@ -9,10 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Staff extends Model
+class Staff extends BaseModel
 {
-    use HasFactory, SoftDeletes;
-
     protected $fillable = [
         'first_name',
         'last_name',

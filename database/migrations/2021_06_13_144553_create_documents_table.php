@@ -15,6 +15,7 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->string('fileName');
             $table->string('docType');
             $table->softDeletes();

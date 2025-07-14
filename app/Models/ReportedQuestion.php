@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ReportedQuestion extends Model
+class ReportedQuestion extends BaseModel
 {
-    use HasFactory;
-
     protected $fillable = [
         'question',
         'user_id',

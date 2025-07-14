@@ -14,10 +14,12 @@ return new class extends Migration
     {
         Schema::create('reported_questions', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->jsonb('question');
             $table->longText('report');
             $table->foreignIdFor(User::class);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -14,10 +14,12 @@ return new class extends Migration
     {
         Schema::create('branches', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->string('name');
             $table->string('address');
             $table->foreignIdFor(Staff::class, 'administrator')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

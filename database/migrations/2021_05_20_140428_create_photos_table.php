@@ -15,6 +15,7 @@ class CreatePhotosTable extends Migration
     {
         Schema::create('photos', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->morphs('photoable');
             $table->string('file_name')->nullable();
             $table->softDeletes();

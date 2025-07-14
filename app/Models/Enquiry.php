@@ -11,10 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 
-class Enquiry extends Model
+class Enquiry extends BaseModel
 {
-    use HasFactory, SoftDeletes;
-
     protected $casts = [
       'programs' => 'array'
     ];

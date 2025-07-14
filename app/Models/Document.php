@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Document extends Model
+class Document extends BaseModel
 {
-    use HasFactory, SoftDeletes;
-
     protected $fillable = ['fileName', 'docType'];
 }

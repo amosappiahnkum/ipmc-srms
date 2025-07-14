@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class ApplicationModel extends Model
+class ApplicationModel extends BaseModel
 {
 
     protected static function booted()

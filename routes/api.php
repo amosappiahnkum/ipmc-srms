@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\FollowUpController;
 use App\Http\Controllers\HomeController;
@@ -25,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('enquiry/programs', [PublicPageController::class, 'getPrograms']);
 Route::get('enquiry/branches', [PublicPageController::class, 'getBranches']);
+
+Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::post('enquiry', [PublicPageController::class, 'newEnquiry']);
 

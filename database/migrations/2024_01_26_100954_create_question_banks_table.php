@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('question_banks', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->foreignIdFor(Module::class);
             $table->longText('text')->unique();
             $table->enum('type', ['single', 'multi', 'essay']);
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->boolean('timed')->nullable()->default(false);
             $table->string('time')->nullable()->comment('in-minutes');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

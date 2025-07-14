@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('durations', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->integer('duration');
             $table->string('duration_type');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

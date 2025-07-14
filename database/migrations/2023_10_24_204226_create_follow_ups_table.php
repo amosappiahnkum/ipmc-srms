@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('follow_ups', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->date('follow_up_date');
             $table->string('mode', 50);
             $table->longText('feedback');

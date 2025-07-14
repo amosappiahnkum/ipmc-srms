@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('programs', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->foreignIdFor(AllPrograms::class);
             $table->foreignIdFor(Duration::class);
             $table->string('year')->nullable();

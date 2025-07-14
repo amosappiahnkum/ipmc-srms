@@ -17,6 +17,7 @@ return new class extends Migration
     {
         Schema::create('program_modules', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->foreignIdFor(Module::class);
             $table->foreignIdFor(Program::class);
             $table->foreignIdFor(Duration::class);
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->integer('semester')->nullable();
             $table->foreignIdFor(User::class);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

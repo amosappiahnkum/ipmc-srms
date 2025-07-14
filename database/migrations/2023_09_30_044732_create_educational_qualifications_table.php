@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('educational_qualifications', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->foreignIdFor(Student::class);
             $table->string('name');
             $table->timestamps();

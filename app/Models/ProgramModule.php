@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class ProgramModule extends Model
+class ProgramModule extends BaseModel
 {
-    use HasFactory;
-
     protected $fillable = [
         'module_id',
         'ongoing_program_id',

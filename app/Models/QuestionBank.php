@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class QuestionBank extends Model
+class QuestionBank extends BaseModel
 {
-    use HasFactory;
-
     protected $casts = [
         'answers' => 'array'
     ];

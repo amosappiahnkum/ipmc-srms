@@ -12,9 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Student extends Model
+class Student extends BaseModel
 {
-    use HasFactory, SoftDeletes;
 
     protected $appends = [
         'name'

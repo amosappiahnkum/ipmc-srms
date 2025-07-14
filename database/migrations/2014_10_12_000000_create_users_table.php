@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->boolean('password_changed')->default(false);
             $table->boolean('is_active')->default(true);
             $table->nullableMorphs('userable');
+            $table->uuid();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

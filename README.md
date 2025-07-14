@@ -10,3 +10,13 @@ We provide IT training under a broad category of Professional courses.
 ## Contact Us
 Email: info@techlineafrica.com  
 Mobile: +233 544 513 074
+
+
+## Setup
+
+Create a copy of the .env-example file and rename it to .env
+
+### Install php dependencies
+```
+composer install
+```

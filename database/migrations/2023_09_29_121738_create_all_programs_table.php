@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('all_programs', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->string('name');
             $table->string('type');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

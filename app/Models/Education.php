@@ -3,16 +3,11 @@
 namespace App\Models;
 
 use App\Enums\ProgramType;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Education extends Model
+class Education extends BaseModel
 {
-    use HasFactory, SoftDeletes;
-
     protected $fillable = [
         'employee_id',
         'education_level_id',

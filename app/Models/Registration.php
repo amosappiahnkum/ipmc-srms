@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Registration extends Model
+class Registration extends BaseModel
 {
-    use HasFactory, SoftDeletes;
 
     protected $casts = [
         'status' => RegistrationType::class

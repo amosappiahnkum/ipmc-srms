@@ -18,6 +18,7 @@ return new class extends Migration
     {
         Schema::create('ongoing_programs', static function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->foreignIdFor(Program::class);
             $table->foreignIdFor(Staff::class)->nullable();
             $table->time('batch_time')->nullable();
