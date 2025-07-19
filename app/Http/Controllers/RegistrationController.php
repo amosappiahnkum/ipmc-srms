@@ -49,7 +49,9 @@ class RegistrationController extends Controller
                 'landscape');
         }
 
-        return RegistrationResource::collection($registrationQuery->paginate(10));
+        $perPage = $request->query('per_page', 10);
+
+        return RegistrationResource::collection($registrationQuery->paginate($perPage));
     }
 
 
