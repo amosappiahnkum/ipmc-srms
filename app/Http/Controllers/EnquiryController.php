@@ -51,6 +51,8 @@ class EnquiryController extends Controller
                 'landscape');
         }
 
-        return EnquiryResource::collection($enquiryQuery->paginate(10));
+        $perPage = $request->query('per_page', 10);
+
+        return EnquiryResource::collection($enquiryQuery->paginate($perPage));
     }
 }
