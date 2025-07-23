@@ -56,7 +56,9 @@ class StaffController extends Controller
                 'landscape');
         }
 
-        return StaffResource::collection($staffQuery->paginate(10));
+        $perPage = $request->query('per_page', 10);
+
+        return StaffResource::collection($staffQuery->paginate($perPage));
     }
 
     /**

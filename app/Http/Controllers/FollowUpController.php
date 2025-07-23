@@ -56,7 +56,9 @@ class FollowUpController extends Controller
                 'FollowUps', 'landscape');
         }
 
-        return FollowUpResource::collection($ongoingProgramsQuery->paginate(10));
+        $perPage = $request->query('per_page', 10);
+
+        return FollowUpResource::collection($ongoingProgramsQuery->paginate($perPage));
     }
 
     /**

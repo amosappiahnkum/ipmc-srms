@@ -80,7 +80,9 @@ class StudentController extends Controller
 
         $studentsQuery->where('status', 'in-school');
 
-        return StudentResource::collection($studentsQuery->paginate(10));
+        $perPage = $request->query('per_page', 10);
+
+        return StudentResource::collection($studentsQuery->paginate($perPage));
     }
 
     /**
