@@ -77,7 +77,9 @@ class OngoingProgramController extends Controller
                 'Batches', 'landscape');
         }
 
-        return OngoingProgramResource::collection($ongoingProgramsQuery->paginate(10));
+        $perPage = $request->query('per_page', 10);
+
+        return OngoingProgramResource::collection($ongoingProgramsQuery->paginate($perPage));
     }
 
     /**
