@@ -207,7 +207,8 @@ class StudentController extends Controller
                 'registration_fee' => $program->registration_fee,
                 'discounted_fee' => $discount,
                 'net_payable_fee' => $program->total_fee - $discount,
-                'branch_id' => $request->branch_id,
+                'branch_id' => 1,
+//                'branch_id' => $request->branch_id,
                 'status' => RegistrationType::IN_SCHOOL
             ]);
 

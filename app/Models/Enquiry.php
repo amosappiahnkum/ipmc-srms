@@ -13,35 +13,25 @@ use Illuminate\Support\Facades\Log;
 
 class Enquiry extends BaseModel
 {
-    protected $casts = [
-      'programs' => 'array'
-    ];
-
     protected $fillable = [
-        'student_id',
-        'programs',
+        'first_name',
+        'last_name',
+        'other_name',
+        'phone_number',
+        'alt_phone_number',
+        'email',
         'other_program',
         'preferred_timings',
         'other_preferred_timing',
         'heard',
         'other_heard',
+        'branch_id',
         'school_name',
-        'evaluated_by',
-        'evaluation_date',
-        'branch_id'
     ];
 
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
-    }
-
-    protected function programs(): Attribute
-    {
-        return Attribute::make(
-            get: static fn(string $value) => json_decode($value, JSON_THROW_ON_ERROR, 512, JSON_THROW_ON_ERROR),
-            set: static fn(array $value) => json_encode($value, JSON_THROW_ON_ERROR)
-        );
     }
 
     protected function preferredTimings(): Attribute
@@ -60,9 +50,9 @@ class Enquiry extends BaseModel
         );
     }
 
-    public function enquiryPrograms (): Collection|array
+    public function enquiryPrograms (): HasMany
     {
-        return Program::query()->whereIn('id', $this->programs)->get();
+        return $this->hasMany(EnquiryProgram::class);
     }
 
     public function followUps (): HasMany

@@ -16,10 +16,8 @@ class EnquiryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'student_id' => $this->student_id,
-            'student' => new StudentResource($this->student),
             'programs' => $this->programs,
-            'enquiry_programs' => ProgramResource::collection($this->enquiryPrograms()),
+            'enquiry_programs' => $this->enquiryPrograms,
             'other_program' => $this->other_program,
             'preferred_timings' => $this->preferred_timings,
             'other_preferred_timing' => $this->other_preferred_timing,

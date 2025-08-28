@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Branch;
+use App\Models\Enquiry;
 use App\Models\Sponsor;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -38,6 +39,7 @@ return new class extends Migration
             $table->string('status')->default('enquiry');
             $table->string('student_number')->unique()->nullable();
             $table->string('index_number')->unique()->nullable();
+            $table->foreignIdFor(Enquiry::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Sponsor::class);
             $table->foreignIdFor(User::class)->comment('added by')->nullable();
             $table->foreignIdFor(Branch::class);

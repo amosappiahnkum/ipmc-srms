@@ -18,8 +18,12 @@ return new class extends Migration
         Schema::create('enquiries', static function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->foreignIdFor(Student::class);
-            $table->jsonb('programs');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('other_name')->nullable();
+            $table->string('phone_number');
+            $table->string('alt_phone_number')->nullable();
+            $table->string('email')->nullable();
             $table->text('other_program')->nullable();
             $table->jsonb('preferred_timings')->nullable();
             $table->text('other_preferred_timing')->nullable();

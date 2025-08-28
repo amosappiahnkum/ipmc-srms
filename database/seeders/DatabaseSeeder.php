@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesAndPermissionsSeeder::class,
             BranchSeeder::class,
-            SponsorSeeder::class,
-            StudentSeeder::class,
+//            SponsorSeeder::class,
+//            StudentSeeder::class,
             UserSeeder::class,
-            StaffSeeder::class,
-            OngoingProgramSeeder::class,
-            RegistrationSeeder::class
+//            StaffSeeder::class,
+//            OngoingProgramSeeder::class,
+//            RegistrationSeeder::class
         ]);
     }
 }

@@ -19,7 +19,7 @@ function Programs({getEnquiryPrograms}) {
         <Spin spinning={loading}>
             {
                 !loading &&
-                <div className={'chat-content h-[calc(100vh-500px)] md:h-[calc(100vh-300px)]'}>
+                <div className={''}>
                     <div>
                         <Form.Item rules={[
                             {
