@@ -23,11 +23,13 @@ function AllEnquires(props) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        setPageInfo({title: 'Students', addLink: '/students/form', buttonText: 'Student'})
+        setPageInfo({title: 'student?s', addLink: '/student?s/form', buttonText: 'student?'})
         getEnquiries(new URLSearchParams(filter)).then(() => {
             setLoading(false)
         })
-    }, [])
+    }, []);
+
+
 
     return (
         <div className={'pb-10'}>
@@ -39,12 +41,12 @@ function AllEnquires(props) {
                 data={data} meta={meta}>
                 <Column title="Name" render={(_, record) => (
                     <Space>
-                        <TlaImage size={40} src={'Avatar'} name={record.student.name}/>
+                        <TlaImage size={40} src={'Avatar'} name={record.student?.name}/>
                         <Space direction={'vertical'} size={1}>
-                            {record.student.name}
+                            {record.student?.name}
                             <Button onClick={() => {
                                 dispatch({type: 'ENQUIRY_DETAIL', payload: record})
-                                navigate(`${record.student.name}/details`)
+                                navigate(`${record.student?.name}/details`)
                             }} type={'primary'} size={'small'}>Detail</Button>
 
                         </Space>
@@ -52,24 +54,24 @@ function AllEnquires(props) {
                 )}/>
                 <Column title="sponsor" render={(_, {student}) => (
                     <Space direction={'vertical'} size={1}>
-                        <p>{student.sponsor_name}</p>
-                        <a className={'link-icon'} href={`mailto:${student.sponsor_email}`}>
-                            <FiMail/>{student.sponsor_email}
+                        <p>{student?.sponsor_name}</p>
+                        <a className={'link-icon'} href={`mailto:${student?.sponsor_email}`}>
+                            <FiMail/>{student?.sponsor_email}
                         </a>
-                        <a className={'link-icon'} href={`tel:${student.sponsor_number}`}>
-                            <FiPhone/>{student.sponsor_number}
+                        <a className={'link-icon'} href={`tel:${student?.sponsor_number}`}>
+                            <FiPhone/>{student?.sponsor_number}
                         </a>
                     </Space>
                 )}/>
-                <Column title="D.o.B" dataIndex={['student', 'dob']}/>
+                <Column title="D.o.B" dataIndex={['student?', 'dob']}/>
                 <Column title="follow ups" dataIndex={'follow_ups_count'}/>
                 <Column title="Contact" render={(_, {student}) => (
                     <Space direction={'vertical'} size={1}>
-                        <a className={'link-icon'} href={`mailto:${student.email}`}><FiMail/>{student.email}</a>
-                        <a className={'link-icon'} href={`tel:${student.phone_number}`}><FiPhone/>{student.phone_number}
+                        <a className={'link-icon'} href={`mailto:${student?.email}`}><FiMail/>{student?.email}</a>
+                        <a className={'link-icon'} href={`tel:${student?.phone_number}`}><FiPhone/>{student?.phone_number}
                         </a>
                         <a className={'link-icon'}
-                           href={`tel:${student.alt_phone_number}`}><FiPhone/>{student.alt_phone_number}</a>
+                           href={`tel:${student?.alt_phone_number}`}><FiPhone/>{student?.alt_phone_number}</a>
                     </Space>
                 )}/>
                 <Table.Column title={'Actions'} render={(_, record) => (
