@@ -26,13 +26,15 @@ class EnquiryResource extends JsonResource
             'follow_ups' => FollowUpResource::collection($this->followUps),
             'follow_ups_count' => $this->followUps->count(),
             'school_name' => $this->school_name,
+            'educational_qualification' => $this->school_name,
             'evaluated_by' => $this->evaluated_by,
             'evaluation_date' => $this->evaluation_date,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'name' => $this->first_name . ' ' . $this->last_name,
             'email' => $this->email,
-            'phone_number' => $this->phone_number
+            'phone_number' => $this->phone_number,
+            'alt_phone_number' => $this->alt_phone_number,
         ];
     }
 }
