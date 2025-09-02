@@ -11,23 +11,30 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProgramController extends Controller
 {
     use UsePrint;
+
+
     /**
-     * Display a listing of the resource.
+     * @param Request $request
+     * @return Response|BinaryFileResponse|AnonymousResourceCollection
      */
-    public function index(Request $request)
+    public function index(Request $request): Response|BinaryFileResponse|AnonymousResourceCollection
     {
         $programsQuery = Program::query();
-        $programsQuery->when($request->has('department_id') &&
-            $request->department_id !== 'all', function ($q) use ($request) {
-            return $q->where('department_id', $request->department_id);
+
+        $programsQuery->when($request->filled('search') && $request->search !== 'null', function ($q) use ($request) {
+            return $q->whereHas('allPrograms', function ($q) use ($request) {
+                return $q->where('name', 'like', "%{$request->search}%");
+            });
         });
 
         if ($request->has('export') && $request->export === 'true') {
