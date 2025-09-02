@@ -22,7 +22,7 @@ class ProgramResource extends JsonResource
             'fee' => $this->fee,
             'registration_fee' => $this->registration_fee,
             'year' => $this->year,
-            'modules' => $this->modules,
+            'modules' => ProgramModuleResource::collection($this->modules),
             'sems' => array_unique($this->modules->pluck('semester')->toArray()),
             'program_type' => $this->allPrograms->type,
             'students' => $this->students->count(),
