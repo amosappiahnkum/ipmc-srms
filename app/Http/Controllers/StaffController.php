@@ -25,22 +25,6 @@ class StaffController extends Controller
     public function index(Request $request)
     {
         $staffQuery = Staff::query();
-        $staffQuery->when($request->has('department_id') &&
-            $request->department_id !== 'all', function ($q) use ($request) {
-            return $q->where('department_id', $request->department_id);
-        });
-
-        $staffQuery->when($request->has('rank_id') &&
-            $request->rank_id !== 'all', function ($q) use ($request) {
-            return $q->where('rank_id', $request->rank_id);
-        });
-
-        $staffQuery->when($request->has('job_category_id') &&
-            $request->job_category_id !== 'all', function ($q) use ($request) {
-            return $q->whereRelation('jobDetail', static function ($jQuery) use ($request) {
-                return $jQuery->where('job_category_id', $request->job_category_id);
-            });
-        });
 
         if(!Auth::user()->hasRole('super-admin')) {
             $staffQuery->where('branch_id', Auth::user()->userable->branch_id);
@@ -56,9 +40,7 @@ class StaffController extends Controller
                 'landscape');
         }
 
-        $perPage = $request->query('per_page', 10);
-
-        return StaffResource::collection($staffQuery->paginate($perPage));
+        return StaffResource::collection($staffQuery->paginate($request->perPage ?? 10));
     }
 
     /**

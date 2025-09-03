@@ -18,6 +18,7 @@ class ProgramResource extends JsonResource
             'id' => $this->id,
             'name' => $this->allPrograms->name . ($this->year ? ' - ' . $this->year : ''),
             'duration' => $this->duration->duration,
+            'duration_type' => $this->duration->duration_type,
             'type' => $this->allPrograms->type,
             'fee' => $this->fee,
             'registration_fee' => $this->registration_fee,

@@ -47,7 +47,7 @@ class ProgramController extends Controller
                 'landscape');
         }
 
-        return ProgramResource::collection($programsQuery->paginate(10));
+        return ProgramResource::collection($programsQuery->paginate($request->perPage ?? 10));
     }
 
     /**

@@ -230,9 +230,9 @@ class OngoingProgramController extends Controller
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return AnonymousResourceCollection
      */
-    public function getAllBatches(Request $request): JsonResponse
+    public function getAllBatches(Request $request): AnonymousResourceCollection
     {
         $ongoingProgramsQuery = OngoingProgram::query();
         $ongoingProgramsQuery->when($request->has('staff_id')
@@ -243,7 +243,8 @@ class OngoingProgramController extends Controller
         if (!Auth::user()?->hasRole('super-admin')) {
             $ongoingProgramsQuery->where('branch_id', Auth::user()->userable->branch_id);
         }
-        return response()->json(OngoingProgramResource::collection($ongoingProgramsQuery->get()));
+
+        return OngoingProgramResource::collection($ongoingProgramsQuery->paginate($request->perPage ?? 10));
     }
 
     /**
