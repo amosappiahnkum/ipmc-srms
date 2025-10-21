@@ -6,8 +6,8 @@ import dayjs from "dayjs";
 
 function FilterWrapper(props) {
     const {submitFilter, exportFilter, children, initialValue, excel, print, onClose, open} = props
-    const [loading, setLoading] = useState(false)
-    const [form] = Form.useForm()
+    const [loading, setLoading] = useState(false);
+    const [form] = Form.useForm();
 
     const onFinish = (values) => {
         setLoading(true)

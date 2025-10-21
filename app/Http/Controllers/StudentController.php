@@ -101,7 +101,7 @@ class StudentController extends Controller
 
             $request['user_id'] = Auth::id();
             $request['sponsor_id'] = $sponsor->id;
-            $request['branch_id'] = Auth::user()->userable->branch_id;
+            $request['branch_id'] = $request->branch_id;
             $request['dob'] = Carbon::parse($request->dob)->format('Y-m-d');
             $request['status'] = StudentStatus::IN_SCHOOL->value;
             $request['student_number'] = Helper::generateStudentNumber();
@@ -129,11 +129,16 @@ class StudentController extends Controller
     public function saveQualifications(Student $student, $qualifications): void
     {
         $student->educationalQualifications()->delete();
-        $mapped = Arr::map(explode(',', $qualifications), static function (string $value, string $key) {
-            return ['name' => $value];
-        });
 
-        $student->educationalQualifications()->createMany($mapped);
+        if (is_string($qualifications)) {
+            $qualifications = array_filter(array_map('trim', explode(',', $qualifications)));
+        } elseif (!is_array($qualifications)) {
+            $qualifications = [];
+        }
+        $mapped = collect($qualifications)->map(fn($value) => ['name' => $value])->all();
+        if (!empty($mapped)) {
+            $student->educationalQualifications()->createMany($mapped);
+        }
     }
 
     /**

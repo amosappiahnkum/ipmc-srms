@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('sponsors', static function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('email')->nullable();
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
             $table->string('relationship')->nullable();
             $table->timestamps();
             $table->softDeletes();

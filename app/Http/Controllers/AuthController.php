@@ -10,9 +10,6 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    /**
-     * @throws ValidationException
-     */
     public function login(Request $request): JsonResponse
     {
         $request->validate([
@@ -41,7 +38,7 @@ class AuthController extends Controller
                 'disabled' => $user->disabled,
                 'username' => $user->username,
                 'passwordChanged' => $user->password_changed,
-                'roles' => $user->roles->pluck('name'),
+                'roles' => $user->roles->pluck('name')
             ]
         ]);
     }
